@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -11,8 +14,6 @@
  * @copyright  Copyright (c) 2016 Woche-Pass AG (http://www.w-vision.ch)
  * @license    MIT License
  */
-
-namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Message\AbstractResponse as OmnipayAbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
@@ -31,6 +32,7 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      * @var string
      */
     protected $testEndpoint = 'https://pay.sandbox.datatrans.com/upp/jsp/upStart.jsp';
+    protected $testEndpointIso = 'https://pay.sandbox.datatrans.com/upp/jsp/upStartIso.jsp';
 
     /*** STATUS CODES ****/
     /**

@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,8 +15,6 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 class CompletePurchaseRequest extends AbstractRequest
 {
     /**
@@ -21,6 +22,7 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
+        // Data could be in GET query or POST parameters.
         return $_REQUEST;
     }
 

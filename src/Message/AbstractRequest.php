@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,14 +15,17 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
+use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\Datatrans\Traits\HasGatewayParameters;
 
 /**
  * Datatrans abstract request.
  * Implements all property setters and getters.
  */
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends OmnipayAbstractRequest
 {
+    use HasGatewayParameters;
+
     /**
      * Get the MerchantId
      * @return string
@@ -36,22 +42,5 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setMerchantId($value)
     {
         return $this->setParameter('merchantId', $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getSign()
-    {
-        return $this->getParameter('sign');
-    }
-
-    /**
-     * @param string $value
-     * @return $this
-     */
-    public function setSign($value)
-    {
-        return $this->setParameter('sign', $value);
     }
 }

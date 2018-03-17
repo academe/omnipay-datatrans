@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans;
+
 /**
  * w-vision
  *
@@ -12,7 +15,9 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans;
+use Omnipay\Datatrans\Message\PurchaseRequest;
+use Omnipay\Datatrans\Message\AuthorizeRequest;
+use Omnipay\Datatrans\Message\CompletePurchaseRequest;
 
 /**
  * Datatrans Gateway
@@ -25,24 +30,35 @@ class Gateway extends AbstractDatatransGateway
     }
 
     /**
+     * Start an autjorize request
+     *
+     * @param array $parameters array of options
+     * @return PurchaseRequest
+     */
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest(AuthorizeRequest::class, $parameters);
+    }
+
+    /**
      * Start a purchase request
      *
      * @param array $parameters array of options
-     * @return \Omnipay\Datatrans\Message\PurchaseRequest
+     * @return PurchaseRequest
      */
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\PurchaseRequest', $parameters);
+        return $this->createRequest(PurchaseRequest::class, $parameters);
     }
 
     /**
      * Complete a purchase
      *
      * @param array $parameters
-     * @return \Omnipay\Datatrans\Message\CompletePurchaseRequest
+     * @return CompletePurchaseRequest
      */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
     }
 }

@@ -39,6 +39,7 @@ class PurchaseRequestTest extends TestCase
             'amount' => 1200,
             'currency' => 'CHF',
             'sign' => '123',
+            'reqtype' => 'CAA',
             'successUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error',
             'cancelUrl' => 'https://www.example.com/cancel'

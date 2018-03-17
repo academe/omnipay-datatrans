@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans;
+
 /**
  * w-vision
  *
@@ -12,29 +15,49 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans;
-
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Datatrans\Message\TokenizeRequest;
+use Omnipay\Datatrans\Traits\HasGatewayParameters;
 
 /**
- * Datatrans Gateway
- *
- * @TODO: add optional fields
+ * Datatrans Gateway (payment form).
  */
 abstract class AbstractDatatransGateway extends AbstractGateway
 {
+    use HasGatewayParameters;
+
+    /**
+     * @var string reqtype parameter to indicate authorize only vs settle immediately
+     */
+    const REQTYPE_AUTHORIZE = 'NOA';
+    const REQTYPE_PURCHASE  = 'CAA';
+
     /**
      * @return array
      */
     public function getDefaultParameters()
     {
-        return array(
-            // general params
-            'merchantId'        => '',
-            'sign'              => '',
-            'testMode'          => true
-        );
+        return [
+            'merchantId'    => '',
+            'sign'          => '',
+            'testMode'      => true,
+            'returnMethod'  => [null, 'POST', 'GET'],
+            'errorUrl'      => '',
+            'language'     => [
+                null, // account default
+                'de', // German
+                'en', // English
+                'fr', // French
+                'it', // Italian
+                'es', // Spanish
+                'el', // Greek
+                'no', // Norwegian
+                'da', // Danish
+                'pl', // Polish
+                'pt', // Portuguese
+            ],
+            'maskedCard' => true,
+        ];
     }
 
     /**
@@ -57,29 +80,12 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     }
 
     /**
-     * @param $value
-     * @return $this
-     */
-    public function setSign($value)
-    {
-        return $this->setParameter('sign', $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getSign()
-    {
-        return $this->getParameter('sign');
-    }
-
-    /**
      * @param array $options
      *
      * @return TokenizeRequest
      */
     public function createCard(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\TokenizeRequest', $options);
+        return $this->createRequest(TokenizeRequest::class, $options);
     }
 }

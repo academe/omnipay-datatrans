@@ -16,13 +16,18 @@
         {
             "name": "Dominik Pfaffenbauer",
             "email": "dominik@pfaffenbauer.at"
+        },
+        {
+            "name": "Jason Judge",
+            "email": "jason@academe.co.uk"
         }
     ],
     "autoload": {
         "psr-4": { "Omnipay\\Datatrans\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~2.0"
+        "php": "^5.5",
+        "omnipay/common": "~2.5"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"

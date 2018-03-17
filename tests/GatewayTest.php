@@ -20,6 +20,7 @@ class GatewayTest extends GatewayTestCase
             'amount' => '10.00',
             'currency' => 'CHF',
             'transactionId' => '1',
+            'language' => 'fr',
             'cancelUrl' => 'https://www.example.com/cancel',
             'returnUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error'
@@ -38,9 +39,41 @@ class GatewayTest extends GatewayTestCase
         $data = array(
             'merchantId' => 'asdf',
             'sign' => '123',
-            'refno' => 1,
+            'refno' => '1',
             'amount' => 1000,
             'currency' => 'CHF',
+            'language' => 'fr',
+            'reqtype' => 'CAA',
+            'successUrl' => 'https://www.example.com/success',
+            'errorUrl' => 'https://www.example.com/error',
+            'cancelUrl' => 'https://www.example.com/cancel'
+        );
+
+        $this->assertInstanceOf('\Omnipay\Datatrans\Message\PurchaseResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('POST', $response->getRedirectMethod());
+        $this->assertEquals($data, $response->getRedirectData());
+        $this->assertStringStartsWith('https://pay.sandbox.datatrans.com/upp/jsp/upStart.jsp', $response->getRedirectUrl());
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    // Purchase
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function testAuthorize()
+    {
+        $response = $this->gateway->authorize($this->options)->send();
+
+        // Expected redirect-data for the default options
+        $data = array(
+            'merchantId' => 'asdf',
+            'sign' => '123',
+            'refno' => '1',
+            'amount' => 1000,
+            'currency' => 'CHF',
+            'reqtype' => 'NOA',
+            'language' => 'fr',
             'successUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error',
             'cancelUrl' => 'https://www.example.com/cancel'

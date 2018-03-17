@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,9 +15,12 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
+use Omnipay\Datatrans\AbstractDatatransGateway;
 
 class PurchaseRequest extends AbstractRedirectRequest
 {
-
+    /**
+     * @var string NOA or CAA (null to use account default)
+     */
+    protected $requestType = AbstractDatatransGateway::REQTYPE_PURCHASE;
 }

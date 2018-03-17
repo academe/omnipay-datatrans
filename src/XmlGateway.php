@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans;
+
 /**
  * w-vision
  *
@@ -12,9 +15,12 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans;
-
 use Omnipay\Datatrans\Message\TokenizeRequest;
+use Omnipay\Datatrans\Message\XmlAuthorizationRequest;
+use Omnipay\Datatrans\Message\XmlSettlementRequest;
+use Omnipay\Datatrans\Message\XmlSettlementCreditRequest;
+use Omnipay\Datatrans\Message\XmlCancelRequest;
+use Omnipay\Datatrans\Message\XmlStatusRequest;
 
 /**
  * Datatrans Gateway
@@ -33,7 +39,7 @@ class XmlGateway extends AbstractDatatransGateway
 
     /**
      * @param array $options
-     * @return Message\XmlAuthorizationRequest
+     * @return XmlAuthorizationRequest
      */
     public function purchase(array $options = array())
     {
@@ -42,46 +48,46 @@ class XmlGateway extends AbstractDatatransGateway
 
     /**
      * @param array $options
-     * @return \Omnipay\Datatrans\Message\XmlAuthorizationRequest
+     * @return XmlAuthorizationRequest
      */
     public function authorize(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\XmlAuthorizationRequest', $options);
+        return $this->createRequest(XmlAuthorizationRequest::class, $options);
     }
 
     /**
      * @param array $options
-     * @return \Omnipay\Datatrans\Message\XmlSettlementRequest
+     * @return XmlSettlementRequest
      */
     public function settlementDebit(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\XmlSettlementRequest', $options);
+        return $this->createRequest(XmlSettlementRequest::class, $options);
     }
 
     /**
      * @param array $options
-     * @return \Omnipay\Datatrans\Message\XmlSettlementRequest
+     * @return XmlSettlementCreditRequest
      */
     public function settlementCredit(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\XmlSettlementCreditRequest', $options);
+        return $this->createRequest(XmlSettlementCreditRequest::class, $options);
     }
 
     /**
      * @param array $options
-     * @return \Omnipay\Datatrans\Message\XmlSettlementRequest
+     * @return XmlCancelRequest
      */
     public function void(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\XmlCancelRequest', $options);
+        return $this->createRequest(XmlCancelRequest::class, $options);
     }
 
     /**
      * @param array $options
-     * @return \Omnipay\Datatrans\Message\XmlStatusRequest
+     * @return XmlStatusRequest
      */
     public function status(array $options = array())
     {
-        return $this->createRequest('\Omnipay\Datatrans\Message\XmlStatusRequest', $options);
+        return $this->createRequest(XmlStatusRequest::class, $options);
     }
 }

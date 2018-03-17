@@ -15,14 +15,21 @@
 namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Datatrans\Traits\HasGatewayParameters;
 
 abstract class AbstractRedirectRequest extends AbstractRequest
 {
+    use HasGatewayParameters;
+
+    /**
+     * @var string NOA or CAA (null to use account default)
+     */
+    protected $requestType;
+
     /**
      * @var array
      */
     protected $optionalParams = array(
-
     );
 
     /**
@@ -32,13 +39,25 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     {
         $this->validate('merchantId', 'transactionId', 'sign');
 
-        $data = array(
-            'merchantId' => $this->getMerchantId(),
-            'refno'      => $this->getTransactionId(),
-            'amount'     => $this->getAmountInteger(),
-            'currency'   => $this->getCurrency(),
-            'sign'       => $this->getSign()
-        );
+        $data = [
+            'merchantId'    => $this->getMerchantId(),
+            'refno'         => $this->getTransactionId(),
+            'amount'        => $this->getAmountInteger(),
+            'currency'      => $this->getCurrency(),
+            'sign'          => $this->getSign(),
+        ];
+
+        if ($this->getReturnMethod()) {
+            $data['uppWebResponseMethod'] = $this->getReturnMethod();
+        }
+
+        if ($this->getLanguage()) {
+            $data['language'] = $this->getLanguage();
+        }
+
+        if ($this->requestType) {
+            $data['reqtype'] = $this->requestType;
+        }
 
         foreach ($this->optionalParams as $param) {
             $value = $this->getParameter($param);
@@ -51,26 +70,8 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         $data['successUrl'] = $this->getReturnUrl();
         $data['cancelUrl'] = $this->getCancelUrl();
         $data['errorUrl'] = $this->getErrorUrl();
-        $data['cancelUrl'] = $this->getCancelUrl();
 
         return $data;
-    }
-
-    /**
-     * @param $value
-     * @return string
-     */
-    public function setErrorUrl($value)
-    {
-        return $this->setParameter('errorUrl', $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getErrorUrl()
-    {
-        return $this->getParameter('errorUrl');
     }
 
     /**
