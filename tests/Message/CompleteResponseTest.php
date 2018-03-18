@@ -5,7 +5,7 @@ namespace Omnipay\Datatrans\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\TestCase;
 
-class CompletePurchaseResponseTest extends TestCase
+class CompleteResponseTest extends TestCase
 {
     /**
      * @var CompletePurchaseResponse
@@ -16,10 +16,10 @@ class CompletePurchaseResponseTest extends TestCase
     {
         parent::setUp();
 
-        $this->response = new CompletePurchaseResponse(
+        $this->response = new CompleteResponse(
             $this->getMockRequest(),
             [
-                "merchantId" => "1100016107",
+                "merchantId" => "1100016000",
                 "currency" => "CHF",
                 "expm" => "12",
                 "amount" => "1000",
@@ -33,7 +33,7 @@ class CompletePurchaseResponseTest extends TestCase
                 "testOnly" => "yes",
                 "authorizationCode" => "913957205",
                 "pmethod" => "VIS",
-                "sign" => "180305143448434776",
+                "sign" => "148843730514034476",
                 "responseCode" => "01",
                 "expy" => "18",
                 "status" => "success",
@@ -51,5 +51,10 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertSame('4242', $this->response->getNumberLastFour());
         $this->assertSame('XXXXXXXXXXXX4242', $this->response->getNumberMasked());
         $this->assertSame('424242xxxxxx4242', $this->response->getNumberMasked(null));
+        $this->assertTrue($this->response->isSuccessful());
+        $this->assertFalse($this->response->isRedirect());
+        $this->assertSame(12, $this->response->getExpiryMonth());
+        $this->assertSame(18, $this->response->getExpiryYear());
+        $this->assertSame('12/18', $this->response->getExpiryDate('m/y'));
     }
 }

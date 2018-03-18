@@ -17,7 +17,7 @@ namespace Omnipay\Datatrans\Message;
 /**
  * Datatrans Complete Purchase Response
  */
-class CompletePurchaseResponse extends AbstractResponse
+class CompleteResponse extends AbstractResponse
 {
     /**
      * @return bool
@@ -37,6 +37,11 @@ class CompletePurchaseResponse extends AbstractResponse
         return false;
     }
 
+    /**
+     * @param string $name name of the data item
+     * @param mixed the default value if the data item is not present
+     * @return mixed
+     */
     protected function getDataItem($name, $default = null)
     {
         if (array_key_exists($name, $this->data)) {
@@ -46,14 +51,23 @@ class CompletePurchaseResponse extends AbstractResponse
         return $default;
     }
 
+    /**
+     * Get the last 4 digits of the card number.
+     *
+     * @return string
+     */
     public function getNumberLastFour()
     {
         return substr($this->getDataItem('maskedCC'), -4, 4) ?: null;
     }
 
     /**
+     * Returns a masked credit card number with only the last 4 chars visible
      * Return an Omnipay format mask by default.
      * Set $mast to null to return the raw gateway masked card number.
+     *
+     * @param string $mask Character to use in place of numbers
+     * @return string
      */
     public function getNumberMasked($mask = 'X')
     {
@@ -67,5 +81,33 @@ class CompletePurchaseResponse extends AbstractResponse
         return str_repeat($mask, $maskLength) . $this->getNumberLastFour();
     }
 
-    // TODO etc for month/year/date too
-}
+    /**
+     * Get the card expiry month.
+     *
+     * @return int
+     */
+    public function getExpiryMonth()
+    {
+        return intval($this->getDataItem('expm'));
+    }
+
+    /**
+     * Get the card expiry year.
+     *
+     * @return int
+     */
+    public function getExpiryYear()
+    {
+        return intval($this->getDataItem('expy'));
+    }
+
+    /**
+     * Get the card expiry date, using the specified date format string.
+     *
+     * @param string $format
+     * @return string
+     */
+    public function getExpiryDate($format)
+    {
+        return gmdate($format, gmmktime(0, 0, 0, $this->getExpiryMonth(), 1, $this->getExpiryYear()));
+    }}
