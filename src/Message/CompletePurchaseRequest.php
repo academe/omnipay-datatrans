@@ -22,8 +22,14 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
-        // Data could be in GET query or POST parameters.
-        return $_REQUEST;
+        // The results could be sent by GET or POST. It's an account
+        // or request option.
+
+        if (strtoupper($this->httpRequest->getMethod()) === 'POST') {
+            return $this->httpRequest->request->all();
+        } else {
+            return $this->httpRequest->query->all();
+        }
     }
 
     /**

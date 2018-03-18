@@ -16,6 +16,7 @@ namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
+use Omnipay\Datatrans\Gateway;
 
 abstract class AbstractRedirectRequest extends AbstractRequest
 {
@@ -57,6 +58,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->requestType) {
             $data['reqtype'] = $this->requestType;
+        }
+
+        if ((bool) $this->getMaskedCard()) {
+            $data['uppReturnMaskedCC'] = Gateway::RETURN_MASKED_CC;
         }
 
         foreach ($this->optionalParams as $param) {

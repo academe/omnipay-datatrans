@@ -44,6 +44,7 @@ class GatewayTest extends GatewayTestCase
             'currency' => 'CHF',
             'language' => 'fr',
             'reqtype' => 'CAA',
+            'uppReturnMaskedCC' => 'yes',
             'successUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error',
             'cancelUrl' => 'https://www.example.com/cancel'
@@ -74,6 +75,7 @@ class GatewayTest extends GatewayTestCase
             'currency' => 'CHF',
             'reqtype' => 'NOA',
             'language' => 'fr',
+            'uppReturnMaskedCC' => 'yes',
             'successUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error',
             'cancelUrl' => 'https://www.example.com/cancel'
@@ -111,11 +113,8 @@ class GatewayTest extends GatewayTestCase
             'uppMsgType' => 'web'
         );
 
-        //$this->getHttpRequest()->request->replace($data);
-        // Response comes from an redirected POST Request, so we need to use either $_POST or $_REQUEST
-        foreach($data as $key=>$value) {
-            $_REQUEST[$key] = $value;
-        }
+        $this->getHttpRequest()->request->replace($data);
+        $this->getHttpRequest()->setMethod('POST');
 
         $response = $this->gateway->completePurchase($this->options)->send();
 
@@ -153,11 +152,8 @@ class GatewayTest extends GatewayTestCase
 
         // create sha hash for the given data
 
-        //$this->getHttpRequest()->request->replace($data);
-        // Response comes from an redirected POST Request, so we need to use either $_POST or $_REQUEST
-        foreach($data as $key=>$value) {
-            $_REQUEST[$key] = $value;
-        }
+        $this->getHttpRequest()->query->replace($data);
+        $this->getHttpRequest()->setMethod('GET');
 
         $response = $this->gateway->completePurchase($this->options)->send();
 
@@ -179,11 +175,8 @@ class GatewayTest extends GatewayTestCase
             'uppMsgType' => 'web'
         );
 
-        //$this->getHttpRequest()->request->replace($data);
-        // Response comes from an redirected POST Request, so we need to use either $_POST or $_REQUEST
-        foreach($data as $key=>$value) {
-            $_REQUEST[$key] = $value;
-        }
+        $this->getHttpRequest()->request->replace($data);
+        $this->getHttpRequest()->setMethod('POST');
 
         $response = $this->gateway->completePurchase($this->options)->send();
 

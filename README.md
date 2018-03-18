@@ -38,16 +38,47 @@ $gateway->setMerchantId('merchantId');
 $gateway->setSign('sign');
 
 // Send purchase request
-$response = $gateway->purchase(
-    [
-        'transactionId' => '17',
-        'amount' => '10.00',
-        'currency' => 'CHF'
-    ]
-)->send();
+$response = $gateway->purchase([
+    'transactionId' => '17',
+    'amount' => '10.00',
+    'currency' => 'CHF',
+])->send();
 
 // This is a redirect gateway, so redirect right away
 $response->redirect();
 
 ```
+
+## TODO
+
+### Shared Optional Parameters
+
+* useAlias
+* Merchant Specific Parameters
+* customTheme
+* mfaReference
+* refno2
+* Refno3
+* virtualCardno
+* uppStartTarget
+* uppReturnTarget
+* uppTermsLink An external link to the merchant’s terms and conditions. Will be
+* uppRememberMe
+* uppDiscountAmount
+* mode
+* Customer address details
+* Basket details
+
+### Full response details
+
+* Methods to access all
+
+### Functionality
+
+* Notification handler (POST handler)
+* Alternative security settings (the "sign" without secret signing seems useless)
+* Use supplied HTTP client rather than $_REQUEST (test for both GET and POST)
+* Payment method selection list
+* Additional parameters and results for different payment types
+* Secure 3D where supported
 

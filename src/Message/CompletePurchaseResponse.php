@@ -36,4 +36,36 @@ class CompletePurchaseResponse extends AbstractResponse
     {
         return false;
     }
+
+    protected function getDataItem($name, $default = null)
+    {
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+
+        return $default;
+    }
+
+    public function getNumberLastFour()
+    {
+        return substr($this->getDataItem('maskedCC'), -4, 4) ?: null;
+    }
+
+    /**
+     * Return an Omnipay format mask by default.
+     * Set $mast to null to return the raw gateway masked card number.
+     */
+    public function getNumberMasked($mask = 'X')
+    {
+        $cardNumber = $this->getDataItem('maskedCC');
+
+        if ($mask === null) {
+            return $cardNumber;
+        }
+
+        $maskLength = strlen($cardNumber) - 4;
+        return str_repeat($mask, $maskLength) . $this->getNumberLastFour();
+    }
+
+    // TODO etc for month/year/date too
 }

@@ -33,6 +33,17 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const REQTYPE_PURCHASE  = 'CAA';
 
     /**
+     * @var string return method values
+     */
+    const RETURN_METHOD_GET     = 'GET';
+    const RETURN_METHOD_POST    = 'POST';
+
+    /**
+     * @var string value to request a masked CC number is retuned
+     */
+    const RETURN_MASKED_CC = 'yes';
+
+    /**
      * @return array
      */
     public function getDefaultParameters()
@@ -41,7 +52,11 @@ abstract class AbstractDatatransGateway extends AbstractGateway
             'merchantId'    => '',
             'sign'          => '',
             'testMode'      => true,
-            'returnMethod'  => [null, 'POST', 'GET'],
+            'returnMethod'  => [
+                null,
+                self::RETURN_METHOD_POST,
+                self::RETURN_METHOD_GET,
+            ],
             'errorUrl'      => '',
             'language'     => [
                 null, // account default
