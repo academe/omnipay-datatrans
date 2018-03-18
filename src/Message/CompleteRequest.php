@@ -15,7 +15,7 @@ namespace Omnipay\Datatrans\Message;
  * @license    MIT License
  */
 
-class CompletePurchaseRequest extends AbstractRequest
+class CompleteRequest extends AbstractRequest
 {
     /**
      * @return array

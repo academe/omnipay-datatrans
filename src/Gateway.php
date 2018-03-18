@@ -17,7 +17,7 @@ namespace Omnipay\Datatrans;
 
 use Omnipay\Datatrans\Message\PurchaseRequest;
 use Omnipay\Datatrans\Message\AuthorizeRequest;
-use Omnipay\Datatrans\Message\CompletePurchaseRequest;
+use Omnipay\Datatrans\Message\CompleteRequest;
 
 /**
  * Datatrans Gateway
@@ -57,8 +57,19 @@ class Gateway extends AbstractDatatransGateway
      * @param array $parameters
      * @return CompletePurchaseRequest
      */
+    public function completeAuthorize(array $parameters = array())
+    {
+        return $this->createRequest(CompleteRequest::class, $parameters);
+    }
+
+    /**
+     * Complete a purchase
+     *
+     * @param array $parameters
+     * @return CompletePurchaseRequest
+     */
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+        return $this->createRequest(CompleteRequest::class, $parameters);
     }
 }
