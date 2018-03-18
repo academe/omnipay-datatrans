@@ -22,32 +22,60 @@ Run the following command to install omnipay and the datatrans gateway:
 
     composer require w-vision/omnipay-datatrans:^1.0.0
 
-## Basic Usage
+## Basic (Minimal) Usage
 
 Payment requests to the Datatrans Gateway must at least supply the following parameters:
 
- - `merchantId` Your merchant ID
- - `transactionId` unique transaction ID
- - `amount` monetary amount
- - `currency` currency
- - `sign` Your sign identifier. Can be found in datatrans backend.
+* `merchantId` Your merchant ID
+* `transactionId` unique merchant site transaction ID
+* `amount` monetary amount (major units fro Omnipay 2.x)
+* `currency` currency, ISO ??? code
+* `sign` Your sign identifier. Can be found in datatrans backend.
+
+Note: this minimal example does not actually sign or encrypt your request.
+See below for details of settings for a more secure approach.
 
 ```php
 $gateway = Omnipay::create('Datatrans');
-$gateway->setMerchantId('merchantId');
-$gateway->setSign('sign');
+$gateway->setMerchantId('{merchantId}');
+$gateway->setSign('{sign}');
 
-// Send purchase request
+// Send purchase request. authorize() is also supported.
+
 $response = $gateway->purchase([
-    'transactionId' => '17',
+    'transactionId' => '{merchant-site-id}',
     'amount' => '10.00',
     'currency' => 'CHF',
 ])->send();
 
-// This is a redirect gateway, so redirect right away
-$response->redirect();
+// This is a redirect gateway, so redirect right away.
+// By degault, this will be a POST redirect.
 
+$response->redirect();
 ```
+
+The results can be read on return:
+
+```php
+// TODO complete messages
+```
+
+### Optional Parameters
+
+Additional parameters change the behaviour of the gateway.
+They can be set in the `purchase()` parameter array, or via setters `setParamName()`.
+
+* `language` - The language to be used by the UI. e.g. 'en', 'de', 'fr'.
+* `returnMethod` - The HTTP method used in returning the user to your merchant site.
+  Defaults to POST, which requires an SSL connection (which is recommended anyway).
+  Can be set to GET if necessary. Will default to the Datatrans account setting..
+* `returnUrl`/`cancelUrl`/`errorUrl` - All must be set either in the back-end Datatrans
+  account or when the payment request is made.
+
+## Hidden Mode
+
+This mode requires credit card details to be passed through your merchant application.
+It is not supported by this release of the driver drue to the PCI requirements involved.
 
 ## TODO
 

@@ -102,7 +102,7 @@ class GatewayTest extends GatewayTestCase
             'acqAuthorizationCode' => 1,
             'theme' => 'DT2015',
             'responseMessage' => 'Authorized',
-            'uppTransactionId' => 1,
+            'uppTransactionId' => "180318151850542785",
             'expy' => 18,
             'expm' => 12,
             'responseCode' => '01',
@@ -121,7 +121,8 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf(\Omnipay\Datatrans\Message\CompleteResponse::class, $response);
         $this->assertFalse($response->isRedirect());
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('1', $response->getTransactionReference());
+        $this->assertEquals('1', $response->getTransactionId());
+        $this->assertEquals('180318151850542785', $response->getTransactionReference());
         $this->assertEquals('', $response->getMessage());
     }
 

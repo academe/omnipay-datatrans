@@ -38,20 +38,6 @@ class CompleteResponse extends AbstractResponse
     }
 
     /**
-     * @param string $name name of the data item
-     * @param mixed the default value if the data item is not present
-     * @return mixed
-     */
-    protected function getDataItem($name, $default = null)
-    {
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
-
-        return $default;
-    }
-
-    /**
      * Get the last 4 digits of the card number.
      *
      * @return string

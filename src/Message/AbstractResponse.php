@@ -83,6 +83,20 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
     const DATATRANS_ALIAS_GENEREL_ERROR = '-999';
 
     /**
+     * @param string $name name of the data item
+     * @param mixed the default value if the data item is not present
+     * @return mixed
+     */
+    protected function getDataItem($name, $default = null)
+    {
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+
+        return $default;
+    }
+
+    /**
      * @return bool
      */
     public function isRedirect()
@@ -148,8 +162,8 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      */
     public function getMessage()
     {
-        if (!$this->isSuccessful()) {
-            return $this->data['responseMessage'];
+        if (! $this->isSuccessful()) {
+            return $this->getDataItem('responseMessage');
         }
 
         return '';
@@ -158,9 +172,17 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
     /**
      * @return string
      */
+    public function getTransactionId()
+    {
+        return $this->getDataItem('refno', '');
+    }
+
+    /**
+     * @return string
+     */
     public function getTransactionReference()
     {
-        return isset($this->data['refno']) ? $this->data['refno'] : '';
+        return $this->getDataItem('uppTransactionId', '');
     }
 
     /**
@@ -168,7 +190,7 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      */
     public function getStatus()
     {
-        return $this->data['status'];
+        return $this->getDataItem('status');
     }
 
     /**
@@ -176,6 +198,6 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      */
     public function getCode()
     {
-        return $this->data['code'];
+        return $this->getDataItem('code');
     }
 }
