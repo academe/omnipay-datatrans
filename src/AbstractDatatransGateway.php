@@ -44,6 +44,16 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const RETURN_MASKED_CC = 'yes';
 
     /**
+     * @var string value to request that a CC alias is retuned
+     */
+    const USE_ALIAS = 'yes';
+
+    /**
+     * @var string value to request that the user is asked to confirm a CC alias is retuned
+     */
+    const USE_ALIAS_ASK_USER = 'yes';
+
+    /**
      * @return array
      */
     public function getDefaultParameters()
@@ -72,6 +82,8 @@ abstract class AbstractDatatransGateway extends AbstractGateway
                 'pt', // Portuguese
             ],
             'maskedCard' => true,
+            'createCard' => false,
+            'createCardAskUser' => false,
         ];
     }
 

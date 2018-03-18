@@ -23,7 +23,7 @@ class GatewayTest extends GatewayTestCase
             'language' => 'fr',
             'cancelUrl' => 'https://www.example.com/cancel',
             'returnUrl' => 'https://www.example.com/success',
-            'errorUrl' => 'https://www.example.com/error'
+            'errorUrl' => 'https://www.example.com/error',
         );
     }
 

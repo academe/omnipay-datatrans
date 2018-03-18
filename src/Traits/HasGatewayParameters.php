@@ -92,4 +92,55 @@ trait HasGatewayParameters
     {
         return $this->getParameter('maskedCard');
     }
+
+    /**
+     * @param $value
+     * @return mixed will be treated as boolean
+     */
+    public function setCreateCard($value)
+    {
+        return $this->setParameter('createCard', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreateCard()
+    {
+        return $this->getParameter('createCard');
+    }
+
+    /**
+     * @param mixed $value will be treated as boolean
+     * @return $this
+     */
+    public function setCreateCardAskUser($value)
+    {
+        return $this->setParameter('createCardAskUser', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreateCardAskUser()
+    {
+        return $this->getParameter('createCardAskUser');
+    }
+
+    /**
+     * @param string three lettter code
+     * @return $this
+     */
+    public function setPaymentMethod($value)
+    {
+        return $this->setParameter('paymentMethod', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->getParameter('paymentMethod');
+    }
 }

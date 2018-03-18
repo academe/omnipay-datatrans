@@ -64,6 +64,18 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['uppReturnMaskedCC'] = Gateway::RETURN_MASKED_CC;
         }
 
+        if ((bool) $this->getCreateCard()) {
+            $data['useAlias'] = Gateway::USE_ALIAS;
+        }
+
+        if ((bool) $this->getCreateCardAskUser()) {
+            $data['uppRememberMe'] = Gateway::USE_ALIAS_ASK_USER;
+        }
+
+        if ($this->getPaymentMethod()) {
+            $data['paymentmethod'] = $this->getPaymentMethod();
+        }
+
         foreach ($this->optionalParams as $param) {
             $value = $this->getParameter($param);
 
@@ -72,6 +84,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             }
         }
 
+        // TODO: these are optional if set in the account.
         $data['successUrl'] = $this->getReturnUrl();
         $data['cancelUrl'] = $this->getCancelUrl();
         $data['errorUrl'] = $this->getErrorUrl();

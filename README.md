@@ -71,6 +71,10 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   Can be set to GET if necessary. Will default to the Datatrans account setting..
 * `returnUrl`/`cancelUrl`/`errorUrl` - All must be set either in the back-end Datatrans
   account or when the payment request is made.
+* `paymentMethod` - The three-letter payment method, e.g. VIS, ECA.
+  If left unset, multiple payment methods will be offered to the visitor to choose.
+  The documentation implies a comma-separated list of payment methods can be provided,
+  but this results in an error indicating the payment method is not valid.
 
 ## Hidden Mode
 
@@ -109,4 +113,6 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * Payment method selection list
 * Additional parameters and results for different payment types
 * Secure 3D where supported
-
+* Capture of customer address when using PayPal
+* Capture of card reference when making a payment (aka "crddit card alias")
+* Allow zero amounts for generating a card alias

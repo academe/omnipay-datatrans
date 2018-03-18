@@ -96,4 +96,25 @@ class CompleteResponse extends AbstractResponse
     public function getExpiryDate($format)
     {
         return gmdate($format, gmmktime(0, 0, 0, $this->getExpiryMonth(), 1, $this->getExpiryYear()));
-    }}
+    }
+
+    /**
+     * Get the reusable card alias.
+     *
+     * @return string|null
+     */
+    public function getCardReference()
+    {
+        return $this->getDataItem('aliasCC');
+    }
+
+    /**
+     * Get the payment method used.
+     *
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->getDataItem('pmethod');
+    }
+}
