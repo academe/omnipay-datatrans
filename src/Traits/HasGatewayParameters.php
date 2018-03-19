@@ -148,17 +148,17 @@ trait HasGatewayParameters
      * @param string HMAC key (in hexadecimal form) for outbound signing
      * @return $this
      */
-    public function setHmacKey($value)
+    public function setHmacKey1($value)
     {
-        return $this->setParameter('hmacKey', $value);
+        return $this->setParameter('hmacKey1', $value);
     }
 
     /**
      * @return string
      */
-    public function getHmacKey()
+    public function getHmacKey1()
     {
-        return $this->getParameter('hmacKey');
+        return $this->getParameter('hmacKey1');
     }
 
     /**
@@ -176,5 +176,14 @@ trait HasGatewayParameters
     public function getHmacKey2()
     {
         return $this->getParameter('hmacKey2');
+    }
+
+    /**
+     * Returns the gateway signing HMAC key ('sign2', falling back to 'sign').
+     * @return string
+     */
+    public function getHmacKey()
+    {
+        return $this->getParameter('hmacKey2') ?: $this->getParameter('hmacKey1');
     }
 }

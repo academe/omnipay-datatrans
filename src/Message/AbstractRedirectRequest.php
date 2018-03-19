@@ -47,11 +47,12 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             'refno'         => $this->getTransactionId(),
         ];
 
-        if ($this->getHmacKey()) {
+        if ($this->getHmacKey1()) {
             // TODO: include "PayPalOrderId" if payPalOrderId=get
             // Also "uppAliasOnly" if uppAliasOnly=true
-            $data['sign'] = hash_hmac('SHA256', implode('', $data), hex2bin($this->getHmacKey()));
+            $data['sign'] = hash_hmac('SHA256', implode('', $data), hex2bin($this->getHmacKey1()));
         } else {
+            // Don't use this method. It is useless.
             $data['sign'] = $this->getSign();
         }
 

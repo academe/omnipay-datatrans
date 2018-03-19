@@ -75,8 +75,10 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   If left unset, multiple payment methods will be offered to the visitor to choose.
   The documentation implies a comma-separated list of payment methods can be provided,
   but this results in an error indicating the payment method is not valid.
-* `hmacKey` - HMAC key 'sign' for signing outbound messages.
+* `hmacKey1` - HMAC key 'sign' for signing outbound messages.
   If signing is configured in the account, then the shared key must be provided here.
+* `hmacKey2` - alternative HMAC key used to sign inbound messages.
+  If not set, will default to the value of hmacKey1.
 
 ## Hidden Mode
 
@@ -87,7 +89,6 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Shared Optional Parameters
 
-* useAlias
 * Merchant Specific Parameters
 * customTheme
 * mfaReference
@@ -105,16 +106,19 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Full response details
 
-* Methods to access all
+* Methods to access most response parameters
 
 ### Functionality
 
-* Notification handler (POST handler)
-* Alternative security settings (the "sign" without secret signing seems useless)
-* Use supplied HTTP client rather than $_REQUEST (test for both GET and POST)
+* Notification handler (POST handler, support FORM and XML payloads)
+  This should be almost a duplicate of completeRequest/completeResponse
 * Payment method selection list
 * Additional parameters and results for different payment types
-* Secure 3D where supported
+* Secure 3D support where applicable
 * Capture of customer address when using PayPal
-* Capture of card reference when making a payment (aka "crddit card alias")
+* Capture of card reference when making a payment (aka "credit card alias")
+  (DONE, but awaiting account update so I can test this)
+* Use of card alias (aliasCC) when making a payment (Omnipay cardReference)
 * Allow zero amounts for generating a card alias
+* Assert signing of XML settlements
+
