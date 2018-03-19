@@ -75,6 +75,8 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   If left unset, multiple payment methods will be offered to the visitor to choose.
   The documentation implies a comma-separated list of payment methods can be provided,
   but this results in an error indicating the payment method is not valid.
+* `hmacKey` - HMAC key 'sign' for signing outbound messages.
+  If signing is configured in the account, then the shared key must be provided here.
 
 ## Hidden Mode
 

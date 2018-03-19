@@ -37,6 +37,7 @@ class CompleteRequest extends AbstractRequest
      */
     public function send()
     {
+        // TODO: validate the keys supplied (sign and sign2, which may or may not use two keys)
         return $this->sendData($this->getData());
     }
 

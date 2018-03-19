@@ -42,11 +42,18 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         $data = [
             'merchantId'    => $this->getMerchantId(),
-            'refno'         => $this->getTransactionId(),
             'amount'        => $this->getAmountInteger(),
             'currency'      => $this->getCurrency(),
-            'sign'          => $this->getSign(),
+            'refno'         => $this->getTransactionId(),
         ];
+
+        if ($this->getHmacKey()) {
+            // TODO: include "PayPalOrderId" if payPalOrderId=get
+            // Also "uppAliasOnly" if uppAliasOnly=true
+            $data['sign'] = hash_hmac('SHA256', implode('', $data), hex2bin($this->getHmacKey()));
+        } else {
+            $data['sign'] = $this->getSign();
+        }
 
         if ($this->getReturnMethod()) {
             $data['uppWebResponseMethod'] = $this->getReturnMethod();

@@ -143,4 +143,38 @@ trait HasGatewayParameters
     {
         return $this->getParameter('paymentMethod');
     }
+
+    /**
+     * @param string HMAC key (in hexadecimal form) for outbound signing
+     * @return $this
+     */
+    public function setHmacKey($value)
+    {
+        return $this->setParameter('hmacKey', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHmacKey()
+    {
+        return $this->getParameter('hmacKey');
+    }
+
+    /**
+     * @param string HMAC key (in hexadecimal form) for inbound signing
+     * @return $this
+     */
+    public function setHmacKey2($value)
+    {
+        return $this->setParameter('hmacKey2', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHmacKey2()
+    {
+        return $this->getParameter('hmacKey2');
+    }
 }
