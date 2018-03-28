@@ -122,3 +122,15 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * Allow zero amounts for generating a card alias
 * Assert signing of XML settlements
 
+### Tech Notes (mainly for me)
+
+* The CompleteRequest and the AcceptNotification requests get their data from
+  the serverRequest. This can be GET, POST, XML header or XML body.
+* The CompleteResponce and AcceptNotification both interpret the data in the
+  same way with a rich set of methods.
+* The CompleteRequest and the AcceptNotification both need to support top-level
+  gateway parameters.
+
+The sticking point is the AcceptNotification needing features from both the
+AbstractRequest (setting gateway parameters) and the Abstract Respeonce
+(interpretting data from the API).

@@ -54,6 +54,11 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const USE_ALIAS_ASK_USER = 'yes';
 
     /**
+     * @var string value to request a card alias only (uppAliasOnly data item)
+     */
+    const CARD_ALIAS_ONLY = 'yes';
+
+    /**
      * @return array
      */
     public function getDefaultParameters()

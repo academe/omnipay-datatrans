@@ -18,6 +18,7 @@ namespace Omnipay\Datatrans;
 use Omnipay\Datatrans\Message\PurchaseRequest;
 use Omnipay\Datatrans\Message\AuthorizeRequest;
 use Omnipay\Datatrans\Message\CompleteRequest;
+use Omnipay\Datatrans\Message\AcceptNotification;
 
 /**
  * Datatrans Gateway
@@ -52,7 +53,7 @@ class Gateway extends AbstractDatatransGateway
     }
 
     /**
-     * Complete a purchase
+     * Complete an authorization.
      *
      * @param array $parameters
      * @return CompletePurchaseRequest
@@ -63,7 +64,7 @@ class Gateway extends AbstractDatatransGateway
     }
 
     /**
-     * Complete a purchase
+     * Complete a purchase.
      *
      * @param array $parameters
      * @return CompletePurchaseRequest
@@ -71,5 +72,16 @@ class Gateway extends AbstractDatatransGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest(CompleteRequest::class, $parameters);
+    }
+
+    /**
+     * Back channel notification.
+     *
+     * @param array $parameters
+     * @return NotificationRequest
+     */
+    public function acceptNotification(array $parameters = array())
+    {
+        return $this->createRequest(AcceptNotification::class, $parameters);
     }
 }

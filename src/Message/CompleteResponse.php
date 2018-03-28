@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,109 +15,13 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
+use Omnipay\Datatrans\Traits\HasCompleteResponse;
+use Omnipay\Datatrans\Gateway;
 
 /**
- * Datatrans Complete Purchase Response
+ * Datatrans Complete Purchase/Authorize Response
  */
 class CompleteResponse extends AbstractResponse
 {
-    /**
-     * @return bool
-     */
-    public function isSuccessful()
-    {
-        $status = $this->getStatus();
-
-        return $status === 'success';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRedirect()
-    {
-        return false;
-    }
-
-    /**
-     * Get the last 4 digits of the card number.
-     *
-     * @return string
-     */
-    public function getNumberLastFour()
-    {
-        return substr($this->getDataItem('maskedCC'), -4, 4) ?: null;
-    }
-
-    /**
-     * Returns a masked credit card number with only the last 4 chars visible
-     * Return an Omnipay format mask by default.
-     * Set $mast to null to return the raw gateway masked card number.
-     *
-     * @param string $mask Character to use in place of numbers
-     * @return string
-     */
-    public function getNumberMasked($mask = 'X')
-    {
-        $cardNumber = $this->getDataItem('maskedCC');
-
-        if ($mask === null) {
-            return $cardNumber;
-        }
-
-        $maskLength = strlen($cardNumber) - 4;
-        return str_repeat($mask, $maskLength) . $this->getNumberLastFour();
-    }
-
-    /**
-     * Get the card expiry month.
-     *
-     * @return int
-     */
-    public function getExpiryMonth()
-    {
-        return intval($this->getDataItem('expm'));
-    }
-
-    /**
-     * Get the card expiry year.
-     *
-     * @return int
-     */
-    public function getExpiryYear()
-    {
-        return intval($this->getDataItem('expy'));
-    }
-
-    /**
-     * Get the card expiry date, using the specified date format string.
-     *
-     * @param string $format
-     * @return string
-     */
-    public function getExpiryDate($format)
-    {
-        return gmdate($format, gmmktime(0, 0, 0, $this->getExpiryMonth(), 1, $this->getExpiryYear()));
-    }
-
-    /**
-     * Get the reusable card alias.
-     *
-     * @return string|null
-     */
-    public function getCardReference()
-    {
-        return $this->getDataItem('aliasCC');
-    }
-
-    /**
-     * Get the payment method used.
-     *
-     * @return string
-     */
-    public function getPaymentMethod()
-    {
-        return $this->getDataItem('pmethod');
-    }
+    use HasCompleteResponse;
 }

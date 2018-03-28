@@ -87,14 +87,14 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      * @param mixed the default value if the data item is not present
      * @return mixed
      */
-    protected function getDataItem($name, $default = null)
+    /*protected function getDataItem($name, $default = null)
     {
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
 
         return $default;
-    }
+    }*/
 
     /**
      * @return bool
@@ -162,11 +162,7 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      */
     public function getMessage()
     {
-        if (! $this->isSuccessful()) {
-            return $this->getDataItem('responseMessage');
-        }
-
-        return '';
+        return $this->getDataItem('errorMessage') ?: $this->getDataItem('responseMessage');
     }
 
     /**
@@ -198,6 +194,6 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      */
     public function getCode()
     {
-        return $this->getDataItem('code');
+        return $this->getDataItem('errorCode');
     }
 }

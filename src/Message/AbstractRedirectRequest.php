@@ -33,6 +33,24 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     protected $optionalParams = array(
     );
 
+    public function getHmacData()
+    {
+        $data = [
+            $this->getMerchantId(),
+        ];
+
+        // If the amount is zero, then flag up "ppAliasOnly" to show we only
+        // want the card to be authorised.
+        $data[] = $this->getAmountInteger() ?: 'uppAliasOnly';
+
+        $data[] = $this->getCurrency();
+        $data[] = $this->getTransactionId();
+
+        // TODO: "PayPalOrderId" if payPalOrderId=get.
+
+        return implode('', $data);
+    }
+
     /**
      * @return array
      */
@@ -47,10 +65,13 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             'refno'         => $this->getTransactionId(),
         ];
 
+        if ($this->getAmountInteger() === 0) {
+            $data['uppAliasOnly'] = Gateway::CARD_ALIAS_ONLY;
+        }
+
         if ($this->getHmacKey1()) {
-            // TODO: include "PayPalOrderId" if payPalOrderId=get
-            // Also "uppAliasOnly" if uppAliasOnly=true
-            $data['sign'] = hash_hmac('SHA256', implode('', $data), hex2bin($this->getHmacKey1()));
+            // A few importing fields are signed.
+            $data['sign'] = hash_hmac('SHA256', $this->getHmacData(), hex2bin($this->getHmacKey1()));
         } else {
             // Don't use this method. It is useless.
             $data['sign'] = $this->getSign();
