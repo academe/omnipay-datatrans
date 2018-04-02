@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -11,8 +14,6 @@
  * @copyright  Copyright (c) 2016 Woche-Pass AG (http://www.w-vision.ch)
  * @license    MIT License
  */
-
-namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
@@ -33,24 +34,6 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     protected $optionalParams = array(
     );
 
-    public function getHmacData()
-    {
-        $data = [
-            $this->getMerchantId(),
-        ];
-
-        // If the amount is zero, then flag up "ppAliasOnly" to show we only
-        // want the card to be authorised.
-        $data[] = $this->getAmountInteger() ?: 'uppAliasOnly';
-
-        $data[] = $this->getCurrency();
-        $data[] = $this->getTransactionId();
-
-        // TODO: "PayPalOrderId" if payPalOrderId=get.
-
-        return implode('', $data);
-    }
-
     /**
      * @return array
      */
@@ -70,7 +53,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         }
 
         if ($this->getHmacKey1()) {
-            // A few importing fields are signed.
+            // A few important fields are signed.
             $data['sign'] = hash_hmac('SHA256', $this->getHmacData(), hex2bin($this->getHmacKey1()));
         } else {
             // Don't use this method. It is useless.
@@ -102,7 +85,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         }
 
         if ($this->getPaymentMethod()) {
-            $data['paymentmethod'] = $this->getPaymentMethod();
+            $data['paymentMethod'] = $this->getPaymentMethod();
         }
 
         foreach ($this->optionalParams as $param) {
@@ -113,11 +96,61 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             }
         }
 
-        // TODO: these are optional if set in the account.
-        $data['successUrl'] = $this->getReturnUrl();
-        $data['cancelUrl'] = $this->getCancelUrl();
-        $data['errorUrl'] = $this->getErrorUrl();
+        // Additional parameters for specific payment types.
 
+        switch ($this->getPaymentMethod()) {
+            case Gateway::PAYMENT_TYPE_PAP:
+                // Paypal
+                $data = $this->extraParamsPAP($data);
+                break;
+            case Gateway::PAYMENT_TYPE_PEF:
+                // Swiss PostFinance E-Finance
+                $data = $this->extraParamsPEF($data);
+                break;
+            case Gateway::PAYMENT_TYPE_PFC:
+                // Swiss PostFinance Card
+                $data = $this->extraParamsPFC($data);
+                break;
+        }
+
+        // These URLs are optional if set in the account.
+
+        if ($this->getReturnUrl() !== null) {
+            $data['successUrl'] = $this->getReturnUrl();
+        }
+
+        if ($this->getCancelUrl() !== null) {
+            $data['cancelUrl'] = $this->getCancelUrl();
+        }
+
+        if ($this->getErrorUrl() !== null) {
+            $data['errorUrl'] = $this->getErrorUrl();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Additional parameters for PayPal (PAP).
+     */
+    protected function extraParamsPAP(array $data)
+    {
+        return $data;
+    }
+
+    /**
+     * Additional parameters for Swiss PostFinance E-Finance (PEF)/
+     */
+    protected function extraParamsPEF(array $data)
+    {
+        return $data;
+    }
+
+    /**
+     * Additional parameters for Swiss PostFinance Card (PFC)/
+     */
+    protected function extraParamsPFC(array $data)
+    {
         return $data;
     }
 

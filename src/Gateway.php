@@ -19,6 +19,7 @@ use Omnipay\Datatrans\Message\PurchaseRequest;
 use Omnipay\Datatrans\Message\AuthorizeRequest;
 use Omnipay\Datatrans\Message\CompleteRequest;
 use Omnipay\Datatrans\Message\AcceptNotification;
+use Omnipay\Datatrans\Message\XmlCancelRequest;
 
 /**
  * Datatrans Gateway
@@ -83,5 +84,14 @@ class Gateway extends AbstractDatatransGateway
     public function acceptNotification(array $parameters = array())
     {
         return $this->createRequest(AcceptNotification::class, $parameters);
+    }
+
+    /**
+     * @param array $options
+     * @return XmlCancelRequest
+     */
+    public function void(array $options = array())
+    {
+        return $this->createRequest(XmlCancelRequest::class, $options);
     }
 }

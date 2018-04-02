@@ -15,13 +15,13 @@ namespace Omnipay\Datatrans\Message;
  * @license    MIT License
  */
 
-use Omnipay\Common\Message\AbstractResponse as OmnipayAbstractResponse;
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * Datatrans purchase redirect response
  */
-abstract class AbstractResponse extends OmnipayAbstractResponse implements RedirectResponseInterface
+abstract class AbstractRedirectResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
      * @var string
@@ -34,7 +34,6 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
     protected $testEndpoint = 'https://pay.sandbox.datatrans.com/upp/jsp/upStart.jsp';
     protected $testEndpointIso = 'https://pay.sandbox.datatrans.com/upp/jsp/upStartIso.jsp';
 
-    /*** STATUS CODES ****/
     /**
      * success code in response
      */
@@ -81,20 +80,6 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
      * generel error
      */
     const DATATRANS_ALIAS_GENEREL_ERROR = '-999';
-
-    /**
-     * @param string $name name of the data item
-     * @param mixed the default value if the data item is not present
-     * @return mixed
-     */
-    /*protected function getDataItem($name, $default = null)
-    {
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
-
-        return $default;
-    }*/
 
     /**
      * @return bool
@@ -155,45 +140,5 @@ abstract class AbstractResponse extends OmnipayAbstractResponse implements Redir
         }
 
         return $this->productionEndpoint;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->getDataItem('errorMessage') ?: $this->getDataItem('responseMessage');
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionId()
-    {
-        return $this->getDataItem('refno', '');
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionReference()
-    {
-        return $this->getDataItem('uppTransactionId', '');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->getDataItem('status');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCode()
-    {
-        return $this->getDataItem('errorCode');
     }
 }

@@ -14,12 +14,10 @@
 
 namespace Omnipay\Datatrans\Message;
 
-//use Omnipay\Common\Message\RedirectResponseInterface;
-
 /**
  * Datatrans purchase redirect response
  */
-class PurchaseResponse extends AbstractResponse //implements RedirectResponseInterface
+class PurchaseResponse extends AbstractRedirectResponse
 {
 
 }

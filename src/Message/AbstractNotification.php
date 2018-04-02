@@ -1,20 +1,25 @@
 <?php
 
-namespace Omnipay\Datatrans\Traits;
+namespace Omnipay\Datatrans\Message;
 
 /**
- * Accepts initialisation parameters from the gateway.
- * This is the minimal requirements from
- * Omnipay\Common\Message\AbstractRequest, and is needed to accept
- * parameters.
+ * Datatrans Notification Request Abstaract.
+ * The Omnipay documentation states that the AcceptNotification does
+ * not accept parameters, and there is subsequently not an abstract
+ * notification in the Omnipay Common library to support parameters.
+ * This abstract meets that need, for now.
  */
+
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\Datatrans\Traits\HasGatewayParameters;
+use Omnipay\Datatrans\Traits\HasSignatureVerifier;
 
 use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Guzzle\Http\ClientInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
-trait HasRequestParameters
+abstract class AbstractNotification implements NotificationInterface
 {
     /**
      * The request parameters

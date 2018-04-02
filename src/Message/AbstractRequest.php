@@ -43,4 +43,22 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
     {
         return $this->setParameter('merchantId', $value);
     }
+
+    public function getHmacData()
+    {
+        $data = [
+            $this->getMerchantId(),
+        ];
+
+        // If the amount is zero, then flag up "ppAliasOnly" to show we only
+        // want the card to be authorised.
+        $data[] = $this->getAmountInteger() ?: 'uppAliasOnly';
+
+        $data[] = $this->getCurrency();
+        $data[] = $this->getTransactionId();
+
+        // TODO: "PayPalOrderId" if payPalOrderId=get.
+
+        return implode('', $data);
+    }
 }

@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -11,8 +14,6 @@
  * @copyright  Copyright (c) 2016 Woche-Pass AG (http://www.w-vision.ch)
  * @license    MIT License
  */
-
-namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Exception\InvalidResponseException;
 
@@ -28,6 +29,7 @@ abstract class XmlRequest extends AbstractRequest
      * @var string
      */
     protected $apiBaseProdUrl = 'https://api.datatrans.com/upp/jsp';
+
     /**
      * The XML API Endpoint Base URL
      *
@@ -83,6 +85,7 @@ abstract class XmlRequest extends AbstractRequest
     protected function getRequestXml()
     {
         $serviceXmlNode = "<" . $this->getServiceName() . "/>";
+
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' . $serviceXmlNode);
         $xml->addAttribute('version', $this->getServiceVersion());
 
@@ -96,7 +99,18 @@ abstract class XmlRequest extends AbstractRequest
 
         $this->prepareRequestXml($requestChild);
 
-        $requestChild->addChild('sign', $this->getSign());
+        //$requestChild->addChild('sign', $this->getSign());
+        if ($this->getHmacKey1()) {
+            // A few important fields are signed.
+            $sign = hash_hmac('SHA256', $this->getHmacData(), hex2bin($this->getHmacKey1()));
+        } else {
+            // Don't use this method. It is useless.
+            $sign = $this->getSign();
+        }
+        $requestChild->addChild('sign', $sign);
+
+        //var_dump($this->getHmacData());
+        //var_dump($xml);
 
         return $xml;
     }
@@ -149,7 +163,7 @@ abstract class XmlRequest extends AbstractRequest
 
 
         // Might be useful to have some debug code here, PayPal especially can be
-        // a bit fussy about data formats and ordering.  Perhaps hook to whatever
+        // a bit fussy about data formats and ordering. Perhaps hook to whatever
         // logging engine is being used.
         // echo "Data == " . json_encode($data) . "\n";
 

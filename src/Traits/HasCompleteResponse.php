@@ -101,7 +101,7 @@ trait HasCompleteResponse
     {
         $status = $this->getStatus();
 
-        return $status === 'success';
+        return $status === Gateway::STATUS_SUCCESS;
     }
 
     /**
@@ -184,5 +184,45 @@ trait HasCompleteResponse
     public function isPurchase()
     {
         return $this->getDataItem('reqtype') === Gateway::REQTYPE_PURCHASE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->getDataItem('errorMessage') ?: $this->getDataItem('responseMessage');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionId()
+    {
+        return $this->getDataItem('refno', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionReference()
+    {
+        return $this->getDataItem('uppTransactionId', '');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->getDataItem('status');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->getDataItem('errorCode');
     }
 }

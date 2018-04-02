@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -11,8 +14,6 @@
  * @copyright  Copyright (c) 2016 Woche-Pass AG (http://www.w-vision.ch)
  * @license    MIT License
  */
-
-namespace Omnipay\Datatrans\Message;
 
 /**
  * Class XmlSettlementRequest
@@ -88,7 +89,7 @@ class XmlSettlementRequest extends XmlRequest
      */
     public function getData()
     {
-        $this->validate('merchantId', 'transactionId', 'sign', 'uppTransactionId');
+        $this->validate('merchantId', 'transactionId', 'sign', 'transactionReference');
 
         $requestType = $this->getRequestType();
 
@@ -98,10 +99,11 @@ class XmlSettlementRequest extends XmlRequest
 
         $data = array(
             'merchantId'        => $this->getMerchantId(),
-            'sign'              => $this->getSign(),
+            // FIXME: disabled temporarity as it is getting added twice when voiding an auth.
+            //'sign'              => $this->getSign(),
             'amount'            => $this->getAmountInteger(),
             'currency'          => $this->getCurrency(),
-            'uppTransactionId'  => $this->getUppTransactionId(),
+            'uppTransactionId'  => $this->getTransactionReference(),
             'refno'             => $this->getTransactionId(),
             'reqtype'           => $requestType,
             'transtype'         => $this->getTransactionType()
@@ -131,10 +133,10 @@ class XmlSettlementRequest extends XmlRequest
     /**
      * @return string
      */
-    public function getUppTransactionId()
+    /*public function getUppTransactionId()
     {
         return $this->getParameter("uppTransactionId");
-    }
+    }*/
 
     /**
      * @param $value

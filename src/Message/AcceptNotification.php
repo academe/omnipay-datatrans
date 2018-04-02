@@ -6,16 +6,15 @@ namespace Omnipay\Datatrans\Message;
  * Datatrans Notification Request.
  */
 
-use Omnipay\Common\Message\NotificationInterface;
+//use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\Datatrans\Traits\HasCompleteResponse;
-use Omnipay\Datatrans\Traits\HasRequestParameters;
+//use Omnipay\Datatrans\Traits\HasRequestParameters;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
 use Omnipay\Datatrans\Traits\HasSignatureVerifier;
 
-class AcceptNotification implements NotificationInterface
+class AcceptNotification extends AbstractNotification
 {
     use HasCompleteResponse;
-    use HasRequestParameters;
     use HasGatewayParameters;
     use HasSignatureVerifier;
 
@@ -70,7 +69,15 @@ class AcceptNotification implements NotificationInterface
      */
     public function getTransactionStatus()
     {
-        return static::STATUS_COMPLETED; // FIXME
+        if ($this->isSuccessful()) {
+            return static::STATUS_COMPLETED;
+        }
+
+        // TODO: look out for static::STATUS_PENDING
+        // Possibly a response code of 13 tells us this.
+        // pendingPayPal also to be looked into.
+
+        return static::STATUS_FAILED;
     }
 
     /**

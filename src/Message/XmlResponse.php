@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,9 +15,8 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Common\Message\AbstractResponse;
 
 /**
  * Datatrans XML Response
