@@ -146,7 +146,6 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * uppStartTarget
 * uppReturnTarget
 * uppTermsLink An external link to the merchant’s terms and conditions. Will be
-* uppRememberMe
 * uppDiscountAmount
 * mode
 * Customer address details
@@ -160,14 +159,9 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 * Notification handler (POST handler, support FORM and XML payloads)
   This should be almost a duplicate of completeRequest/completeResponse
-* Payment method selection list
 * Additional parameters and results for different payment types
 * Secure 3D support where applicable
 * Capture of customer address when using PayPal
-* Capture of card reference when making a payment (aka "credit card alias")
-  (DONE, but awaiting account update so I can test this)
-* Use of card alias (aliasCC) when making a payment (Omnipay cardReference)
-* Allow zero amounts for generating a card alias
 * Assert signing of XML settlements
 
 ### Tech Notes (mainly for me)
