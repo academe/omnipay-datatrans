@@ -99,18 +99,7 @@ abstract class XmlRequest extends AbstractRequest
 
         $this->prepareRequestXml($requestChild);
 
-        //$requestChild->addChild('sign', $this->getSign());
-        if ($this->getHmacKey1()) {
-            // A few important fields are signed.
-            $sign = hash_hmac('SHA256', $this->getHmacData(), hex2bin($this->getHmacKey1()));
-        } else {
-            // Don't use this method. It is useless.
-            $sign = $this->getSign();
-        }
-        $requestChild->addChild('sign', $sign);
-
-        //var_dump($this->getHmacData());
-        //var_dump($xml);
+        $requestChild->addChild('sign', $this->getSigning());
 
         return $xml;
     }

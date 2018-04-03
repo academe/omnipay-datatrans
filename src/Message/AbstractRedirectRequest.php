@@ -15,6 +15,12 @@ namespace Omnipay\Datatrans\Message;
  * @license    MIT License
  */
 
+/**
+ * The abstract request for redirect requests.
+ * These involve sending the end user directly to the remote gateway
+ * as the very first step.
+ */
+
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
 use Omnipay\Datatrans\Gateway;
@@ -30,6 +36,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
     /**
      * @var array
+     * TODO: remove this and use more explicit parameters.
      */
     protected $optionalParams = array(
     );
@@ -48,17 +55,16 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             'refno'         => $this->getTransactionId(),
         ];
 
+        // If the amount is zero, then the merchant site is seeking
+        // authorisation for the card (or other payment method) only.
+        // Some docuemnts list using '1' instead of zero, but both seem
+        // to work.
+
         if ($this->getAmountInteger() === 0) {
             $data['uppAliasOnly'] = Gateway::CARD_ALIAS_ONLY;
         }
 
-        if ($this->getHmacKey1()) {
-            // A few important fields are signed.
-            $data['sign'] = hash_hmac('SHA256', $this->getHmacData(), hex2bin($this->getHmacKey1()));
-        } else {
-            // Don't use this method. It is useless.
-            $data['sign'] = $this->getSign();
-        }
+        $data['sign'] = $this->getSigning();
 
         if ($this->getReturnMethod()) {
             $data['uppWebResponseMethod'] = $this->getReturnMethod();
@@ -170,6 +176,6 @@ abstract class AbstractRedirectRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data);
+        return $this->response = new RedirectResponse($this, $data);
     }
 }

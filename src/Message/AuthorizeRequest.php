@@ -15,12 +15,12 @@ namespace Omnipay\Datatrans\Message;
  * @license    MIT License
  */
 
-use Omnipay\Datatrans\AbstractDatatransGateway;
+use Omnipay\Datatrans\Gateway;
 
 class AuthorizeRequest extends AbstractRedirectRequest
 {
     /**
      * @var string NOA or CAA (null to use account default)
      */
-    protected $requestType = AbstractDatatransGateway::REQTYPE_AUTHORIZE;
+    protected $requestType = Gateway::REQTYPE_AUTHORIZE;
 }

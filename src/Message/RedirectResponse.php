@@ -19,9 +19,10 @@ use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
- * Datatrans purchase redirect response
+ * Datatrans purchase redirect response.
+ * Handles [local] redirection responses for authorize, purchase, createCard.
  */
-abstract class AbstractRedirectResponse extends AbstractResponse implements RedirectResponseInterface
+class RedirectResponse extends AbstractResponse implements RedirectResponseInterface
 {
     /**
      * @var string

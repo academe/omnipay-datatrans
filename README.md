@@ -29,7 +29,7 @@ Payment requests to the Datatrans Gateway must at least supply the following par
 * `merchantId` Your merchant ID
 * `transactionId` unique merchant site transaction ID
 * `amount` monetary amount (major units fro Omnipay 2.x)
-* `currency` currency, ISO ??? code
+* `currency` ISO 4217 three-letter code
 * `sign` Your sign identifier. Can be found in datatrans backend.
 
 Note: this minimal example does not actually sign or encrypt your request.
@@ -49,12 +49,60 @@ $response = $gateway->purchase([
 ])->send();
 
 // This is a redirect gateway, so redirect right away.
-// By degault, this will be a POST redirect.
+// By default, this will be a POST redirect.
 
 $response->redirect();
 ```
 
-The results can be read on return:
+## Optional Gateway and Authorize Paramaters
+
+### Signing Requests
+
+It is recommended the requests are signed with a pre-shared key.
+The SHA256 key is set in the gateway account and is set in the gateway:
+
+```php
+$gateway->setHmacKey1('3e6c83...{long-key}...6e502a');
+```
+
+The same key will be used for checking the signing of response messages,
+if set on the gateway when handling responses.
+The response can optionally be signed by a different key, which is set using
+`$gateway->setHmacKey2()`, and that is documented later.
+
+### Getting A Card Reference
+
+If enabled on the gateway account, a reusable card reference can be created.
+To trigger this behaviour, set the `createCard` parameter to `true` while
+making a purchase or authorization:
+
+```php
+$request = $gateway->purchase([
+   'createCard' => true,
+   ...
+]);
+```
+
+The card reference will be available in the notification server request or the
+*complete* response:
+
+```php
+// Will return null if this feature is not enabled in the gateway account.
+$reusableCardReference = $response->getCardReference();
+```
+
+If you just want the card reference without making a purchase,
+then set a zero amount.
+Alternatively use `$gateway->createCard()` to create a card reference.
+
+$response = $gateway->createCard([
+    'transactionId' => '{merchant-site-id}',
+    'currency' => 'GBP',
+])->send();
+
+## Complete Response
+
+The results can be read on the user returning to the merchant site:
 
 ```php
 // TODO complete messages
