@@ -50,7 +50,7 @@ class GatewayTest extends GatewayTestCase
             'cancelUrl' => 'https://www.example.com/cancel'
         );
 
-        $this->assertInstanceOf(\Omnipay\Datatrans\Message\PurchaseResponse::class, $response);
+        $this->assertInstanceOf(\Omnipay\Datatrans\Message\RedirectResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('POST', $response->getRedirectMethod());
@@ -81,7 +81,7 @@ class GatewayTest extends GatewayTestCase
             'cancelUrl' => 'https://www.example.com/cancel'
         );
 
-        $this->assertInstanceOf(\Omnipay\Datatrans\Message\PurchaseResponse::class, $response);
+        $this->assertInstanceOf(\Omnipay\Datatrans\Message\RedirectResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('POST', $response->getRedirectMethod());
@@ -123,7 +123,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('1', $response->getTransactionId());
         $this->assertEquals('180318151850542785', $response->getTransactionReference());
-        $this->assertEquals('', $response->getMessage());
+        $this->assertEquals('Authorized', $response->getMessage());
     }
 
 
@@ -205,7 +205,7 @@ class GatewayTest extends GatewayTestCase
             'cancelUrl' => 'https://www.example.com/cancel'
         );
 
-        $this->assertInstanceOf(\Omnipay\Datatrans\Message\PurchaseResponse::class, $response);
+        $this->assertInstanceOf(\Omnipay\Datatrans\Message\RedirectResponse::class, $response);
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('POST', $response->getRedirectMethod());

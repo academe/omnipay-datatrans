@@ -46,7 +46,7 @@ class XmlGatewayTest extends GatewayTestCase
         $response = $this->gateway->authorize($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('44E89981F8714392Y', $response->getUppTransactionId());
+        $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
         $this->assertEquals('Authorized', $response->getMessage());
     }
 
@@ -57,7 +57,7 @@ class XmlGatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options)->send();
 
         $this->assertTrue($response->isSuccessful());
-        $this->assertEquals('44E89981F8714392Y', $response->getUppTransactionId());
+        $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
         $this->assertEquals('Authorized', $response->getMessage());
     }
 
@@ -67,14 +67,14 @@ class XmlGatewayTest extends GatewayTestCase
 
         $request = $this->gateway->settlementCredit(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ));
         $response = $request->send();
 
         $this->assertInstanceOf('\Omnipay\Datatrans\Message\XmlSettlementCreditRequest', $request);
-        $this->assertSame('44E89981F8714392Y', $request->getUppTransactionId());
+        $this->assertSame('44E89981F8714392Y', $request->getTransactionReference());
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('01', $response->getCode());
     }
@@ -85,7 +85,7 @@ class XmlGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->settlementCredit(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ))->send();
@@ -100,14 +100,14 @@ class XmlGatewayTest extends GatewayTestCase
 
         $request = $this->gateway->settlementDebit(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ));
         $response = $request->send();
 
         $this->assertInstanceOf('\Omnipay\Datatrans\Message\XmlSettlementRequest', $request);
-        $this->assertSame('44E89981F8714392Y', $request->getUppTransactionId());
+        $this->assertSame('44E89981F8714392Y', $request->getTransactionReference());
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('01', $response->getCode());
     }
@@ -118,7 +118,7 @@ class XmlGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->settlementCredit(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ))->send();
@@ -133,7 +133,7 @@ class XmlGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->status(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y'
+            'transactionReference' => '44E89981F8714392Y'
         ))->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -146,7 +146,7 @@ class XmlGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->status(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392X'
+            'transactionReference' => '44E89981F8714392X'
         ))->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -159,14 +159,14 @@ class XmlGatewayTest extends GatewayTestCase
 
         $request = $this->gateway->void(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ));
         $response = $request->send();
 
         $this->assertInstanceOf('\Omnipay\Datatrans\Message\XmlCancelRequest', $request);
-        $this->assertSame('44E89981F8714392Y', $request->getUppTransactionId());
+        $this->assertSame('44E89981F8714392Y', $request->getTransactionReference());
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('01', $response->getCode());
     }
@@ -177,7 +177,7 @@ class XmlGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->settlementCredit(array(
             'transactionId' => '1',
-            'uppTransactionId' => '44E89981F8714392Y',
+            'transactionReference' => '44E89981F8714392Y',
             'amount' => 10.00,
             'currency' => 'CHF',
         ))->send();

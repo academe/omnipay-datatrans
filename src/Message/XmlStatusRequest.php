@@ -43,12 +43,12 @@ class XmlStatusRequest extends XmlSettlementRequest
      */
     public function getData()
     {
-        $this->validate('merchantId', 'transactionId', 'sign', 'uppTransactionId');
+        $this->validate('merchantId', 'transactionId', 'sign', 'transactionReference');
 
         $data = array(
             'merchantId'        => $this->getMerchantId(),
             'sign'              => $this->getSign(),
-            'uppTransactionId'  => $this->getUppTransactionId(),
+            'uppTransactionId'  => $this->getTransactionReference(),
             'refno'             => $this->getTransactionId()
         );
 

@@ -24,7 +24,7 @@ class XmlAuthorizationResponse extends XmlResponse implements RedirectResponseIn
     /**
      * @return null
      */
-    public function getUppTransactionId()
+    public function getTransactionReference()
     {
         if (isset($this->data['response'])) {
             return $this->data['response']['uppTransactionId'];

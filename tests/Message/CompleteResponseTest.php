@@ -58,6 +58,6 @@ class CompleteResponseTest extends TestCase
         $this->assertSame('12/18', $this->response->getExpiryDate('m/y'));
         $this->assertSame('e7e86bee-0ced-43b8-9ee9-e7fbb8d4ef31', $this->response->getTransactionId());
         $this->assertSame('180317175618647060', $this->response->getTransactionReference());
-        $this->assertSame('VIS', $this->response->getPaymentMethod());
+        $this->assertSame('VIS', $this->response->getUsedPaymentMethod());
     }
 }
