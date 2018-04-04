@@ -1,5 +1,5 @@
 {
-    "name": "w-vision/omnipay-datatrans",
+    "name": "academe/omnipay-datatrans",
     "type": "library",
     "description": "Datatrans Gateway for the Omnipay payment processing library",
     "keywords": [
@@ -10,7 +10,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/w-vision/omnipay-datatrans",
+    "homepage": "https://github.com/academe/omnipay-datatrans",
     "license": "MIT",
     "authors": [
         {

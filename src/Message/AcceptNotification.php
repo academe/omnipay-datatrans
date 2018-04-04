@@ -27,6 +27,7 @@ class AcceptNotification extends AbstractNotification
     {
         // The results could be sent by GET or POST. It's an account
         // or request option.
+        // FIXME: could also be XML.
 
         if (strtoupper($this->httpRequest->getMethod()) === 'POST') {
             return $this->httpRequest->request->all();
@@ -35,7 +36,10 @@ class AcceptNotification extends AbstractNotification
         }
     }
 
-    public function getHeaders()
+    /**
+     *
+     */
+    public function getDataHeader()
     {
         // Header name is "upptransaction", with the XML url encoded into a string.
         // The XML, like when delivered in the body, is three levels deep,

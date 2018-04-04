@@ -60,11 +60,11 @@ class XmlResponse extends AbstractResponse
     /**
      * Gets the redirect form data array, if the redirect method is POST.
      *
-     * @return null
+     * @return []
      */
     public function getRedirectData()
     {
-        return null;
+        return [];
     }
 
     /**

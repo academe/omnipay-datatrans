@@ -150,7 +150,6 @@ abstract class XmlRequest extends AbstractRequest
             $this->getRequestXml()->asXML()
         );
 
-
         // Might be useful to have some debug code here, PayPal especially can be
         // a bit fussy about data formats and ordering. Perhaps hook to whatever
         // logging engine is being used.
@@ -159,10 +158,11 @@ abstract class XmlRequest extends AbstractRequest
         try {
             $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
             $httpResponse = $httpRequest->send();
-            // Empty response body should be parsed also as and empty array
+
+            // Empty response body should be parsed also as an empty array
             $body = $httpResponse->getBody(true);
             $xmlResponse = !empty($body) ? $httpResponse->xml() : '';
-            
+//echo "<textarea>"; var_dump($body); echo "</textarea>";
             if ($xmlResponse instanceof \SimpleXMLElement) {
                 $response = $xmlResponse->body->transaction;
 

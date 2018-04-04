@@ -5,6 +5,8 @@ namespace Omnipay\Datatrans\Traits;
 /**
  * Provides support for AcceptNotification and CompleteResponse,
  * which both read the final transaction results from the gateway.
+ *
+ * TODO: rename to HasResponseData
  */
 
 use Omnipay\Datatrans\Gateway;

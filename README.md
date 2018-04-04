@@ -54,7 +54,7 @@ $response = $gateway->purchase([
 $response->redirect();
 ```
 
-## Optional Gateway and Authorize Paramaters
+## Optional Gateway and Authorize Parameters
 
 ### Signing Requests
 
@@ -95,17 +95,11 @@ If you just want the card reference without making a purchase,
 then set a zero amount.
 Alternatively use `$gateway->createCard()` to create a card reference.
 
+```php
 $response = $gateway->createCard([
     'transactionId' => '{merchant-site-id}',
     'currency' => 'GBP',
 ])->send();
-
-## Complete Response
-
-The results can be read on the user returning to the merchant site:
-
-```php
-// TODO complete messages
 ```
 
 ### Optional Parameters
@@ -127,6 +121,26 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   If signing is configured in the account, then the shared key must be provided here.
 * `hmacKey2` - alternative HMAC key used to sign inbound messages.
   If not set, will default to the value of hmacKey1.
+
+## Complete Response
+
+The results can be read on the user returning to the merchant site:
+
+```php
+// TODO complete messages
+```
+
+## Void
+
+```php
+$voidRequest = $gateway->void([
+    'transactionReference' => $authorizedTransactionReference,
+    'transactionId' => $uniqueTtransactionId,
+    'currency' => 'GBP',
+    'amount' => $originalTransactionAmount,
+]);
+$voidResponse = $voidRequest->send();
+```
 
 ## Hidden Mode
 
