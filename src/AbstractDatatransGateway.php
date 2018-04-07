@@ -43,9 +43,14 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const REQTYPE_COA = 'COA';
 
     /**
-     * Transaction status request
+     * Transaction status request (simple data, default for the gateway)
      */
     const REQTYPE_STA = 'STA';
+
+    /**
+     * Transaction status request (extended data, default for this driver)
+     */
+    const REQTYPE_STX = 'STX';
 
     /**
      * Re-Authorization of old transaction
@@ -149,6 +154,11 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const STATUS_ACCEPTED   = 'accepted';
     const STATUS_ERROR      = 'error';
     const STATUS_CANCEL     = 'cancel';
+
+    /**
+     * The XML service version.
+     */
+    const XML_SERVICE_VERSION = '3';
 
     /**
      * @return array

@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,13 +15,14 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 /**
  * Class XmlSettlementCreditRequest
  *
  * @package Omnipay\Datatrans\Message
  */
+
+use Omnipay\Datatrans\Gateway;
+
 class XmlSettlementCreditRequest extends XmlSettlementRequest
 {
     /**
@@ -26,6 +30,6 @@ class XmlSettlementCreditRequest extends XmlSettlementRequest
      */
     public function getTransactionType()
     {
-        return static::DATATRANS_TRANSACTION_TYPE_CREDIT;
+        return Gateway::TRANSACTION_TYPE_CREDIT;
     }
 }

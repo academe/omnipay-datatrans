@@ -89,7 +89,7 @@ class XmlGatewayTest extends GatewayTestCase
             'amount' => 10.00,
             'currency' => 'CHF',
         ))->send();
-
+var_dump($response->getErrorCode());
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('-72', $response->getCode());
     }

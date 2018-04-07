@@ -27,17 +27,17 @@ class XmlSettlementRequest extends AbstractXmlRequest
     /**
      * @var string
      */
+    protected $requestType = Gateway::REQTYPE_COA;
+
+    /**
+     * @var string
+     */
     protected $apiEndpoint = 'XML_processor.jsp';
 
     /**
      * @var string
      */
     protected $serviceName = 'paymentService';
-
-    /**
-     * @var int
-     */
-    protected $serviceVersion = 3;
 
     /**
      * @return array
@@ -52,29 +52,28 @@ class XmlSettlementRequest extends AbstractXmlRequest
             'merchantId'        => $this->getMerchantId(),
             'amount'            => $this->getAmountInteger(),
             'currency'          => $this->getCurrency(),
-            'uppTransactionId'  => $this->getTransactionReference(),
             'refno'             => $this->getTransactionId(),
+            'uppTransactionId'  => $this->getTransactionReference(),
             'reqtype'           => $requestType,
-            'transtype'         => $this->getTransactionType()
         );
+
+        if ($this->getTransactionType()) {
+            $data['transtype'] = $this->getTransactionType();
+        }
 
         if ($this->getErrorEmail()) {
             $data['errorEmail'] = $this->getErrorEmail();
         }
 
-        if ($this->getAcqAuthorizationCode()) {
+        // CHECKME: requried for REF and REC, but is it allowed for other request types?
+        if (
+            $this->getAcqAuthorizationCode()
+            && ($requestType === Gateway::REQTYPE_REF || $requestType === Gateway::REQTYPE_REC)
+        ) {
             $data['acqAuthorizationCode'] = $this->getAcqAuthorizationCode();
         }
 
         return $data;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestType()
-    {
-        return Gateway::REQTYPE_COA;
     }
 
     /**

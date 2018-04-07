@@ -24,4 +24,14 @@ use Omnipay\Common\Message\AbstractResponse;
 class XmlResponse extends AbstractResponse
 {
     use HasCompleteResponse;
+
+    /**
+     * The XML responses have a slightly different way to check for success.
+     *
+     * @return bool
+     */
+    public function isSuccessful()
+    {
+        return $this->getErrorCode() === null;
+    }
 }

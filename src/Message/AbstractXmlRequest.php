@@ -16,6 +16,7 @@ namespace Omnipay\Datatrans\Message;
  */
 
 use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Datatrans\Gateway;
 use Omnipay\Datatrans\Helper;
 
 /**
@@ -43,17 +44,17 @@ abstract class AbstractXmlRequest extends AbstractRequest
      *
      * @var string
      */
-    protected $apiEndpoint = null;
+    protected $apiEndpoint;
 
     /**
      * @var string
      */
-    protected $serviceName = null;
+    protected $serviceName;
 
     /**
-     * @var int
+     * @var string (containing an int)
      */
-    protected $serviceVersion = null;
+    protected $serviceVersion = Gateway::XML_SERVICE_VERSION;
 
     public abstract function getData();
 

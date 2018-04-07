@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,24 +15,11 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * PayPal REST Authorize Response
  */
-class XmlAuthorizationResponse extends XmlResponse implements RedirectResponseInterface
+class XmlAuthorizationResponse extends XmlResponse //implements RedirectResponseInterface
 {
-    /**
-     * @return null
-     */
-    public function getTransactionReference()
-    {
-        if (isset($this->data['response'])) {
-            return $this->data['response']['uppTransactionId'];
-        }
-
-        return null;
-    }
 }

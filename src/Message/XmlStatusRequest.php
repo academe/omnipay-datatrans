@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,22 +15,16 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 /**
  * Class XmlStatusRequest
  *
  * @package Omnipay\Datatrans\Message
  */
-class XmlStatusRequest extends XmlSettlementRequest
-{
-    /**
-     * @var array
-     */
-    protected $optionalParameters = array(
-        'reqtype'
-    );
 
+use Omnipay\Datatrans\Gateway;
+
+class XmlStatusRequest extends AbstractXmlRequest
+{
     /**
      * @var string
      */
@@ -52,13 +49,10 @@ class XmlStatusRequest extends XmlSettlementRequest
             'refno'             => $this->getTransactionId()
         );
 
-        foreach ($this->optionalParameters as $param) {
-            $value = $this->getParameter($param);
+        // Default to the extended response format, which provides cardReference
+        // maskedCard, etc.
 
-            if ($value) {
-                $data[$param] = $value;
-            }
-        }
+        $data['reqtype'] = $this->getRequestType() ?: Gateway::REQTYPE_STX;
 
         return $data;
     }

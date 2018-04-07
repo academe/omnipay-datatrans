@@ -9,6 +9,31 @@ namespace Omnipay\Datatrans\Traits;
 trait HasGatewayParameters
 {
     /**
+     * @var string
+     */
+    protected $requestType;
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setRequestType($value)
+    {
+        return $this->setParameter('requestType', $value);
+    }
+
+    /**
+     * Default to the request type defined in the request message, but allow
+     * for an override for special requierments.
+     *
+     * @return string
+     */
+    public function getRequestType()
+    {
+        return $this->getParameter('requestType') ?: $this->requestType;
+    }
+
+    /**
      * @param $value
      * @return $this
      */

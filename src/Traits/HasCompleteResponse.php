@@ -239,8 +239,16 @@ trait HasCompleteResponse
     /**
      * @return mixed
      */
+    public function getErrorCode()
+    {
+        return $this->getDataItem('errorCode');
+    }
+
+    /**
+     * @return mixed
+     */
     public function getCode()
     {
-        return $this->getDataItem('errorCode') ?: $this->getDataItem('responseCode');
+        return $this->getErrorCode() ?: $this->getDataItem('responseCode');
     }
 }

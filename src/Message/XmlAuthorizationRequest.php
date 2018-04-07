@@ -19,7 +19,7 @@ namespace Omnipay\Datatrans\Message;
  *
  * @package Omnipay\Datatrans\Message
  */
-class XmlAuthorizationRequest extends XmlRequest
+class XmlAuthorizationRequest extends AbstractXmlRequest
 {
     /**
      * @var array

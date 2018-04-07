@@ -12,6 +12,27 @@
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+.
 
+Table of Contents
+=================
+
+   * [Omnipay: Datatrans](#omnipay-datatrans)
+   * [Table of Contents](#table-of-contents)
+      * [Installation](#installation)
+      * [Basic (Minimal) Usage](#basic-minimal-usage)
+      * [Optional Gateway and Authorize Parameters](#optional-gateway-and-authorize-parameters)
+         * [Signing Requests](#signing-requests)
+         * [Getting A Card Reference](#getting-a-card-reference)
+         * [Optional Parameters](#optional-parameters)
+      * [Complete Response](#complete-response)
+      * [Notification](#notification)
+      * [Void](#void)
+      * [Capture](#capture)
+      * [Get Transaction](#get-transaction)
+      * [Hidden Mode](#hidden-mode)
+      * [TODO](#todo)
+         * [Shared Optional Parameters](#shared-optional-parameters)
+         * [Functionality](#functionality)
+
 This Gateway implements offsite payments via Datatrans. Purchase and Authorization are available, capturing an authorized payment has to be performed via Datatrans backend (not currently implemented for this Gateway).
 
 ## Installation
@@ -186,6 +207,30 @@ $captureRequest = $gateway->capture([
 $captureResponse = $voidRequest->send();
 ```
 
+## Get Transaction
+
+A previous transaction can be fetched given bith its `transactionId` and `transactionReference`.
+This incoludes transactions that were cancelled by the user.
+
+```php
+$request = $gateway->getTransaction([
+    'transactionReference' => $originalTransactionReference,
+    'transactionId' => $originalTransactionId,
+]);
+$response = $request->send();
+```
+
+Please note that (for now) the `isSuccessful()` method on the response refers to
+the success of getting the transaction, and not the success of the authorization.
+This is likely to change.
+
+The transactino status is given by the numeric value of `$response->getResponseCode()`
+and the values can be found in the Datatrans documentation. Some work is needed to map
+these ~20 codes to a simple success/failed/pending/cancelled status.
+
+The response will, by default, contain the extended transaction details, which include
+any `cardReference` that was requested, and masked card numbers and expiry dates.
+
 ## Hidden Mode
 
 This mode requires credit card details to be passed through your merchant application.
@@ -206,7 +251,7 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * uppTermsLink An external link to the merchant’s terms and conditions. Will be
 * uppDiscountAmount
 * mode
-* Customer address details
+* Customer name and address details
 * Basket details
 
 ### Functionality
@@ -216,5 +261,4 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * Capture of customer address when using PayPal
 * Authorize and purchase on previous payments
 * Authorize and purchase on card token (subscriptions)
-* Get transaction
 

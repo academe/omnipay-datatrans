@@ -30,18 +30,6 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     use HasGatewayParameters;
 
     /**
-     * @var string NOA or CAA (null to use account default)
-     */
-    protected $requestType;
-
-    /**
-     * @var array
-     * TODO: remove this and use more explicit parameters.
-     */
-    protected $optionalParams = array(
-    );
-
-    /**
      * @return array
      */
     public function getData()
@@ -92,14 +80,6 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->getPaymentMethod()) {
             $data['paymentMethod'] = $this->getPaymentMethod();
-        }
-
-        foreach ($this->optionalParams as $param) {
-            $value = $this->getParameter($param);
-
-            if ($value !== '') {
-                $data[$param] = $value;
-            }
         }
 
         // Additional parameters for specific payment types.
