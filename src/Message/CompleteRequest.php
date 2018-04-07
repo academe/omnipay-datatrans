@@ -16,7 +16,7 @@ namespace Omnipay\Datatrans\Message;
  */
 
 use Omnipay\Datatrans\Traits\HasSignatureVerifier;
-use SimpleXMLElement;
+use Omnipay\Datatrans\Helper;
 use Exception;
 
 class CompleteRequest extends AbstractRequest
@@ -28,51 +28,11 @@ class CompleteRequest extends AbstractRequest
      */
     public function getData()
     {
-        // The results could be sent by GET or POST. It's an account
-        // option, or an overriding request option.
-        // Could also be XML in a header or the body.
-
-        if (strtoupper($this->httpRequest->getMethod()) === 'POST') {
-            return $this->httpRequest->request->all();
-        } else {
-            return $this->httpRequest->query->all();
-        }
+        return Helper::getRemoteData($this->httpRequest);
     }
 
     /**
-     * Parse a SimpleXML object to a flat array.
-     * Start by passing in the parsed XML string: simplexml_load_string($xmlString)
-     *
-     * @return array
-     */
-    protected function parseXmlElement(SimpleXMLElement $element, $result = [])
-    {
-        $attributes = $element->attributes();
-
-        if ($element->getName() === 'parameter' && $attributes->name) {
-            $result[(string)$attributes->name] = (string)$xml;
-        } else {
-            if ($attributes) {
-                foreach ($attributes as $name => $value) {
-                    $result[$name] = (string)$value;
-                }
-            }
-
-            if ($element->count()) {
-                // Has children.
-                foreach ($element as $childElement) {
-                    $result = parseXmlElement($childElement, $result);
-                }
-            } else {
-                // Is a leaf node.
-                $result[$element->getName()] = (string)$element;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
+     * FIXME: do we need this here? It does not appear to be used.
      * Get a single data item, or return a default.
      */
     protected function getDataItem($name, $default = null)

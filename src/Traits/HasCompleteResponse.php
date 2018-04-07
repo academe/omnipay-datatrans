@@ -103,7 +103,7 @@ trait HasCompleteResponse
     {
         $status = $this->getStatus();
 
-        return $status === Gateway::STATUS_SUCCESS;
+        return $status === Gateway::STATUS_SUCCESS || $status === Gateway::STATUS_ACCEPTED;
     }
 
     /**
@@ -189,6 +189,22 @@ trait HasCompleteResponse
     }
 
     /**
+     * @return bool true if the original request was a void
+     */
+    public function isVoid()
+    {
+        return $this->getDataItem('reqtype') === Gateway::REQTYPE_DOA;
+    }
+
+    /**
+     * @return bool true if the original request was a capture
+     */
+    public function isCapture()
+    {
+        return $this->getDataItem('reqtype') === Gateway::REQTYPE_COA;
+    }
+
+    /**
      * @return string
      */
     public function getMessage()
@@ -225,6 +241,6 @@ trait HasCompleteResponse
      */
     public function getCode()
     {
-        return $this->getDataItem('errorCode');
+        return $this->getDataItem('errorCode') ?: $this->getDataItem('responseCode');
     }
 }

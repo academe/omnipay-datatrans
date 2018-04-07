@@ -127,8 +127,40 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
 The results can be read on the user returning to the merchant site:
 
 ```php
-// TODO complete messages
+$request = $gateway->completeAuthorize();
+$response = $request->send();
+
+$success = $response->isSuccessful();
+$transactionReference = $response->getTransactionReference();
 ```
+
+Note: If the `returnUrl` ends with ".htm", then *no data* will not be returned
+with the user to the merchant site. The site must then use the notification
+handler to get the result.
+
+## Notification
+
+The notification handler provides all the same data and methods as `completeResponse`.
+
+```php
+$notify = $gateway->acceptNotification();
+
+$success = $notify->isSuccessful();
+$transactionReference = $notify->getTransactionReference();
+```
+
+To check the notification is correction signed, the `send()` method is used.
+
+The notification handler supports all the data delivery modes: GET, POST,
+XML in header or XML in body.
+The signing check supports `key1` and the extended `key2` (a different key
+used for responses as for the original request).
+
+```php
+$notify->send();
+```
+
+This will return $notify, but will throw an exception if the signing checks fail.
 
 ## Void
 
@@ -140,6 +172,18 @@ $voidRequest = $gateway->void([
     'amount' => $originalTransactionAmount,
 ]);
 $voidResponse = $voidRequest->send();
+```
+
+## Capture
+
+```php
+$captureRequest = $gateway->capture([
+    'transactionReference' => $authorizedTransactionReference,
+    'transactionId' => $uniqueTtransactionId,
+    'currency' => 'GBP',
+    'amount' => $originalTransactionAmount,
+]);
+$captureResponse = $voidRequest->send();
 ```
 
 ## Hidden Mode
@@ -165,28 +209,12 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * Customer address details
 * Basket details
 
-### Full response details
-
-* Methods to access most response parameters
-
 ### Functionality
 
-* Notification handler (POST handler, support FORM and XML payloads)
-  This should be almost a duplicate of completeRequest/completeResponse
 * Additional parameters and results for different payment types
 * Secure 3D support where applicable
 * Capture of customer address when using PayPal
-* Assert signing of XML settlements
+* Authorize and purchase on previous payments
+* Authorize and purchase on card token (subscriptions)
+* Get transaction
 
-### Tech Notes (mainly for me)
-
-* The CompleteRequest and the AcceptNotification requests get their data from
-  the serverRequest. This can be GET, POST, XML header or XML body.
-* The CompleteResponce and AcceptNotification both interpret the data in the
-  same way with a rich set of methods.
-* The CompleteRequest and the AcceptNotification both need to support top-level
-  gateway parameters.
-
-The sticking point is the AcceptNotification needing features from both the
-AbstractRequest (setting gateway parameters) and the Abstract Respeonce
-(interpretting data from the API).

@@ -128,7 +128,7 @@ trait HasGatewayParameters
     }
 
     /**
-     * @param string three lettter code
+     * @param string three letter code
      * @return $this
      */
     public function setPaymentMethod($value)
@@ -142,6 +142,40 @@ trait HasGatewayParameters
     public function getPaymentMethod()
     {
         return $this->getParameter('paymentMethod');
+    }
+
+    /**
+     * @param string
+     * @return $this
+     */
+    public function setErrorEmail($value)
+    {
+        return $this->setParameter('errorEmail', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorEmail()
+    {
+        return $this->getParameter('errorEmail');
+    }
+
+    /**
+     * @param string required for reqtype REF and REC
+     * @return $this
+     */
+    public function setAcqAuthorizationCode($value)
+    {
+        return $this->setParameter('acqAuthorizationCode', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAcqAuthorizationCode()
+    {
+        return $this->getParameter('acqAuthorizationCode');
     }
 
     /**

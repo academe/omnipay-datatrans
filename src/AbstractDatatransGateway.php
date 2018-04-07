@@ -33,6 +33,46 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     const REQTYPE_PURCHASE  = 'CAA';
 
     /**
+     * Transaction cancel request
+     */
+    const REQTYPE_DOA = 'DOA';
+
+    /**
+     * Settlement Debit/Credit
+     */
+    const REQTYPE_COA = 'COA';
+
+    /**
+     * Transaction status request
+     */
+    const REQTYPE_STA = 'STA';
+
+    /**
+     * Re-Authorization of old transaction
+     */
+    const REQTYPE_REA = 'REA';
+
+    /**
+     * Submission of acqAuthorizationCode after denial
+     */
+    const REQTYPE_REC = 'REC';
+
+    /**
+     * Submission of acqAuthorizationCode after referral
+     */
+    const REQTYPE_REF = 'REF';
+
+    /**
+     * Debit Transaction
+     */
+    const TRANSACTION_TYPE_DEBIT = '05';
+
+    /**
+     * Credit Transaction
+     */
+    const TRANSACTION_TYPE_CREDIT = '06';
+
+    /**
      * @var string return method values
      */
     const RETURN_METHOD_GET     = 'GET';
@@ -106,6 +146,7 @@ abstract class AbstractDatatransGateway extends AbstractGateway
      * "status" values.
      */
     const STATUS_SUCCESS    = 'success';
+    const STATUS_ACCEPTED   = 'accepted';
     const STATUS_ERROR      = 'error';
     const STATUS_CANCEL     = 'cancel';
 

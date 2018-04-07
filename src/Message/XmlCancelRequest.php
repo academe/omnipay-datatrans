@@ -1,4 +1,7 @@
 <?php
+
+namespace Omnipay\Datatrans\Message;
+
 /**
  * w-vision
  *
@@ -12,13 +15,14 @@
  * @license    MIT License
  */
 
-namespace Omnipay\Datatrans\Message;
-
 /**
  * Class XmlCancelRequest
  *
  * @package Omnipay\Datatrans\Message
  */
+
+use Omnipay\Datatrans\Gateway;
+
 class XmlCancelRequest extends XmlSettlementRequest
 {
     /**
@@ -26,6 +30,6 @@ class XmlCancelRequest extends XmlSettlementRequest
      */
     public function getRequestType()
     {
-        return static::DATATRANS_REQUEST_TYPE_DOA;
+        return Gateway::REQTYPE_DOA;
     }
 }

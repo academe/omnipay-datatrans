@@ -16,14 +16,14 @@ namespace Omnipay\Datatrans\Message;
  */
 
 use Omnipay\Datatrans\Traits\HasCompleteResponse;
+use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Datatrans\Gateway;
-use Omnipay\Common\Message\AbstractResponse as OmnipayAbstractResponse;
 
 
 /**
  * Datatrans Complete Purchase/Authorize Response
  */
-class CompleteResponse extends OmnipayAbstractResponse
+class CompleteResponse extends AbstractResponse
 {
     use HasCompleteResponse;
 }

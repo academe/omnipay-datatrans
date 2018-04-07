@@ -16,12 +16,13 @@ namespace Omnipay\Datatrans\Message;
  */
 
 use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Datatrans\Helper;
 
 /**
  * Datatrans abstract request.
  * Implements all property setters and getters.
  */
-abstract class XmlRequest extends AbstractRequest
+abstract class AbstractXmlRequest extends AbstractRequest
 {
     /**
      * The XML API Endpoint Base URL
@@ -53,6 +54,8 @@ abstract class XmlRequest extends AbstractRequest
      * @var int
      */
     protected $serviceVersion = null;
+
+    public abstract function getData();
 
     /**
      * @param $requestChild
@@ -150,28 +153,18 @@ abstract class XmlRequest extends AbstractRequest
             $this->getRequestXml()->asXML()
         );
 
-        // Might be useful to have some debug code here, PayPal especially can be
-        // a bit fussy about data formats and ordering. Perhaps hook to whatever
-        // logging engine is being used.
-        // echo "Data == " . json_encode($data) . "\n";
-
         try {
-            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
+            // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
+            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6);
             $httpResponse = $httpRequest->send();
 
             // Empty response body should be parsed also as an empty array
             $body = $httpResponse->getBody(true);
-            $xmlResponse = !empty($body) ? $httpResponse->xml() : '';
-//echo "<textarea>"; var_dump($body); echo "</textarea>";
-            if ($xmlResponse instanceof \SimpleXMLElement) {
-                $response = $xmlResponse->body->transaction;
 
-                $response = json_decode(json_encode($response), true);
+            $response = Helper::getRemoteData($httpResponse);
+            return $this->response = $this->createResponse($response);
 
-                return $this->response = $this->createResponse($response);
-            }
-
-            throw new InvalidResponseException('Error communicating with payment gateway');
+            //throw new InvalidResponseException('Error communicating with payment gateway');
         } catch (\Exception $e) {
             throw new InvalidResponseException(
                 'Error communicating with payment gateway: ' . $e->getMessage(),

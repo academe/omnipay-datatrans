@@ -21,6 +21,7 @@ use Omnipay\Datatrans\Message\CompleteRequest;
 use Omnipay\Datatrans\Message\AcceptNotification;
 use Omnipay\Datatrans\Message\XmlCancelRequest;
 use Omnipay\Datatrans\Message\CreateCardRequest;
+use Omnipay\Datatrans\Message\XmlSettlementRequest;
 
 /**
  * Datatrans Gateway
@@ -94,6 +95,15 @@ class Gateway extends AbstractDatatransGateway
     public function void(array $options = array())
     {
         return $this->createRequest(XmlCancelRequest::class, $options);
+    }
+
+    /**
+     * @param array $options
+     * @return XmlCancelRequest
+     */
+    public function capture(array $options = array())
+    {
+        return $this->createRequest(XmlSettlementRequest::class, $options);
     }
 
     /**
