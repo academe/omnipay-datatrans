@@ -6,6 +6,8 @@ namespace Omnipay\Datatrans\Traits;
  * Setters and getters for parameters set at the Gateway level.
  */
 
+use Omnipay\Datatrans\Gateway;
+
 trait HasGatewayParameters
 {
     /**
@@ -167,6 +169,24 @@ trait HasGatewayParameters
     public function getPaymentMethod()
     {
         return $this->getParameter('paymentMethod');
+    }
+
+    /**
+     * CHECKME: I'm not convinced this is the full list. The Datatrans docs are
+     * a little out of date in many places, often contradicting itself.
+     *
+     * @return boolean true if the payment method is a credit card.
+     */
+    public function paymentMethodIsCreditCard()
+    {
+        return in_array($this->getPaymentMethod(), [
+            Gateway::PAYMENT_METHOD_VIS,
+            Gateway::PAYMENT_METHOD_ECA,
+            Gateway::PAYMENT_METHOD_AMX,
+            Gateway::PAYMENT_METHOD_DIN,
+            Gateway::PAYMENT_METHOD_DIS,
+            Gateway::PAYMENT_METHOD_JCB,
+        ]);
     }
 
     /**

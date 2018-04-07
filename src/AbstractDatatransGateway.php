@@ -106,46 +106,47 @@ abstract class AbstractDatatransGateway extends AbstractGateway
     /**
      * Supported payment types.
      */
-    const PAYMENT_TYPE_VIS = 'VIS'; // VISA
-    const PAYMENT_TYPE_ECA = 'ECA'; // MasterCard
-    const PAYMENT_TYPE_AMX = 'AMX'; // American Express
-    const PAYMENT_TYPE_BPY = 'BPY'; // Billpay
-    const PAYMENT_TYPE_CUP = 'CUP'; // China Union Pay
-    const PAYMENT_TYPE_DIN = 'DIN'; // Diners Club
-    const PAYMENT_TYPE_DIS = 'DIS'; // Discover
-    const PAYMENT_TYPE_DEA = 'DEA'; // * iDeal
-    const PAYMENT_TYPE_DIB = 'DIB'; // SOFORT Überweisung
-    const PAYMENT_TYPE_DII = 'DII'; // iDEAL via SOFORT Überweisung
-    const PAYMENT_TYPE_DNK = 'DNK'; // Dankort
-    const PAYMENT_TYPE_DVI = 'DVI'; // Deltavista
-    const PAYMENT_TYPE_ELV = 'ELV'; // SEPA Direct Debit / ELV
-    const PAYMENT_TYPE_ESY = 'ESY'; // * Swisscom Easypay
-    const PAYMENT_TYPE_JCB = 'JCB'; // JCB
-    const PAYMENT_TYPE_JEL = 'JEL'; // Jelmoli Bonus Card
-    const PAYMENT_TYPE_MAU = 'MAU'; // Maestro
-    const PAYMENT_TYPE_MDP = 'MDP'; // Migros Bank Payment
-    const PAYMENT_TYPE_MFA = 'MFA'; // MFGroup Check Out (Credit Check)
-    const PAYMENT_TYPE_MFG = 'MFG'; // MFGroup Financial Request (authorization)
-    const PAYMENT_TYPE_MFX = 'MFX'; // MFGroup Easy integration
-    const PAYMENT_TYPE_MMS = 'MMS'; // Mediamarkt Shopping Card
-    const PAYMENT_TYPE_MNB = 'MNB'; // * Moneybookers only with reqtype CAA
-    const PAYMENT_TYPE_MYO = 'MYO'; // Manor MyOne Card
-    const PAYMENT_TYPE_PAP = 'PAP'; // * PayPal
-    const PAYMENT_TYPE_PEF = 'PEF'; // * Swiss PostFinance E-Finance
-    const PAYMENT_TYPE_PFC = 'PFC'; // * Swiss PostFinance Card
-    const PAYMENT_TYPE_PSC = 'PSC'; // * Paysafecard
-    const PAYMENT_TYPE_PYL = 'PYL'; // Payolution Installments
-    const PAYMENT_TYPE_PYO = 'PYO'; // Payolution Invoice
-    const PAYMENT_TYPE_REK = 'REK'; // Reka Card
-    const PAYMENT_TYPE_SWB = 'SWB'; // SwissBilling
-    const PAYMENT_TYPE_TWI = 'TWI'; // * TWINT Wallet
-    const PAYMENT_TYPE_MPW = 'MPW'; // * MasterPass Wallet
-    const PAYMENT_TYPE_ACC = 'ACC'; // * Accarda Kauf
-    const PAYMENT_TYPE_INT = 'INT'; // * Byjuno
-    const PAYMENT_TYPE_PPA = 'PPA'; // * LoyLogic Pointspay
-    const PAYMENT_TYPE_GPA = 'GPA'; // * Girosolution Giropay
-    const PAYMENT_TYPE_GEP = 'GEP'; // * Girosolution EPS
-    const PAYMENT_TYPE_BON = 'BON'; // Boncard
+    const PAYMENT_METHOD_VIS = 'VIS'; // VISA
+    const PAYMENT_METHOD_ECA = 'ECA'; // MasterCard
+    const PAYMENT_METHOD_AMX = 'AMX'; // American Express
+    const PAYMENT_METHOD_DIN = 'DIN'; // Diners Club
+    const PAYMENT_METHOD_JCB = 'JCB'; // JCB
+
+    const PAYMENT_METHOD_BPY = 'BPY'; // Billpay
+    const PAYMENT_METHOD_CUP = 'CUP'; // China Union Pay
+    const PAYMENT_METHOD_DIS = 'DIS'; // Discover
+    const PAYMENT_METHOD_DEA = 'DEA'; // * iDeal
+    const PAYMENT_METHOD_DIB = 'DIB'; // SOFORT Überweisung
+    const PAYMENT_METHOD_DII = 'DII'; // iDEAL via SOFORT Überweisung
+    const PAYMENT_METHOD_DNK = 'DNK'; // Dankort
+    const PAYMENT_METHOD_DVI = 'DVI'; // Deltavista
+    const PAYMENT_METHOD_ELV = 'ELV'; // SEPA Direct Debit / ELV
+    const PAYMENT_METHOD_ESY = 'ESY'; // * Swisscom Easypay
+    const PAYMENT_METHOD_JEL = 'JEL'; // Jelmoli Bonus Card
+    const PAYMENT_METHOD_MAU = 'MAU'; // Maestro
+    const PAYMENT_METHOD_MDP = 'MDP'; // Migros Bank Payment
+    const PAYMENT_METHOD_MFA = 'MFA'; // MFGroup Check Out (Credit Check)
+    const PAYMENT_METHOD_MFG = 'MFG'; // MFGroup Financial Request (authorization)
+    const PAYMENT_METHOD_MFX = 'MFX'; // MFGroup Easy integration
+    const PAYMENT_METHOD_MMS = 'MMS'; // Mediamarkt Shopping Card
+    const PAYMENT_METHOD_MNB = 'MNB'; // * Moneybookers only with reqtype CAA
+    const PAYMENT_METHOD_MYO = 'MYO'; // Manor MyOne Card
+    const PAYMENT_METHOD_PAP = 'PAP'; // * PayPal
+    const PAYMENT_METHOD_PEF = 'PEF'; // * Swiss PostFinance E-Finance
+    const PAYMENT_METHOD_PFC = 'PFC'; // * Swiss PostFinance Card
+    const PAYMENT_METHOD_PSC = 'PSC'; // * Paysafecard
+    const PAYMENT_METHOD_PYL = 'PYL'; // Payolution Installments
+    const PAYMENT_METHOD_PYO = 'PYO'; // Payolution Invoice
+    const PAYMENT_METHOD_REK = 'REK'; // Reka Card
+    const PAYMENT_METHOD_SWB = 'SWB'; // SwissBilling
+    const PAYMENT_METHOD_TWI = 'TWI'; // * TWINT Wallet
+    const PAYMENT_METHOD_MPW = 'MPW'; // * MasterPass Wallet
+    const PAYMENT_METHOD_ACC = 'ACC'; // * Accarda Kauf
+    const PAYMENT_METHOD_INT = 'INT'; // * Byjuno
+    const PAYMENT_METHOD_PPA = 'PPA'; // * LoyLogic Pointspay
+    const PAYMENT_METHOD_GPA = 'GPA'; // * Girosolution Giropay
+    const PAYMENT_METHOD_GEP = 'GEP'; // * Girosolution EPS
+    const PAYMENT_METHOD_BON = 'BON'; // Boncard
 
     /**
      * "status" values.

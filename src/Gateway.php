@@ -35,7 +35,10 @@ class Gateway extends AbstractDatatransGateway
     }
 
     /**
-     * Start an autjorize request
+     * Start an authorize request.
+     * TODO: can we look at any parameters to see if this needs to be diverted
+     * to the XML authorization request? e.g. if a cardReference or transactionReference
+     * were supplied?
      *
      * @param array $parameters array of options
      * @return PurchaseRequest

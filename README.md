@@ -231,6 +231,49 @@ these ~20 codes to a simple success/failed/pending/cancelled status.
 The response will, by default, contain the extended transaction details, which include
 any `cardReference` that was requested, and masked card numbers and expiry dates.
 
+## Offline Authorization
+
+Some payment methods support offline authorization using a `cardReference`.
+
+First a `cardReference` must be obtained using `authorize`, `purchase` or
+`createCard`.
+
+A separate gateway is used to do offline payments, initialized using the
+same parameters as the redirect gateway, but like this:
+
+```php
+$gateway = Omnipay::create('Datatrans\Xml');
+```
+
+If the `cardReference` was for a credit card, then the expiry date must be
+supplied with that reference. This is done using the Omnipsy `CreditCard`
+class:
+
+```php
+// Minimum data for the card is the expiry month and year.
+$card = new \Omnipay\Common\CreditCard([
+    'expiryMonth' => $expiryMonth,
+    'expiryYear' => $expiryYear,
+    // The saved cardReference can be supplied here or later.
+    'number' => $cardReference,
+]);
+
+$response = $gateway->authorize([
+    'card' => $card,
+    // Supply the card reference here if not in the $card object:
+    'cardReference' => $cardReference,
+    'amount' => '20.00',
+    'currency' => 'EUR',
+    'transactionId' => $transactionId,
+    // The original payment method
+    'paymentMethod' => Omnipay\Datatrans\Gateway::PAYMENT_PAYMENT_METHOD__VIS,
+])->send();
+```
+
+*Note: I have not seen offline authorization working yet.
+I suspect it is a problem with the settings on my sandbox account,
+but cannot yet be sure.*
+
 ## Hidden Mode
 
 This mode requires credit card details to be passed through your merchant application.
@@ -256,9 +299,11 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Functionality
 
-* Additional parameters and results for different payment types
+* Additional parameters and results for different payment PAYMENT_METHOD_s
 * Secure 3D support where applicable
 * Capture of customer address when using PayPal
 * Authorize and purchase on previous payments
 * Authorize and purchase on card token (subscriptions)
+* Support lightbox mode (iframe)
+* Support inline mode (JavaScript)
 

@@ -59,26 +59,29 @@ abstract class AbstractXmlRequest extends AbstractRequest
     public abstract function getData();
 
     /**
-     * @param $requestChild
+     * @param $requestElement
      * @return mixed
      */
-    protected function prepareRequestXml($requestChild)
+    protected function prepareRequestXml($requestElement)
     {
         $fields = $this->getData();
 
         foreach ($fields as $key => $value) {
+            // Supports multiple levels of nesting in the request element, thoough
+            // there does not appear to be anywhere this is used.
+
             if (is_array($value)) {
-                $array = $requestChild->addChild($key);
+                $array = $requestElement->addChild($key);
 
                 foreach ($value as $subKey => $subValue) {
                     $array->addChild($subKey, $subValue);
                 }
             } else {
-                $requestChild->addChild($key, $value);
+                $requestElement->addChild($key, $value);
             }
         }
 
-        return $requestChild;
+        return $requestElement;
     }
 
     /**
@@ -102,6 +105,8 @@ abstract class AbstractXmlRequest extends AbstractRequest
         $requestChild = $transactionChild->addChild('request');
 
         $this->prepareRequestXml($requestChild);
+
+        // Sign the request (last child of the "request" element.
 
         $requestChild->addChild('sign', $this->getSigning());
 

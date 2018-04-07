@@ -85,15 +85,15 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         // Additional parameters for specific payment types.
 
         switch ($this->getPaymentMethod()) {
-            case Gateway::PAYMENT_TYPE_PAP:
+            case Gateway::PAYMENT_METHOD_PAP:
                 // Paypal
                 $data = $this->extraParamsPAP($data);
                 break;
-            case Gateway::PAYMENT_TYPE_PEF:
+            case Gateway::PAYMENT_METHOD_PEF:
                 // Swiss PostFinance E-Finance
                 $data = $this->extraParamsPEF($data);
                 break;
-            case Gateway::PAYMENT_TYPE_PFC:
+            case Gateway::PAYMENT_METHOD_PFC:
                 // Swiss PostFinance Card
                 $data = $this->extraParamsPFC($data);
                 break;
