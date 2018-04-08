@@ -28,6 +28,7 @@ Table of Contents
       * [Void](#void)
       * [Capture](#capture)
       * [Get Transaction](#get-transaction)
+      * [Offline Authorization](#offline-authorization)
       * [Hidden Mode](#hidden-mode)
       * [TODO](#todo)
          * [Shared Optional Parameters](#shared-optional-parameters)

@@ -45,43 +45,6 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
      */
     const DATATRANS_ERROR = '02';
 
-    /**** ALIAS ERRORS ****/
-
-    /**
-     * CC alias update error
-     */
-    const DATATRANS_ALIAS_UPDATE_ERROR = '-885';
-
-    /**
-     * CC alias insert error
-     */
-    const DATATRANS_ALIAS_INSERT_ERROR = '-886';
-
-    /**
-     * CC alias does not match with cardno
-     */
-    const DATATRANS_ALIAS_CARD_NO = '-887';
-
-    /**
-     * CC alias not found
-     */
-    const DATATRANS_ALIAS_NOT_FOUND = '-888';
-
-    /**
-     * CC alias error / input parameters missing
-     */
-    const DATATRANS_ALIAS_ERROR = '-889';
-
-    /**
-     * CC alias service is not supported
-     */
-    const DATATRANS_ALIAS_SERVICE_NOT_SUPPORTED = '-900';
-
-    /**
-     * generel error
-     */
-    const DATATRANS_ALIAS_GENEREL_ERROR = '-999';
-
     /**
      * @return bool
      */
