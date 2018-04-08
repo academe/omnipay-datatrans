@@ -66,11 +66,21 @@ abstract class AbstractRedirectRequest extends AbstractRequest
                 $data['expy'] = $card->getExpiryDate('y');
                 $data['aliasCC'] = $card->getNumber();
             }
+
+            // Hidden mode has PCI requirements when used, since the merchant
+            // site will be handling the CVV entered by the user.
+            // Better not to use it. But it's here for more complete support.
+
+            if ($this->getHiddenMode()) {
+                if ($card->getCvv()) {
+                    $data['hiddenMode'] = 'yes';
+                    $data['cvv'] = $card->getCvv();
+                }
+            }
         }
 
         // The card reference be provided without a card object and without
         // an expiry date.
-
         if ($this->getCardReference()) {
             $data['aliasCC'] = $this->getCardReference();
         }
@@ -83,6 +93,50 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->getLanguage()) {
             $data['language'] = $this->getLanguage();
+        }
+
+        if ($this->getTermsLink()) {
+            $data['uppTermsLink'] = $this->getTermsLink();
+        }
+
+        if ($this->getStartTarget()) {
+            $data['uppStartTarget'] = $this->getStartTarget();
+        }
+
+        if ($this->getReturnTarget()) {
+            $data['uppReturnTarget'] = $this->getReturnTarget();
+        }
+
+        if ($this->getCustomTheme()) {
+            $data['customTheme'] = $this->getCustomTheme();
+        }
+
+        if ($this->getForceRedirect()) {
+            $data['mode'] = 'forceRedirect';
+        }
+
+        // When using PayPal, always ask for a copy of the address entered.
+        // This will work for PayPal Express only.
+
+        if ($this->getPaymentMethod() === Gateway::PAYMENT_METHOD_PAP) {
+            $data['uppCustomerDetails'] = 'return';
+        }
+
+        if ($this->getInline()) {
+            $data['theme'] = 'Inline';
+        }
+
+        // The Discount Amount is in minor units.
+        // A Money\Money object would be better for Omnipay 3.x
+
+        if ($this->getDiscountAmount() !== null) {
+            $data['uppDiscountAmount'] = $this->getDiscountAmount();
+        }
+
+        // An array of custom parameters can be included.
+
+        if ($this->getCustomParameters()) {
+            $data = array_merge($data, $this->getCustomParameters());
         }
 
         if ($this->requestType) {
@@ -124,6 +178,18 @@ abstract class AbstractRedirectRequest extends AbstractRequest
                 // Swiss PostFinance Card
                 $data = $this->extraParamsPFC($data);
                 break;
+            case Gateway::PAYMENT_METHOD_MFA:
+                // MFGroup Check Out (Credit Check)
+                $data = $this->extraParamsMFA($data);
+                break;
+            case Gateway::PAYMENT_METHOD_ELV:
+                // SEPA Direct Debit / ELV
+                $data = $this->extraParamsELV($data);
+                break;
+            case Gateway::PAYMENT_METHOD_MFG:
+                // MFGroup Financial Request (authorization)
+                $data = $this->extraParamsMFG($data);
+                break;
         }
 
         // These URLs are optional here, if set in the account.
@@ -164,6 +230,46 @@ abstract class AbstractRedirectRequest extends AbstractRequest
      */
     protected function extraParamsPFC(array $data)
     {
+        return $data;
+    }
+
+    /**
+     * Additional parameters for MFGroup Check Out (Credit Check) (MFA)/
+     */
+    protected function extraParamsMFA(array $data)
+    {
+        if ($this->getMfaReference()) {
+            $data['mfaReference'] = $this->getMfaReference();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Additional parameters for SEPA Direct Debit / ELV (ELV)/
+     */
+    protected function extraParamsELV(array $data)
+    {
+        if ($this->getRefno2()) {
+            $data['refno2'] = $this->getRefno2();
+        }
+
+        if ($this->getRefno3()) {
+            $data['refno3'] = $this->getRefno3();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Additional parameters for MFGroup Financial Request (authorization) (MFG)/
+     */
+    protected function extraParamsMFG(array $data)
+    {
+        if ($this->getVirtualCardno()) {
+            $data['virtualCardno'] = $this->getVirtualCardno();
+        }
+
         return $data;
     }
 

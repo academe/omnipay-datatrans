@@ -124,6 +124,23 @@ trait HasGatewayParameters
      * @param $value
      * @return mixed will be treated as boolean
      */
+    public function setInline($value)
+    {
+        return $this->setParameter('inline', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInline()
+    {
+        return $this->getParameter('inline');
+    }
+
+    /**
+     * @param $value
+     * @return mixed will be treated as boolean
+     */
     public function setCreateCard($value)
     {
         return $this->setParameter('createCard', $value);
@@ -135,6 +152,210 @@ trait HasGatewayParameters
     public function getCreateCard()
     {
         return $this->getParameter('createCard');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHiddenMode()
+    {
+        return $this->getParameter('hiddenMode');
+    }
+
+    /**
+     * @param $value
+     * @return mixed will be treated as boolean
+     */
+    public function setHiddenMode($value)
+    {
+        return $this->setParameter('hiddenMode', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getForceRedirect()
+    {
+        return $this->getParameter('forceRedirect');
+    }
+
+    /**
+     * @param $value
+     * @return mixed will be treated as boolean
+     */
+    public function setForceRedirect($value)
+    {
+        return $this->setParameter('forceRedirect', $value);
+    }
+
+    /**
+     * @return int used only for MFA payemnt method
+     */
+    public function getMfaReference()
+    {
+        return $this->getParameter('mfaReference');
+    }
+
+    /**
+     * @param $value
+     * @return int
+     */
+    public function setMfaReference($value)
+    {
+        return $this->setParameter('mfaReference', $value);
+    }
+
+    /**
+     * @return string used only for ELC payemnt method
+     */
+    public function getRefno2()
+    {
+        return $this->getParameter('refno2');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setRefno2($value)
+    {
+        return $this->setParameter('refno2', $value);
+    }
+
+    /**
+     * @return string used only for ELC payemnt method
+     */
+    public function getRefno3()
+    {
+        return $this->getParameter('refno3');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setRefno3($value)
+    {
+        return $this->setParameter('refno3', $value);
+    }
+
+    /**
+     * @return string used only for MFG payemnt method
+     */
+    public function getVirtualCardno()
+    {
+        return $this->getParameter('virtualCardno');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setVirtualCardno($value)
+    {
+        return $this->setParameter('virtualCardno', $value);
+    }
+
+    /**
+     * @return string URL to merchant terms and conditions
+     */
+    public function getTermsLink()
+    {
+        return $this->getParameter('uppTermsLink');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setTermsLink($value)
+    {
+        return $this->setParameter('uppTermsLink', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStartTarget()
+    {
+        return $this->getParameter('uppStartTarget');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setStartTarget($value)
+    {
+        return $this->setParameter('uppStartTarget', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturnTarget()
+    {
+        return $this->getParameter('uppReturnTarget');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setReturnTarget($value)
+    {
+        return $this->setParameter('uppReturnTarget', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomTheme()
+    {
+        return $this->getParameter('customTheme');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setCustomTheme($value)
+    {
+        return $this->setParameter('customTheme', $value);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDiscountAmount()
+    {
+        return $this->getParameter('uppDiscountAmount');
+    }
+
+    /**
+     * @param $value
+     * @return int
+     */
+    public function setDiscountAmount($value)
+    {
+        return $this->setParameter('uppDiscountAmount', $value);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomParameters()
+    {
+        return $this->getParameter('customParameters');
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    public function setCustomParameters($value)
+    {
+        return $this->setParameter('customParameters', $value);
     }
 
     /**

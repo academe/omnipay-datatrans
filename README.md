@@ -281,6 +281,28 @@ there will be no expiry date. Just the previously saved `cardReference` is passe
 in. The `cardReference` is a generic term used for a number of card and non-card
 payment methods.
 
+## Redirect Mode
+
+This is the standard mode for authorizing a payment, where the user will be taken
+to a remove payment form and returned when they have finished.
+
+The redirect can be either a `POST` or a `GET` redirect, defaulting to `POST`.
+The `setRedirectmethod()` parameter takes either "GET" or "POST" to set the
+redirection mode.
+
+## iframe Mode (aka Inline Mode)
+
+By putting the redirect mode into GET `mode`, the URL for the iframe becomes the
+redirect URL: `$response->getRedirectUrl()`
+
+The iframe content is put into a simplified theme by setting `$request->setInline(true)`
+
+```php
+$response = $gateway->purchase(['inline' => true, 'redirectMethod' => 'GET', ...]);
+
+echo '<iframe width="600" height="500" frameborder="0" border="0" src="'.$response->getRedirectUrl().'" />';
+```
+
 ## Hidden Mode
 
 This mode requires credit card details to be passed through your merchant application.
@@ -290,17 +312,6 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Shared Optional Parameters
 
-* Merchant Specific Parameters
-* customTheme
-* mfaReference
-* refno2
-* Refno3
-* virtualCardno
-* uppStartTarget
-* uppReturnTarget
-* uppTermsLink An external link to the merchant’s terms and conditions
-* uppDiscountAmount
-* mode
 * Customer name and address details (this varies across payment methods)
 * Basket details
 
