@@ -58,6 +58,7 @@ abstract class AbstractDatatransGateway extends AbstractGateway implements Const
             'maskedCard' => true,
             'createCard' => false,
             'createCardAskUser' => false,
+            'redirectMethod' => ['POST', 'GET'],
         ];
     }
 

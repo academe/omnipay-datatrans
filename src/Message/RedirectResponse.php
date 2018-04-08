@@ -36,16 +36,6 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
     protected $testEndpointIso = 'https://pay.sandbox.datatrans.com/upp/jsp/upStartIso.jsp';
 
     /**
-     * success code in response
-     */
-    const DATATRANS_SUCCESS = '01';
-
-    /**
-     * error code in response
-     */
-    const DATATRANS_ERROR = '02';
-
-    /**
      * @return bool
      */
     public function isRedirect()
@@ -66,7 +56,27 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectUrl()
     {
-        return $this->getCheckoutEndpoint();
+        if ($this->getRedirectMethod() === 'POST') {
+            return $this->getCheckoutEndpoint();
+        } else {
+            // Add the redierect data onto the endpoint URL.
+
+            $parts = parse_url($this->getCheckoutEndpoint());
+            if (array_key_exists('query', $parts)) {
+                parse_str($parts['query'], $query);
+                $query = array_merge($query, $this->getRedirectData());
+            } else {
+                $query = $this->getRedirectData();
+            }
+
+            return sprintf(
+                '%s://%s%s?%s',
+                $parts['scheme'],
+                $parts['host'],
+                $parts['path'],
+                http_build_query($query)
+            );
+        }
     }
 
     /**
@@ -74,6 +84,12 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectMethod()
     {
+        $data = $this->getData();
+
+        if (array_key_exists('redirectMethod', $data) && strtoupper($data['redirectMethod']) === 'GET') {
+            return 'GET';
+        }
+
         return 'POST';
     }
 
@@ -82,14 +98,7 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectData()
     {
-        // Build the post data as expected by Datatrans.
-        $params = $this->getData();
-        $getData = array();
-        foreach ($params as $key => $value) {
-            $getData[$key] = $value;
-        }
-
-        return $getData;
+        return array_diff_key($this->getData(), ['redirectMethod' => null]);
     }
 
     /**

@@ -207,6 +207,25 @@ trait HasGatewayParameters
     }
 
     /**
+     * The redieect method to use for the redirect mode payments.
+     *
+     * @param string $value POST or GET
+     * @return $this
+     */
+    public function setRedirectMethod($value)
+    {
+        return $this->setParameter('redirectMethod', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirectMethod()
+    {
+        return $this->getParameter('redirectMethod');
+    }
+
+    /**
      * @param string required for reqtype REF and REC
      * @return $this
      */

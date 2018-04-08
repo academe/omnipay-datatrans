@@ -37,11 +37,17 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         $this->validate('merchantId', 'transactionId', 'sign');
 
         $data = [
-            'merchantId'    => $this->getMerchantId(),
-            'amount'        => $this->getAmountInteger(),
-            'currency'      => $this->getCurrency(),
-            'refno'         => $this->getTransactionId(),
+            'merchantId'        => $this->getMerchantId(),
+            'amount'            => $this->getAmountInteger(),
+            'currency'          => $this->getCurrency(),
+            'refno'             => $this->getTransactionId(),
         ];
+
+        // The kind of redirect the merchant site would like.
+
+        if ($this->getRedirectMethod()) {
+            $data['redirectMethod'] = $this->getRedirectMethod();
+        }
 
         // If the amount is zero, then the merchant site is seeking
         // authorisation for the card (or other payment method) only.
@@ -50,6 +56,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->getAmountInteger() === 0) {
             $data['uppAliasOnly'] = Gateway::CARD_ALIAS_ONLY;
+        }
+
+        if ($this->getCardReference()) {
+            $data['aliasCC'] = $this->getCardReference();
         }
 
         $data['sign'] = $this->getSigning();
@@ -79,7 +89,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         }
 
         if ($this->getPaymentMethod()) {
-            $data['paymentMethod'] = $this->getPaymentMethod();
+            // 'method' must be lower-case to be recognised by the gateway.
+            // Some documentation examples show this as lowerCamelCase.
+
+            $data['paymentmethod'] = $this->getPaymentMethod();
         }
 
         // Additional parameters for specific payment types.

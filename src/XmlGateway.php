@@ -25,8 +25,6 @@ use Omnipay\Datatrans\Message\XmlStatusRequest;
 
 /**
  * Datatrans Gateway
- *
- * @TODO: add optional fields
  */
 class XmlGateway extends AbstractDatatransGateway
 {
