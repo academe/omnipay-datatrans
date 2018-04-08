@@ -21,13 +21,15 @@ namespace Omnipay\Datatrans\Message;
  *
  * @package Omnipay\Datatrans\Message
  */
+
+use Omnipay\Datatrans\Gateway;
+
 class XmlAuthorizationRequest extends AbstractXmlRequest
 {
     /**
      * @var array
      */
     protected $optionalParameters = array(
-        'reqtype',
         'uppCustomerIpAddress'
     );
 
@@ -47,6 +49,11 @@ class XmlAuthorizationRequest extends AbstractXmlRequest
     protected $serviceVersion = 3;
 
     /**
+     * Inidates authorize only.
+     */
+    protected $requestType = Gateway::REQTYPE_AUTHORIZE;
+
+    /**
      * This returns the data used for the "request" element of the XML request
      * data. This is further wrapped with the merchant ID and transaction ID
      * as the XML is constructed.
@@ -55,12 +62,21 @@ class XmlAuthorizationRequest extends AbstractXmlRequest
      */
     public function getData()
     {
-        $this->validate('merchantId', 'transactionId', 'sign');
+        // The request type Determines whether the transaction is authorized
+        // only, or settled immediately.
 
         $data = array(
-            'amount'     => $this->getAmountInteger(),
-            'currency'   => $this->getCurrency(),
+            'amount'    => $this->getAmountInteger(),
+            'currency'  => $this->getCurrency(),
+            'reqtype'   => $this->getRequestType(),
         );
+
+        // We probably need to filter out non-IPv4 addresses.
+        // That should actually be a core Omnipay fundion.
+
+        if ($this->getClientIp()) {
+            $data['uppCustomerIpAddress'] = $this->getClientIp();
+        }
 
         // Some assumptions here.
         // If the card object is supplied, and it has an expiry date set,
@@ -85,14 +101,6 @@ class XmlAuthorizationRequest extends AbstractXmlRequest
 
             $data['aliasCC'] = $this->getCardReference();
             $data['pmethod'] = $this->getPaymentMethod();
-        }
-
-        foreach ($this->optionalParameters as $param) {
-            $value = $this->getParameter($param);
-
-            if ($value) {
-                $data[$param] = $value;
-            }
         }
 
         return $data;

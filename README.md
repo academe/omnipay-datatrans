@@ -243,7 +243,7 @@ A separate gateway is used to do offline payments, initialized using the
 same parameters as the redirect gateway, but like this:
 
 ```php
-$gateway = Omnipay::create('Datatrans\Xml');
+$xmlGateway = Omnipay::create('Datatrans\Xml');
 ```
 
 If the `cardReference` was for a credit card, then the expiry date must be
@@ -259,7 +259,8 @@ $card = new \Omnipay\Common\CreditCard([
     'number' => $cardReference,
 ]);
 
-$response = $gateway->authorize([
+//$response = $xmlGateway->purchase([
+$response = $xmlGateway->authorize([
     'card' => $card,
     // Supply the card reference here if not in the $card object:
     'cardReference' => $cardReference,
@@ -267,13 +268,14 @@ $response = $gateway->authorize([
     'currency' => 'EUR',
     'transactionId' => $transactionId,
     // The original payment method
-    'paymentMethod' => Omnipay\Datatrans\Gateway::PAYMENT_PAYMENT_METHOD__VIS,
+    'paymentMethod' => \Omnipay\Datatrans\Gateway::PAYMENT_PAYMENT_METHOD_VIS,
 ])->send();
 ```
 
-*Note: I have not seen offline authorization working yet.
-I suspect it is a problem with the settings on my sandbox account,
-but cannot yet be sure.*
+For non-credit card payment methods, the `CreditCard` object is not needed since
+there will be no expiry date. Just the previously saved `cardReference` is passed
+in. The `cardReference` is a generic term used for a number of card and non-card
+payment methods.
 
 ## Hidden Mode
 
@@ -292,19 +294,17 @@ It is not supported by this release of the driver drue to the PCI requirements i
 * virtualCardno
 * uppStartTarget
 * uppReturnTarget
-* uppTermsLink An external link to the merchant’s terms and conditions. Will be
+* uppTermsLink An external link to the merchant’s terms and conditions
 * uppDiscountAmount
 * mode
-* Customer name and address details
+* Customer name and address details (this varies across payment methods)
 * Basket details
 
 ### Functionality
 
 * Additional parameters and results for different payment PAYMENT_METHOD_s
-* Secure 3D support where applicable
 * Capture of customer address when using PayPal
 * Authorize and purchase on previous payments
-* Authorize and purchase on card token (subscriptions)
 * Support lightbox mode (iframe)
 * Support inline mode (JavaScript)
 

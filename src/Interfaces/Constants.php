@@ -5,9 +5,13 @@ namespace Omnipay\Datatrans\Interfaces;
 interface Constants
 {
     /**
-     * @var string reqtype parameter to indicate authorize only vs settle immediately
+     * @var string authorize only
      */
     const REQTYPE_AUTHORIZE = 'NOA';
+
+    /**
+     * @var string authorize and settle immediately
+     */
     const REQTYPE_PURCHASE  = 'CAA';
 
     /**

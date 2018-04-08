@@ -17,6 +17,7 @@ namespace Omnipay\Datatrans;
 
 use Omnipay\Datatrans\Message\TokenizeRequest;
 use Omnipay\Datatrans\Message\XmlAuthorizationRequest;
+use Omnipay\Datatrans\Message\XmlPurchaseRequest;
 use Omnipay\Datatrans\Message\XmlSettlementRequest;
 use Omnipay\Datatrans\Message\XmlSettlementCreditRequest;
 use Omnipay\Datatrans\Message\XmlCancelRequest;
@@ -39,11 +40,11 @@ class XmlGateway extends AbstractDatatransGateway
 
     /**
      * @param array $options
-     * @return XmlAuthorizationRequest
+     * @return XmlPurchaseRequest
      */
     public function purchase(array $options = array())
     {
-        return $this->authorize($options);
+        return $this->createRequest(XmlPurchaseRequest::class, $options);
     }
 
     /**

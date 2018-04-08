@@ -18,11 +18,23 @@ class AcceptNotification extends AbstractNotification
     use HasSignatureVerifier;
 
     /**
+     * @var array the data sent from the gateway, parsed into a flat array.
+     */
+    protected $data;
+
+    /**
      * @return array
      */
     public function getData()
     {
-        return Helper::getRemoteData($this->httpRequest);
+        // Cache the data the first time we fetch it, as parsing the XML
+        // data can be intensive, and is called many times.
+
+        if ($this->data === null) {
+            $this->data = Helper::getRemoteData($this->httpRequest);
+        }
+
+        return $this->data;
     }
 
     /**
