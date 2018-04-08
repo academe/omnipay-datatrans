@@ -58,6 +58,19 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['uppAliasOnly'] = Gateway::CARD_ALIAS_ONLY;
         }
 
+        if ($card = $this->getCard()) {
+            // The card alias could be set, with optional expiry date.
+
+            if ($card->getExpiryMonth()) {
+                $data['expm'] = $card->getExpiryMonth();
+                $data['expy'] = $card->getExpiryDate('y');
+                $data['aliasCC'] = $card->getNumber();
+            }
+        }
+
+        // The card reference be provided without a card object and without
+        // an expiry date.
+
         if ($this->getCardReference()) {
             $data['aliasCC'] = $this->getCardReference();
         }
@@ -90,7 +103,8 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->getPaymentMethod()) {
             // 'method' must be lower-case to be recognised by the gateway.
-            // Some documentation examples show this as lowerCamelCase.
+            // Some documentation examples show this as lowerCamelCase, but
+            // that is incorrect.
 
             $data['paymentmethod'] = $this->getPaymentMethod();
         }
@@ -112,7 +126,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
                 break;
         }
 
-        // These URLs are optional if set in the account.
+        // These URLs are optional here, if set in the account.
 
         if ($this->getReturnUrl() !== null) {
             $data['successUrl'] = $this->getReturnUrl();

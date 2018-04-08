@@ -98,7 +98,11 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectData()
     {
-        return array_diff_key($this->getData(), ['redirectMethod' => null]);
+        if ($this->getRedirectMethod() === 'POST') {
+            return array_diff_key($this->getData(), ['redirectMethod' => null]);
+        } else {
+            return [];
+        }
     }
 
     /**
