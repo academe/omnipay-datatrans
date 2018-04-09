@@ -33,20 +33,38 @@ Table of Contents
       * [Capture](#capture)
       * [Get Transaction](#get-transaction)
       * [Offline Authorization](#offline-authorization)
+      * [Redirect Mode](#redirect-mode)
+      * [iframe Mode/Inline Mode](#iframe-modeinline-mode)
+      * [Lightbox Mode](#lightbox-mode)
       * [Hidden Mode](#hidden-mode)
       * [TODO](#todo)
          * [Shared Optional Parameters](#shared-optional-parameters)
          * [Functionality](#functionality)
 
-This Gateway implements offsite payments via Datatrans. Purchase and Authorization are available, capturing an authorized payment has to be performed via Datatrans backend (not currently implemented for this Gateway).
+This Gateway implements offsite payments via Datatrans.
+Purchase and Authorization are available, capturing an authorized payment has to be performed
+via Datatrans XML backend.
 
 ## Installation
 
-Omnipay can be installed using [Composer](https://getcomposer.org/). [Installation instructions](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+Omnipay can be installed using [Composer](https://getcomposer.org/).
+[Installation instructions](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
 
 Run the following command to install omnipay and the datatrans gateway:
 
-    composer require w-vision/omnipay-datatrans:^1.0.0
+    composer require academe/omnipay-datatrans:^2.0
+
+While this is in development - before it is released on [packagist](https://packagist.org/) -
+you will need this entry in your `composer.json`:
+
+```json
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/academe/omnipay-datatrans"
+        }
+    },
+```
 
 ## Basic (Minimal) Usage
 
@@ -290,7 +308,7 @@ The redirect can be either a `POST` or a `GET` redirect, defaulting to `POST`.
 The `setRedirectmethod()` parameter takes either "GET" or "POST" to set the
 redirection mode.
 
-## iframe Mode (aka Inline Mode)
+## iframe Mode/Inline Mode
 
 By putting the redirect mode into GET `mode`, the URL for the iframe becomes the
 redirect URL: `$response->getRedirectUrl()`
@@ -302,6 +320,13 @@ $response = $gateway->purchase(['inline' => true, 'redirectMethod' => 'GET', ...
 
 echo '<iframe width="600" height="500" frameborder="0" border="0" src="'.$response->getRedirectUrl().'" />';
 ```
+
+The iframe mode appears to require exactly one payment method, making the
+payment method mandatory.
+
+## Lightbox Mode
+
+TBC
 
 ## Hidden Mode
 
