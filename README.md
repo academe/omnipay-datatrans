@@ -63,7 +63,7 @@ you will need this entry in your `composer.json`:
             "type": "vcs",
             "url": "https://github.com/academe/omnipay-datatrans"
         }
-    },
+    ],
 ```
 
 ## Basic (Minimal) Usage
