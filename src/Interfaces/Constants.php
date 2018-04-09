@@ -298,4 +298,10 @@ interface Constants
      * generel error
      */
     const ERROR_CODE_ALIAS_GENEREL_ERROR = '-999';
+
+    /**
+     * @var string Gender values
+     */
+    const GENDER_MALE   = 'male';
+    const GENDER_FEMALE = 'female';
 }

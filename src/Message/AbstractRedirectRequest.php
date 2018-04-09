@@ -163,6 +163,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['paymentmethod'] = $this->getPaymentMethod();
         }
 
+        // Add the optional customer details.
+
+        $data = $this->getCustomerData($data);
+
         // Additional parameters for specific payment types.
 
         switch ($this->getPaymentMethod()) {
@@ -204,6 +208,92 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         if ($this->getErrorUrl() !== null) {
             $data['errorUrl'] = $this->getErrorUrl();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Populate the data array with any customer details supplied in the card.
+     */
+    public function getCustomerData(array $data)
+    {
+        if (! $card = $this->getCard()) {
+            return $data;
+        }
+
+        $customer = [];
+
+        if ($card->getTitle()) {
+            $customer['uppCustomerTitle'] = $card->getTitle();
+        }
+
+        if ($card->getName()) {
+            $customer['uppCustomerName'] = $card->getName();
+        }
+
+        if ($card->getFirstName()) {
+            $customer['uppCustomerFirstName'] = $card->getFirstName();
+        }
+
+        if ($card->getLastName()) {
+            $customer['uppCustomerLastName'] = $card->getLastName();
+        }
+
+        if ($card->getAddress1()) {
+            $customer['uppStreet'] = $card->getAddress1();
+        }
+
+        if ($card->getAddress2()) {
+            $customer['uppStreet2'] = $card->getAddress2();
+        }
+
+        if ($card->getCity()) {
+            $customer['uppCity'] = $card->getCity();
+        }
+
+        if ($card->getCountry() && preg_match('/[A-Z]{3}/', $card->getCountry())) {
+            $customer['uppCountry'] = $card->getCountry();
+        }
+
+        if ($card->getPostcode()) {
+            $customer['uppCustomerZipCode'] = $card->getPostcode();
+        }
+
+        if ($card->getState()) {
+            $customer['uppState'] = $card->getState();
+        }
+
+        if ($card->getPhone()) {
+            $customer['uppPhone'] = $card->getPhone();
+        }
+
+        if ($card->getFax()) {
+            $customer['uppFax'] = $card->getFax();
+        }
+
+        if ($card->getEmail()) {
+            $customer['uppCustomerEmail'] = $card->getEmail();
+        }
+
+        if ($card->getGender()) {
+            $customer['uppCustomerGender'] = strtoupper(substr($card->getGender(), 0, 1)) === 'M'
+                ? Gateway::GENDER_MALE
+                : Gateway::GENDER_FEMALE;
+        }
+
+        // API requires format "dd.mm.yyyy" or "yyyy-mm-dd"
+
+        if ($card->getBirthday()) {
+            $customer['uppCustomerBirthDate'] = $card->getBirthday('Y-m-d');
+        }
+
+        if (count($customer)) {
+            $data = array_merge($data, $customer);
+
+            if (empty($data['uppCustomerDetails'])) {
+                $data['uppCustomerDetails'] = 'yes';
+            }
         }
 
         return $data;
