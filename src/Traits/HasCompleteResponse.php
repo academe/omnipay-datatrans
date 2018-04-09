@@ -117,6 +117,39 @@ trait HasCompleteResponse
     }
 
     /**
+     * Virtual card number for MFGroup Checkout
+     */
+    public function getVirtualCardno()
+    {
+        return $this->getDataItem('virtualCardno');
+    }
+
+    /**
+     * DCC amount in home currency chosen by cardholder.
+     * minorUnits
+     */
+    public function getDccAmount()
+    {
+        return $this->getDataItem('DccAmount');
+    }
+
+    /**
+     * Cardholders home currency – ISO Character Code (USD, EUR etc.)
+     */
+    public function getDccCurrency()
+    {
+        return $this->getDataItem('DccCurrency');
+    }
+
+    /**
+     * Applied exchange rate of DCC provider (e.g. 0.855304)
+     */
+    public function getDccRate()
+    {
+        return $this->getDataItem('DccRate');
+    }
+
+    /**
      * Get the payment method used.
      *
      * @return string
@@ -234,6 +267,16 @@ trait HasCompleteResponse
     public function getStatus()
     {
         return $this->getDataItem('status');
+    }
+
+    /**
+     * Constant "web" for successUrl, "post" for postUrl.
+     *
+     * @return mixed
+     */
+    public function getMessageType()
+    {
+        return $this->getDataItem('uppMsgType');
     }
 
     /**

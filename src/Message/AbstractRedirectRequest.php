@@ -143,6 +143,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['reqtype'] = $this->requestType;
         }
 
+        if ($this->getThemeConfiguration()) {
+            $data['themeConfiguration'] = $this->getThemeConfiguration();
+        }
+
         if ((bool) $this->getMaskedCard()) {
             $data['uppReturnMaskedCC'] = Gateway::RETURN_MASKED_CC;
         }

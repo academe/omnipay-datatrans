@@ -40,17 +40,23 @@ class XmlStatusRequest extends AbstractXmlRequest
      */
     public function getData()
     {
-        $this->validate('merchantId', 'transactionId', 'sign', 'transactionReference');
+        $this->validate('merchantId', 'sign');
 
-        $data = array(
-            'merchantId'        => $this->getMerchantId(),
-            'sign'              => $this->getSign(),
-            'uppTransactionId'  => $this->getTransactionReference(),
-            'refno'             => $this->getTransactionId()
-        );
+        $data = [];
+
+        // Either the transactionReference or the transactionId is required
+
+        if ($this->getTransactionReference()) {
+            $data['uppTransactionId'] = $this->getTransactionReference();
+        } elseif ($this->getTransactionId()) {
+            $data['refno'] = $this->getTransactionId();
+        } else {
+            // Throw an error since neither are set.
+            $this->validate('transactionReference', 'transactionId');
+        }
 
         // Default to the extended response format, which provides cardReference
-        // maskedCard, etc.
+        // maskedCard, etc. but allow this to be overridden.
 
         $data['reqtype'] = $this->getRequestType() ?: Gateway::REQTYPE_STX;
 

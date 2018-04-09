@@ -232,12 +232,14 @@ $captureResponse = $voidRequest->send();
 
 ## Get Transaction
 
-A previous transaction can be fetched given bith its `transactionId` and `transactionReference`.
-This incoludes transactions that were cancelled by the user.
+A previous transaction can be fetched given either its `transactionId` or
+`transactionReference`. The `transactionReference` is preferred.
+This includes transactions that were cancelled by the user.
 
 ```php
 $request = $gateway->getTransaction([
     'transactionReference' => $originalTransactionReference,
+    // or
     'transactionId' => $originalTransactionId,
 ]);
 $response = $request->send();

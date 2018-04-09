@@ -54,6 +54,26 @@ trait HasGatewayParameters
 
     /**
      * @param $value
+     * @return $this
+     */
+    public function setThemeConfiguration($value)
+    {
+        return $this->setParameter('themeConfiguration', $value);
+    }
+
+    /**
+     * The themeConfiguration is a valid JSON string (no trailing
+     * commas like in the docs).
+     *
+     * @return string
+     */
+    public function getThemeConfiguration()
+    {
+        return $this->getParameter('themeConfiguration');
+    }
+
+    /**
+     * @param $value
      * @return string
      */
     public function setReturnMethod($value)

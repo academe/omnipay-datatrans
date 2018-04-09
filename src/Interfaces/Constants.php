@@ -304,4 +304,12 @@ interface Constants
      */
     const GENDER_MALE   = 'male';
     const GENDER_FEMALE = 'female';
+
+    /**
+     * @var string Message type values
+     *
+     * "web" for successUrl, "post" for postUrl.
+     */
+    const MESSAGE_TYPE_WEB  = 'web';
+    const MESSAGE_TYPE_POST = 'post';
 }
