@@ -243,7 +243,7 @@ trait HasGatewayParameters
     }
 
     /**
-     * @return string used only for ELC payemnt method
+     * @return string used only for ELC/ELV/SEPA payment method
      */
     public function getRefno3()
     {
@@ -257,6 +257,108 @@ trait HasGatewayParameters
     public function setRefno3($value)
     {
         return $this->setParameter('refno3', $value);
+    }
+
+    /**
+     * @return string used only for ELV payemnt method
+     */
+    public function getElvMandatText()
+    {
+        return $this->getParameter('uppElvMandatText');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setElvMandatText($value)
+    {
+        return $this->setParameter('uppElvMandatText', $value);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setBankIban($value)
+    {
+        return $this->setParameter('bankiban', $value);
+    }
+
+    /**
+     * @return string used only for ELV payemnt method
+     */
+    public function getBankIban()
+    {
+        return $this->getParameter('bankiban');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setBankBic($value)
+    {
+        return $this->setParameter('bankbic', $value);
+    }
+
+    /**
+     * @return string used only for ELV payemnt method
+     */
+    public function getBankBic()
+    {
+        return $this->getParameter('bankbic');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setElvMandateID($value)
+    {
+        return $this->setParameter('elvMandateID', $value);
+    }
+
+    /**
+     * @return string used only for ELV payemnt method
+     */
+    public function getElvMandateID()
+    {
+        return $this->getParameter('elvMandateID');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setPurchaseType($value)
+    {
+        return $this->setParameter('PurchaseType', $value);
+    }
+
+    /**
+     * @return string used only for ELV payemnt method
+     */
+    public function getPurchaseType()
+    {
+        return $this->getParameter('PurchaseType');
+    }
+
+    /**
+     * @param $value XML document
+     * @return string
+     */
+    public function setCurabillDocument($value)
+    {
+        return $this->setParameter('curabillDocument', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurabillDocument()
+    {
+        return $this->getParameter('curabillDocument');
     }
 
     /**
@@ -354,11 +456,28 @@ trait HasGatewayParameters
 
     /**
      * @param $value
-     * @return int
+     * @return self
      */
     public function setDiscountAmount($value)
     {
         return $this->setParameter('uppDiscountAmount', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerType()
+    {
+        return $this->getParameter('uppCustomerType');
+    }
+
+    /**
+     * @param $value 'P' or 'C'
+     * @return self
+     */
+    public function setCustomerType($value)
+    {
+        return $this->setParameter('uppCustomerType', $value);
     }
 
     /**

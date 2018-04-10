@@ -96,6 +96,7 @@ interface Constants
 
     const PAYMENT_METHOD_BPY = 'BPY'; // Billpay
     const PAYMENT_METHOD_CUP = 'CUP'; // China Union Pay
+    const PAYMENT_METHOD_CUR = 'CUR'; // 
     const PAYMENT_METHOD_DIS = 'DIS'; // Discover
     const PAYMENT_METHOD_DEA = 'DEA'; // * iDeal
     const PAYMENT_METHOD_DIB = 'DIB'; // SOFORT Überweisung
@@ -312,4 +313,12 @@ interface Constants
      */
     const MESSAGE_TYPE_WEB  = 'web';
     const MESSAGE_TYPE_POST = 'post';
+
+    /**
+     * @var string Customer type values (Payolution)
+     *
+     * "P" for person, "C" for company.
+     */
+    const CUSTOMER_TYPE_PERSON  = 'P';
+    const CUSTOMER_TYPE_COMPANY = 'C';
 }

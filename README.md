@@ -220,6 +220,8 @@ $voidResponse = $voidRequest->send();
 
 ## Capture
 
+*Up to* the original authotization amount can be captured.
+
 ```php
 $captureRequest = $gateway->capture([
     'transactionReference' => $authorizedTransactionReference,
@@ -339,14 +341,29 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Shared Optional Parameters
 
-* Customer name and address details (this varies across payment methods)
-* Basket details
+* Basket details (PayPal only?)
+* PayPal specific parameters
+* Payolution mandatory parameters validation
+* Aduno surprize specific parameters
+* Migros Bank Payment mdpUserId and mdpAlias parameter + txnMbRefNo return param
+* Swisscom Easypay parameters
+* SwissBilling most customer details mandatory + optional shipping details + basket
+* MasterPass Wallet basket + confirmationUrl parameter + shipping and billing address
+  return details + lots more funky wallet pairing stuff with long-access tokens
+  \+ multilevel XML files come into this
+* uppCustomerLanguage is mandatory for a few gateways, e.g. Accarda Kauf-auf Rechnung
+* Accarda Kauf-auf Rechnung mandatory customer details + tonnes of new specific parameters
+  \+ lots more return parameters
+* Byjuno customer details mandatory + optional shipping details
+* LoyLogic Pointspay very simple basket (only supports purchase)
+* Girosolution Giropay simply basket + bank details return params
 
 ### Functionality
 
-* Additional parameters and results for different payment PAYMENT_METHOD_s
+* Additional parameters and results for different payment PAYMENT_METHOD
 * Capture of customer address when using PayPal
 * Authorize and purchase on previous payments
 * Support lightbox mode (iframe)
 * Support inline mode (JavaScript)
+* AVS (address verification) by web interface and XML back-end
 

@@ -198,6 +198,14 @@ abstract class AbstractRedirectRequest extends AbstractRequest
                 // MFGroup Financial Request (authorization)
                 $data = $this->extraParamsMFG($data);
                 break;
+            case Gateway::PAYMENT_METHOD_CUR:
+                // Curabill
+                $data = $this->extraParamsCUR($data);
+                break;
+            case Gateway::PAYMENT_METHOD_PYO:
+                // Payolution
+                $data = $this->extraParamsPYO($data);
+                break;
         }
 
         // These URLs are optional here, if set in the account.
@@ -308,11 +316,17 @@ abstract class AbstractRedirectRequest extends AbstractRequest
      */
     protected function extraParamsPAP(array $data)
     {
+        // TODO: basket details (MUST add up correctly)
+        // TODO: options:-
+        // imageURL cpp-cart-border-color PayPalAllowNote uppForwardCustomerDetails
+        // uppDisplayShippingDetails pendingPayPal ppPayerID
+        // TODO: PayPalOrderId=get to trigger an authorize-only, to be captured later
+
         return $data;
     }
 
     /**
-     * Additional parameters for Swiss PostFinance E-Finance (PEF)/
+     * Additional parameters for Swiss PostFinance E-Finance (PEF).
      */
     protected function extraParamsPEF(array $data)
     {
@@ -320,7 +334,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     }
 
     /**
-     * Additional parameters for Swiss PostFinance Card (PFC)/
+     * Additional parameters for Swiss PostFinance Card (PFC).
      */
     protected function extraParamsPFC(array $data)
     {
@@ -328,7 +342,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     }
 
     /**
-     * Additional parameters for MFGroup Check Out (Credit Check) (MFA)/
+     * Additional parameters for MFGroup Check Out (Credit Check) (MFA).
      */
     protected function extraParamsMFA(array $data)
     {
@@ -340,7 +354,36 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     }
 
     /**
-     * Additional parameters for SEPA Direct Debit / ELV (ELV)/
+     * Additional parameters for Curabill (CUR).
+     */
+    protected function extraParamsCUR(array $data)
+    {
+        // The XML document is base64 encoded before sending.
+
+        if ($this->getMfaReference()) {
+            $data['curabillDocument'] = base64_encode($this->getCurabillDocument());
+        }
+
+        return $data;
+    }
+
+    /**
+     * Additional parameters for Payolution (PYO).
+     * TODO: uppCustomerAirlineDeparture uppCustomerAirlineRoute uppCustomerAirlineFlightNumber
+     * uppCustomerAirlineBookingCode uppCustomerAirlineFrequentFlyer
+     */
+    protected function extraParamsPYO(array $data)
+    {
+        // TODO: plus most customer details are also mandatory.
+        $this->validate('customerType');
+
+        $data['uppCustomerType'] = $this->getCustomerType();
+
+        return $data;
+    }
+
+    /**
+     * Additional parameters for SEPA Direct Debit / ELV (ELV).
      */
     protected function extraParamsELV(array $data)
     {
@@ -352,16 +395,34 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['refno3'] = $this->getRefno3();
         }
 
+        $data['uppElvMandatText'] = $this->getElvMandatText();
+        $data['bankiban'] = $this->getBankIban();
+        $data['bankbic'] = $this->getBankBic();
+        $data['elvMandateID'] = $this->getElvMandateID();
+
+        if ($this->getPurchaseType()) {
+            $data['PurchaseType'] = $this->getPurchaseType();
+        }
+
         return $data;
     }
 
     /**
-     * Additional parameters for MFGroup Financial Request (authorization) (MFG)/
+     * Additional parameters for MFGroup Financial Request (authorization) (MFG).
+     * TODO: about a dozen more parameters, but the documentation is a little unclear.
      */
     protected function extraParamsMFG(array $data)
     {
         if ($this->getVirtualCardno()) {
             $data['virtualCardno'] = $this->getVirtualCardno();
+        }
+
+        if ($this->getRefno2()) {
+            $data['refno2'] = $this->getRefno2();
+        }
+
+        if ($this->getRefno3()) {
+            $data['refno3'] = $this->getRefno3();
         }
 
         return $data;

@@ -294,4 +294,92 @@ trait HasCompleteResponse
     {
         return $this->getErrorCode() ?: $this->getDataItem('responseCode');
     }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getAvailableCredit()
+    {
+        return $this->getDataItem('mfaAvailableCredit');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getMaximalCredit()
+    {
+        return $this->getDataItem('mfaMaximalCredit');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getReference()
+    {
+        return $this->getDataItem('mfaReference');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getCreditRefusalReason()
+    {
+        return $this->getDataItem('mfaCreditRefusalReason');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getMfaResponseCode()
+    {
+        return $this->getDataItem('mfaResponseCode');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getInstallmentNumber()
+    {
+        return $this->getDataItem('installmentNumber');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getInstallmentAmount()
+    {
+        return $this->getDataItem('installmentAmount');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getInstallmentFees()
+    {
+        return $this->getDataItem('installmentFees');
+    }
+
+    /**
+     * @return mixed MFA specific parameter
+     */
+    public function getInstallmentInterests()
+    {
+        return $this->getDataItem('installmentInterests');
+    }
+
+    /**
+     * @return mixed MFA specific parameter (XML document)
+     */
+    public function getESRData()
+    {
+        return $this->getDataItem('ESRData');
+    }
+
+    /**
+     * @return mixed MFA specific parameter (XML document)
+     */
+    public function getBankConnection()
+    {
+        return $this->getDataItem('BankConnection');
+    }
 }
