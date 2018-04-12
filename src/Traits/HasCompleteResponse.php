@@ -382,4 +382,12 @@ trait HasCompleteResponse
     {
         return $this->getDataItem('BankConnection');
     }
+
+    /**
+     * @return mixed MFA specific parameter (XML document)
+     */
+    public function getPendingPayPal()
+    {
+        return $this->getDataItem('pendingPayPal');
+    }
 }

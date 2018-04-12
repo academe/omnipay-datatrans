@@ -481,6 +481,139 @@ trait HasGatewayParameters
     }
 
     /**
+     * For PayPal.
+     * @return string
+     */
+    public function getImageURL()
+    {
+        return $this->getParameter('imageURL');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setImageURL($value)
+    {
+        return $this->setParameter('imageURL', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getCartBorderColor()
+    {
+        return $this->getParameter('cpp-cart-border-color');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setCartBorderColor($value)
+    {
+        return $this->setParameter('cpp-cart-border-color', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getPayPalAllowNote()
+    {
+        return $this->getParameter('PayPalAllowNote');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setPayPalAllowNote($value)
+    {
+        return $this->setParameter('PayPalAllowNote', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getForwardCustomerDetails()
+    {
+        return $this->getParameter('uppForwardCustomerDetails');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setForwardCustomerDetails($value)
+    {
+        return $this->setParameter('uppForwardCustomerDetails', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getDisplayShippingDetails()
+    {
+        return $this->getParameter('uppDisplayShippingDetails');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setDisplayShippingDetails($value)
+    {
+        return $this->setParameter('uppDisplayShippingDetails', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getPPPayerID()
+    {
+        return $this->getParameter('ppPayerID');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setPPPayerID($value)
+    {
+        return $this->setParameter('ppPayerID', $value);
+    }
+
+    /**
+     * For PayPal.
+     * @return string
+     */
+    public function getPayPalOrderId()
+    {
+        return $this->getParameter('PayPalOrderId');
+    }
+
+    /**
+     * For PayPal.
+     * @param $value
+     * @return self
+     */
+    public function setPayPalOrderId($value)
+    {
+        return $this->setParameter('PayPalOrderId', $value);
+    }
+
+    /**
      * @return array
      */
     public function getCustomParameters()

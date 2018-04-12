@@ -85,8 +85,6 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['aliasCC'] = $this->getCardReference();
         }
 
-        $data['sign'] = $this->getSigning();
-
         if ($this->getReturnMethod()) {
             $data['uppWebResponseMethod'] = $this->getReturnMethod();
         }
@@ -152,7 +150,14 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         }
 
         if ((bool) $this->getCreateCard()) {
-            $data['useAlias'] = Gateway::USE_ALIAS;
+            // The PayPal equivalent to this is to create an order that can
+            // be used repeatedly to authorise payments against.
+
+            if ($this->getPaymentMethod() === Gateway::PAYMENT_METHOD_PAP) {
+                $this->setPayPalOrderId(true);
+            } else {
+                $data['useAlias'] = Gateway::USE_ALIAS;
+            }
         }
 
         if ((bool) $this->getCreateCardAskUser()) {
@@ -207,6 +212,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
                 $data = $this->extraParamsPYO($data);
                 break;
         }
+
+        // Sign the message.
+
+        $data['sign'] = $this->getSigning();
 
         // These URLs are optional here, if set in the account.
 
@@ -317,10 +326,34 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     protected function extraParamsPAP(array $data)
     {
         // TODO: basket details (MUST add up correctly)
-        // TODO: options:-
-        // imageURL cpp-cart-border-color PayPalAllowNote uppForwardCustomerDetails
-        // uppDisplayShippingDetails pendingPayPal ppPayerID
-        // TODO: PayPalOrderId=get to trigger an authorize-only, to be captured later
+
+        if ($this->getCartBorderColor()) {
+            $data['cpp-cart-border-color'] = $this->getCartBorderColor();
+        }
+
+        if ($this->getPayPalAllowNote()) {
+            $data['PayPalAllowNote'] = $this->getPayPalAllowNote();
+        }
+
+        if ($this->getForwardCustomerDetails() !== null) {
+            $data['uppForwardCustomerDetails'] = (bool)$this->getForwardCustomerDetails()
+                ? 'yes'
+                : 'no';
+        }
+
+        if ($this->getDisplayShippingDetails() !== null) {
+            $data['uppDisplayShippingDetails'] = (bool)$this->getDisplayShippingDetails()
+                ? 'yes'
+                : 'no';
+        }
+
+        if ($this->getPPPayerID()) {
+            $data['ppPayerID'] = $this->getPPPayerID();
+        }
+
+        if ((bool)$this->getPayPalOrderId()) {
+            $data['PayPalOrderId'] = 'get';
+        }
 
         return $data;
     }

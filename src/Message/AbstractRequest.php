@@ -17,6 +17,7 @@ namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
+use Omnipay\Datatrans\Gateway;
 
 /**
  * Datatrans abstract request.
@@ -62,7 +63,12 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         $data[] = $this->getCurrency();
         $data[] = $this->getTransactionId();
 
-        // TODO: "PayPalOrderId" if payPalOrderId=get.
+        if (
+            (bool)$this->getPayPalOrderId()
+            && $this->getPaymentMethod() === Gateway::PAYMENT_METHOD_PAP
+        ) {
+            $data[] = 'PayPalOrderId';
+        }
 
         return implode('', $data);
     }

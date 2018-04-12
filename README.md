@@ -161,6 +161,7 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   If left unset, multiple payment methods will be offered to the visitor to choose.
   The documentation implies a comma-separated list of payment methods can be provided,
   but this results in an error indicating the payment method is not valid.
+  Supporrted values can be found in constans `\Omnipay\Datatrans\Gateway::PAYMENT_METHOD_xxx`
 * `hmacKey1` - HMAC key 'sign' for signing outbound messages.
   If signing is configured in the account, then the shared key must be provided here.
 * `hmacKey2` - alternative HMAC key used to sign inbound messages.
@@ -263,7 +264,11 @@ any `cardReference` that was requested, and masked card numbers and expiry dates
 Some payment methods support offline authorization using a `cardReference`.
 
 First a `cardReference` must be obtained using `authorize`, `purchase` or
-`createCard`.
+`createCard`. If this is done for a PayPal (PAP) payment method, then PayPal
+will create an *order* which can have a series of amounts authorized up to
+the maximum of the original order. The PayPal order ID is returned as the
+`cardReference` and is used just like the `cardReference` in other opayment
+methods.
 
 A separate gateway is used to do offline payments, initialized using the
 same parameters as the redirect gateway, but like this:
@@ -362,7 +367,6 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 * Additional parameters and results for different payment PAYMENT_METHOD
 * Capture of customer address when using PayPal
-* Authorize and purchase on previous payments
 * Support lightbox mode (iframe)
 * Support inline mode (JavaScript)
 * AVS (address verification) by web interface and XML back-end
