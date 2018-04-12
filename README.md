@@ -2,19 +2,20 @@
 
 **Datatrans Gateway for the Omnipay PHP payment processing library.**
 
-[![Build Status](https://api.travis-ci.org/w-vision/omnipay-datatrans.png)](https://travis-ci.org/w-vision/omnipay-datatrans)
-[![Code Coverage](https://scrutinizer-ci.com/g/w-vision/omnipay-datatrans/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/w-vision/omnipay-datatrans/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/w-vision/omnipay-datatrans/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/w-vision/omnipay-datatrans/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/w-vision/omnipay-datatrans/v/stable)](https://packagist.org/packages/w-vision/omnipay-datatrans)
-[![Latest Unstable Version](https://poser.pugx.org/w-vision/omnipay-datatrans/v/unstable)](https://packagist.org/packages/w-vision/omnipay-datatrans)
-[![License](https://poser.pugx.org/w-vision/omnipay-datatrans/license)](https://packagist.org/packages/w-vision/omnipay-datatrans)
+[![Build Status](https://api.travis-ci.org/academe/omnipay-datatrans.png)](https://travis-ci.org/academe/omnipay-datatrans)
+[![Code Coverage](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/academe/omnipay-datatrans/v/stable)](https://packagist.org/packages/academe/omnipay-datatrans)
+[![Latest Unstable Version](https://poser.pugx.org/academe/omnipay-datatrans/v/unstable)](https://packagist.org/packages/academe/omnipay-datatrans)
+[![License](https://poser.pugx.org/academe/omnipay-datatrans/license)](https://packagist.org/packages/academe/omnipay-datatrans)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+.
 
 **This is for Omnipay 2.x with a minimum PHP version of 5.6.
-Once complete, the 2.x version will be moved to a lagacy branch and
-the master branch will be updated for Omnipay 3.x, currently in alpha.**
+Shortly, the 2.x version will be moved to a legacy branch and
+the master branch will be updated for Omnipay 3.x, which is
+currently in alpha.**
 
 Table of Contents
 =================
