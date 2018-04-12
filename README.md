@@ -3,8 +3,8 @@
 **Datatrans Gateway for the Omnipay PHP payment processing library.**
 
 [![Build Status](https://api.travis-ci.org/academe/omnipay-datatrans.png)](https://travis-ci.org/academe/omnipay-datatrans)
-[![Code Coverage](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master)
+<!-- [![Code Coverage](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master) -->
+<!-- [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/academe/omnipay-datatrans/?branch=master) -->
 [![Latest Stable Version](https://poser.pugx.org/academe/omnipay-datatrans/v/stable)](https://packagist.org/packages/academe/omnipay-datatrans)
 [![Latest Unstable Version](https://poser.pugx.org/academe/omnipay-datatrans/v/unstable)](https://packagist.org/packages/academe/omnipay-datatrans)
 [![License](https://poser.pugx.org/academe/omnipay-datatrans/license)](https://packagist.org/packages/academe/omnipay-datatrans)
