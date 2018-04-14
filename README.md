@@ -100,6 +100,10 @@ $response = $gateway->purchase([
 $response->redirect();
 ```
 
+All data should be in UTF-8 encoding.
+The gateway API supports ISO extended-ASCII encoding, but that is not
+enabled for this Omnipay driver.
+
 ## Optional Gateway and Authorize Parameters
 
 ### Signing Requests
@@ -344,7 +348,23 @@ payment method mandatory.
 
 ## Lightbox Mode
 
-TBC
+This is supported by getting the redirect data in a lightbox-mode format.
+To use lightbox mode, please see the DataTrans documentation for the genral HTML needed.
+The form attributes are then supplied by this driver through the `getLightboxHtmlAttributes()`
+method of the redirect response:
+
+```php
+// Simple echo example. Use whatever templates you like.
+echo '<form id="paymentForm" ' . $response->getLightboxHtmlAttributes() . '>';
+echo '<button id="paymentButton">Pay</button>';
+echo '</form>';
+```
+
+Set up the gateway as you would for a redirect payment.
+
+If you prefer to build your own HTML attributes, the data for the attributes is available
+using `$resquest->getLightboxData()`.
+It is similar to `redirectData()` but uses different keys.
 
 ## Hidden Mode
 
@@ -385,7 +405,6 @@ Some notes, since the ItemBag can be inflexible and a little ambiguous:
 ### Functionality
 
 * Capture of customer address when using PayPal
-* Support lightbox mode (iframe)
 * Support inline mode (JavaScript)
 * AVS (address verification) by web interface and XML back-end
 * Tests needed especially around the multiple notification methods and formats.

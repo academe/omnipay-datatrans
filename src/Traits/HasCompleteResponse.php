@@ -156,7 +156,7 @@ trait HasCompleteResponse
      */
     public function getUsedPaymentMethod()
     {
-        return $this->getDataItem('pmethod');
+        return $this->getDataItem('pmethod') ?: $this->getDataItem('sourcepmethod');
     }
 
     /**

@@ -102,6 +102,50 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
     }
 
     /**
+     * Converts the data so it is suitable for use in lightbox mode.
+     * All data keys are converted to the data-* camel-case format.
+     * @return array
+     */
+    public function getLightboxData()
+    {
+        $data = $this->getData();
+
+        $newKeys = array_map([$this, 'toLightboxFormat'], array_keys($data));
+
+        return array_combine($newKeys, array_values($data));
+    }
+
+    /**
+     * Returns a HTML attributes string for lightbox mode.
+     * All values are HTML encoded, so it can be used without further encoding
+     * in a HTML template.
+     */
+    public function getLightboxHtmlAttributes($quote = '"')
+    {
+        $attributes = [];
+
+        foreach ($this->getLightboxData() as $key => $value) {
+            $attributes[] = $key . '=' . $quote . htmlspecialchars($value) . $quote;
+        }
+
+        return implode(' ', $attributes);
+    }
+
+    /**
+     * Convert string from camel case parameter name to lightbox-mode name.
+     */
+    protected function toLightboxFormat($camelCase) {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $camelCase, $matches);
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return 'data-' . implode('-', $ret);
+    }
+
+    /**
      * @return string
      */
     protected function getCheckoutEndpoint()
