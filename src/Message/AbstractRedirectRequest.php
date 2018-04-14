@@ -237,7 +237,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Populate the data array with any customer details supplied in the card.
      */
-    public function getCustomerData(array $data)
+    public function getCustomerData(array $data = [])
     {
         if (! $card = $this->getCard()) {
             return $data;
@@ -323,7 +323,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Additional parameters for PayPal (PAP).
      */
-    protected function extraParamsPAP(array $data)
+    protected function extraParamsPAP(array $data = [])
     {
         // TODO: basket details (MUST add up correctly)
 
@@ -355,13 +355,92 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             $data['PayPalOrderId'] = 'get';
         }
 
+        // Add the basket to PayPal.
+
+        $data = $this->getPapBasket($data);
+
         return $data;
+    }
+
+    /**
+     * Get the basket/card/items into a PayPal format.
+     * @param array $data
+     * @return array The data with the ItemBag added if set.
+     */
+    public function getPapBasket(array $data = [])
+    {
+        if (empty($this->getItems())) {
+            return $data;
+        }
+
+        // Some running totals need to be maintained.
+        // Amounts are sent to PayPal as minor units.
+        // The standard Omnipay Item does not support separate tax or shipping values,
+        // and these will be defaulted to zero when an extended basket is not used.
+
+        $itemsAmount = 0;
+        $taxAmount = 0;
+        $shippingAmount = 0;
+
+        $itemData = [];
+        $itemNumber  = 0;
+
+        foreach ($this->getItems() as $item) {
+            $itemPrice = $this->priceMinorUnit($item->getPrice());
+            $itemQuantity = $item->getQuantity();
+
+            $itemData['L_NAME' . $itemNumber] = $item->getName();
+            $itemData['L_AMT' . $itemNumber] = $itemPrice;
+            $itemData['L_Number' . $itemNumber] = $itemNumber + 1;
+            $itemData['L_Desc' . $itemNumber] = $item->getDescription();
+            $itemData['L_QTY' . $itemNumber] = $itemQuantity;
+            $itemData['L_TAXAMT' . $itemNumber] = 0;
+
+            $itemsAmount += $itemPrice * $itemQuantity;
+
+            $itemNumber++;
+        }
+
+        $data['ITEMAMT'] = $itemsAmount;
+        $data['TAXAMT'] = $taxAmount;
+        $data['SHIPPINGAMT'] = $shippingAmount;
+
+        $data = array_merge($data, $itemData);
+
+        return $data;
+    }
+
+    /**
+     * Convert an Item price to minor units
+     * @param mixed $price
+     * @return int
+     */
+    protected function priceMinorUnit($price)
+    {
+        if ($price instanceof Money) {
+            // Money::EUR(123)
+            return (int)$price->getAmount();
+        } elseif (is_int($price)) {
+            // 123
+            return $price;
+        } elseif (is_float($price)) {
+            // 1.23
+            return (int)($price * 100); // Horrible hack! Needs to take currency into account.
+        } elseif (is_string($price) && strpos($price, '.') !== false) {
+            // '1.23'
+            return (int)((float)$price * 100); // Horrible hack!
+        } elseif (is_string($price)) {
+            // '123'
+            return (int)$price;
+        }
+
+        return 0;
     }
 
     /**
      * Additional parameters for Swiss PostFinance E-Finance (PEF).
      */
-    protected function extraParamsPEF(array $data)
+    protected function extraParamsPEF(array $data = [])
     {
         return $data;
     }
@@ -369,7 +448,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Additional parameters for Swiss PostFinance Card (PFC).
      */
-    protected function extraParamsPFC(array $data)
+    protected function extraParamsPFC(array $data = [])
     {
         return $data;
     }
@@ -377,7 +456,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Additional parameters for MFGroup Check Out (Credit Check) (MFA).
      */
-    protected function extraParamsMFA(array $data)
+    protected function extraParamsMFA(array $data = [])
     {
         if ($this->getMfaReference()) {
             $data['mfaReference'] = $this->getMfaReference();
@@ -389,7 +468,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Additional parameters for Curabill (CUR).
      */
-    protected function extraParamsCUR(array $data)
+    protected function extraParamsCUR(array $data = [])
     {
         // The XML document is base64 encoded before sending.
 
@@ -405,7 +484,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
      * TODO: uppCustomerAirlineDeparture uppCustomerAirlineRoute uppCustomerAirlineFlightNumber
      * uppCustomerAirlineBookingCode uppCustomerAirlineFrequentFlyer
      */
-    protected function extraParamsPYO(array $data)
+    protected function extraParamsPYO(array $data = [])
     {
         // TODO: plus most customer details are also mandatory.
         $this->validate('customerType');
@@ -418,7 +497,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
     /**
      * Additional parameters for SEPA Direct Debit / ELV (ELV).
      */
-    protected function extraParamsELV(array $data)
+    protected function extraParamsELV(array $data = [])
     {
         if ($this->getRefno2()) {
             $data['refno2'] = $this->getRefno2();
@@ -444,7 +523,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
      * Additional parameters for MFGroup Financial Request (authorization) (MFG).
      * TODO: about a dozen more parameters, but the documentation is a little unclear.
      */
-    protected function extraParamsMFG(array $data)
+    protected function extraParamsMFG(array $data = [])
     {
         if ($this->getVirtualCardno()) {
             $data['virtualCardno'] = $this->getVirtualCardno();

@@ -38,8 +38,9 @@ Table of Contents
       * [iframe Mode/Inline Mode](#iframe-modeinline-mode)
       * [Lightbox Mode](#lightbox-mode)
       * [Hidden Mode](#hidden-mode)
+      * [ItemBag/Basket](#itembagbasket)
       * [TODO](#todo)
-         * [Shared Optional Parameters](#shared-optional-parameters)
+         * [Additional Parameters (for various payment methods)](#additional-parameters-for-various-payment-methods)
          * [Functionality](#functionality)
 
 This Gateway implements offsite payments via Datatrans.
@@ -167,6 +168,13 @@ They can be set in the `purchase()` parameter array, or via setters `setParamNam
   If signing is configured in the account, then the shared key must be provided here.
 * `hmacKey2` - alternative HMAC key used to sign inbound messages.
   If not set, will default to the value of hmacKey1.
+* A `cardReference` and optional expiry dates (in the `CreditCard` object, if the
+  `cardReference` is for a credit card) can be supplied. This will pre-populate the
+  card details for the user, so that they need only enter their CVV to authorize
+  a payment.
+* Many other optional parameters are supported, generally all those in the official
+  documentaion except where listed in the TODO section here. These will be added as
+  time permits.
 
 ## Complete Response
 
@@ -206,7 +214,7 @@ used for responses as for the original request).
 $notify->send();
 ```
 
-This will return $notify, but will throw an exception if the signing checks fail.
+This will return `$notify`, but will throw an exception if the signing checks fail.
 
 ## Void
 
@@ -343,12 +351,22 @@ TBC
 This mode requires credit card details to be passed through your merchant application.
 It is not supported by this release of the driver drue to the PCI requirements involved.
 
+## ItemBag/Basket
+
+The standard Omnipay Itembag is supported for the PayPal (PAP) mayment method.
+Some notes, since the ItemBag can be inflexible and a little ambiguous:
+
+* The `price` of each item is assumed to be the gross unit price.
+* The `price` units are considered minor units if an integer (e.g. 123 or "123")
+  or major units if a floating point number (e.g. 4.56 or "4.56").
+* Shipping is set to zero.
+* Tax is set to zero.
+* The total `ItemBag` amount *must* equal the total order amount.
+
 ## TODO
 
-### Shared Optional Parameters
+### Additional Parameters (for various payment methods)
 
-* Basket details (PayPal only?)
-* PayPal specific parameters
 * Payolution mandatory parameters validation
 * Aduno surprize specific parameters
 * Migros Bank Payment mdpUserId and mdpAlias parameter + txnMbRefNo return param
@@ -366,9 +384,9 @@ It is not supported by this release of the driver drue to the PCI requirements i
 
 ### Functionality
 
-* Additional parameters and results for different payment PAYMENT_METHOD
 * Capture of customer address when using PayPal
 * Support lightbox mode (iframe)
 * Support inline mode (JavaScript)
 * AVS (address verification) by web interface and XML back-end
+* Tests needed especially around the multiple notification methods and formats.
 
