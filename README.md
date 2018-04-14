@@ -370,6 +370,13 @@ If you prefer to build your own HTML attributes, the data for the attributes is 
 using `$resquest->getLightboxData()`.
 It is similar to `redirectData()` but uses different keys.
 
+One thing lightbox mode offers that other modes do not, is the ability to select multiple
+payment methods. These are set as a comma-separated list of values.
+For example, to offer both Visa and PayPal as options in the lightbox, set the
+`paymentMethod` to `"VIS,PAP"`.
+Or you can leave the `paymentMethod` blank and the lightbox will offer all available
+payment methods available to the account.
+
 ## Hidden Mode
 
 This mode requires credit card details to be passed through your merchant application.
