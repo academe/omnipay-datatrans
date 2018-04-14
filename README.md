@@ -324,7 +324,7 @@ payment methods.
 ## Redirect Mode
 
 This is the standard mode for authorizing a payment, where the user will be taken
-to a remove payment form and returned when they have finished.
+to a remote payment form and returned when they have finished.
 
 The redirect can be either a `POST` or a `GET` redirect, defaulting to `POST`.
 The `setRedirectmethod()` parameter takes either "GET" or "POST" to set the
@@ -347,6 +347,10 @@ The iframe mode appears to require exactly one payment method, making the
 payment method mandatory.
 
 ## Lightbox Mode
+
+Lightbox mode uses JavaScript to display the payment form in an iframe in the merchant
+site, with the merchant site behind a darkened mask. It appears to the user that they
+are remaining on the merchant site, but the form is remotely supplied by the gateway.
 
 This is supported by getting the redirect data in a lightbox-mode format.
 To use lightbox mode, please see the DataTrans documentation for the genral HTML needed.
