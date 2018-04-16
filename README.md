@@ -415,8 +415,6 @@ Some notes, since the ItemBag can be inflexible and a little ambiguous:
 
 ### Functionality
 
-* Capture of customer address when using PayPal
-* Support inline mode (JavaScript)
 * AVS (address verification) by web interface and XML back-end
 * Tests needed especially around the multiple notification methods and formats.
 

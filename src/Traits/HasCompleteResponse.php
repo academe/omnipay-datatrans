@@ -10,6 +10,7 @@ namespace Omnipay\Datatrans\Traits;
  */
 
 use Omnipay\Datatrans\Gateway;
+use Omnipay\Common\CreditCard;
 
 trait HasCompleteResponse
 {
@@ -389,5 +390,121 @@ trait HasCompleteResponse
     public function getPendingPayPal()
     {
         return $this->getDataItem('pendingPayPal');
+    }
+
+    /**
+     * @return CreditCard captured biling and/or shipping details.
+     * @todo also capture here any credit card details (masked number, expiry dates)
+     * that we are given.
+     */
+    public function getCard()
+    {
+        $data = [];
+
+        // Billing details.
+
+        if ($this->getDataItem('uppCustomerTitle')) {
+            $data['billingTitle'] = $this->getDataItem('uppCustomerTitle');
+        }
+
+        if ($this->getDataItem('uppCustomerName')) {
+            $data['billingName'] = $this->getDataItem('uppCustomerName');
+        }
+
+        if ($this->getDataItem('uppCustomerFirstName')) {
+            $data['billingFirstName'] = $this->getDataItem('uppCustomerFirstName');
+        }
+
+        if ($this->getDataItem('uppCustomerLastName')) {
+            $data['billingLastName'] = $this->getDataItem('uppCustomerLastName');
+        }
+
+        if ($this->getDataItem('uppCustomerStreet')) {
+            $data['billingAddress1'] = $this->getDataItem('uppCustomerStreet');
+        }
+
+        if ($this->getDataItem('uppCustomerStreet2')) {
+            $data['billingAddress2'] = $this->getDataItem('uppCustomerStreet2');
+        }
+
+        if ($this->getDataItem('uppCustomerCity')) {
+            $data['billingCity'] = $this->getDataItem('uppCustomerCity');
+        }
+
+        if ($this->getDataItem('uppCustomerCountry')) {
+            $data['billingCountry'] = $this->getDataItem('uppCustomerCountry');
+        }
+
+        if ($this->getDataItem('uppCustomerZipCode')) {
+            $data['billingPostcode'] = $this->getDataItem('uppCustomerZipCode');
+        }
+
+        if ($this->getDataItem('uppCustomerEmail')) {
+            $data['email'] = $this->getDataItem('uppCustomerEmail');
+        }
+
+        if ($this->getDataItem('uppCustomerGender')) {
+            $data['gender'] = $this->getDataItem('uppCustomerGender');
+        }
+
+        if ($this->getDataItem('uppCustomerBirthDate')) {
+            $data['birthday'] = $this->getDataItem('uppCustomerBirthDate');
+        }
+
+        if ($this->getDataItem('uppCustomerPhone')) {
+            $data['billingPhone'] = $this->getDataItem('uppCustomerPhone');
+        }
+
+        if ($this->getDataItem('uppCustomerFax')) {
+            $data['billingFax'] = $this->getDataItem('uppCustomerFax');
+        }
+
+        // Shipping details.
+
+        if ($this->getDataItem('uppShippingTitle')) {
+            $data['ShippingTitle'] = $this->getDataItem('uppShippingTitle');
+        }
+
+        if ($this->getDataItem('uppShippingName')) {
+            $data['ShippingName'] = $this->getDataItem('uppShippingName');
+        }
+
+        if ($this->getDataItem('uppShippingFirstName')) {
+            $data['ShippingFirstName'] = $this->getDataItem('uppShippingFirstName');
+        }
+
+        if ($this->getDataItem('uppShippingLastName')) {
+            $data['ShippingLastName'] = $this->getDataItem('uppShippingLastName');
+        }
+
+        if ($this->getDataItem('uppShippingStreet')) {
+            $data['ShippingAddress1'] = $this->getDataItem('uppShippingStreet');
+        }
+
+        if ($this->getDataItem('uppShippingStreet2')) {
+            $data['ShippingAddress2'] = $this->getDataItem('uppShippingStreet2');
+        }
+
+        if ($this->getDataItem('uppShippingCity')) {
+            $data['ShippingCity'] = $this->getDataItem('uppShippingCity');
+        }
+
+        if ($this->getDataItem('uppShippingCountry')) {
+            $data['ShippingCountry'] = $this->getDataItem('uppShippingCountry');
+        }
+
+        if ($this->getDataItem('uppShippingZipCode')) {
+            $data['ShippingPostcode'] = $this->getDataItem('uppShippingZipCode');
+        }
+
+        if ($this->getDataItem('uppShippingPhone')) {
+            $data['ShippingPhone'] = $this->getDataItem('uppShippingPhone');
+        }
+
+        if ($this->getDataItem('uppShippingFax')) {
+            $data['ShippingFax'] = $this->getDataItem('uppShippingFax');
+        }
+
+        return new CreditCard($data);
     }
 }
