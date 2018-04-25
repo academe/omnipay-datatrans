@@ -19,7 +19,6 @@ use Omnipay\Datatrans\Traits\HasCompleteResponse;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Datatrans\Gateway;
 
-
 /**
  * Datatrans Complete Purchase/Authorize Response
  */

@@ -96,7 +96,7 @@ interface Constants
 
     const PAYMENT_METHOD_BPY = 'BPY'; // Billpay
     const PAYMENT_METHOD_CUP = 'CUP'; // China Union Pay
-    const PAYMENT_METHOD_CUR = 'CUR'; // 
+    const PAYMENT_METHOD_CUR = 'CUR'; // Curabill
     const PAYMENT_METHOD_DIS = 'DIS'; // Discover
     const PAYMENT_METHOD_DEA = 'DEA'; // * iDeal
     const PAYMENT_METHOD_DIB = 'DIB'; // SOFORT Überweisung

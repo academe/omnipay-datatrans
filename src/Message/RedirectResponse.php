@@ -134,7 +134,8 @@ class RedirectResponse extends AbstractResponse implements RedirectResponseInter
     /**
      * Convert string from camel case parameter name to lightbox-mode name.
      */
-    protected function toLightboxFormat($camelCase) {
+    protected function toLightboxFormat($camelCase)
+    {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $camelCase, $matches);
         $ret = $matches[0];
 

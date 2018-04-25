@@ -56,7 +56,7 @@ abstract class AbstractXmlRequest extends AbstractRequest
      */
     protected $serviceVersion = Gateway::XML_SERVICE_VERSION;
 
-    public abstract function getData();
+    abstract public function getData();
 
     /**
      * @param $requestElement
