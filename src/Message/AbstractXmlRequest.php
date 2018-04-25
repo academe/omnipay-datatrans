@@ -167,7 +167,7 @@ abstract class AbstractXmlRequest extends AbstractRequest
             // Empty response body should be parsed also as an empty array
             $body = $httpResponse->getBody(true);
 
-            $response = Helper::getRemoteData($httpResponse);
+            $response = Helper::extractMessageData($httpResponse);
             return $this->response = $this->createResponse($response);
 
             //throw new InvalidResponseException('Error communicating with payment gateway');

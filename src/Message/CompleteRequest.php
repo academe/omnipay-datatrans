@@ -15,20 +15,20 @@ namespace Omnipay\Datatrans\Message;
  * @license    MIT License
  */
 
-use Omnipay\Datatrans\Traits\HasSignatureVerifier;
+use Omnipay\Datatrans\Traits\VerifiesSignatures;
 use Omnipay\Datatrans\Helper;
 use Exception;
 
 class CompleteRequest extends AbstractRequest
 {
-    use HasSignatureVerifier;
+    use VerifiesSignatures;
 
     /**
      * @return array
      */
     public function getData()
     {
-        return Helper::getRemoteData($this->httpRequest);
+        return Helper::extractMessageData($this->httpRequest);
     }
 
     /**

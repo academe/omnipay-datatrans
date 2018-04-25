@@ -21,10 +21,10 @@ class Helper
      * Supports Guzzle sewrver request/response, but be
      * switched to PSR-7 messages in Omnipay 3.x versions.
      *
-     * @param TBC $httpMessage a Guzzle HTTP server request or HTTP response, or a PSR-7 message (TODO)
+     * @param Request|Response|TBC $httpMessage a Guzzle HTTP server request or HTTP response, or a PSR-7 message (TODO)
      * @return array the data as a flat array
      */
-    public static function getRemoteData($httpMessage)
+    public static function extractMessageData($httpMessage)
     {
         // Guzzle 3 Response.
         // The assumption for now is that it will always be XML.
@@ -46,8 +46,8 @@ class Helper
             if (static::getMethod($httpMessage) === 'POST') {
                 // Check if XML data is in the body.
 
-                if (static::getContentType($httpMessage) === 'text/xml') {
-                    $xmlString = static::getBody($httpMessage);
+                if ($httpMessage->headers->get('Content-Type', '') === 'text/xml') {
+                    $xmlString = (string)$httpMessage->getContent();
 
                     if ($xmlString) {
                         $xmlString = simplexml_load_string($xmlString);
@@ -57,7 +57,7 @@ class Helper
             } else {
                 // Check if XML data is in the header.
 
-                $xmlString = static::getXmlHeader($httpMessage);
+                $xmlString = static::extractXmlHeader($httpMessage);
 
                 if ($xmlString) {
                     $xmlString = simplexml_load_string($xmlString);
@@ -87,17 +87,13 @@ class Helper
         return strtoupper($httpMessage->getMethod());
     }
 
-    public static function getContentType($httpMessage)
-    {
-        return $httpMessage->headers->get('Content-Type', '');
-    }
-
     /**
      * Parse a SimpleXML object to a flat array.
      * Start by passing in the parsed XML string: simplexml_load_string($xmlString)
      *
      * There should not be any clashes, as all those names will be unique across
-     * the whole XML file.
+     * the whole XML file. This is a feature of the data supplied by this gateway.
+     *
      * e.g.
      * <userParameters>otherelemtns</userParameters> -> ignore
      * <parameter name="maskedCC">424242xxxxxx4242</parameter> -> "maskedCC" => "424242xxxxxx4242"
@@ -143,22 +139,14 @@ class Helper
     }
 
     /**
-     * Get the XML string from the header, if present
+     * Extract the XML string from the header, if present.
      */
-    public static function getXmlHeader($httpMessage)
+    public static function extractXmlHeader($httpMessage)
     {
         // Header name is "upptransaction", with the XML url encoded into a string.
         // The XML, like when delivered in the body, is three levels deep,
         // and makes use of both attributes and content.
 
         return urldecode($httpMessage->headers->get('upptransaction', null, true));
-    }
-
-    /**
-     * Get the XML string from the body, if present.
-     */
-    public static function getBody($httpMessage)
-    {
-        return (string)$httpMessage->getContent();
     }
 }

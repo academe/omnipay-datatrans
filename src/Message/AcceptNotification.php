@@ -8,14 +8,14 @@ namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Datatrans\Traits\HasCompleteResponse;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
-use Omnipay\Datatrans\Traits\HasSignatureVerifier;
+use Omnipay\Datatrans\Traits\VerifiesSignatures;
 use Omnipay\Datatrans\Helper;
 
 class AcceptNotification extends AbstractNotification
 {
     use HasCompleteResponse;
     use HasGatewayParameters;
-    use HasSignatureVerifier;
+    use VerifiesSignatures;
 
     /**
      * @var array the data sent from the gateway, parsed into a flat array.
@@ -31,7 +31,7 @@ class AcceptNotification extends AbstractNotification
         // data can be intensive, and is called many times.
 
         if ($this->data === null) {
-            $this->data = Helper::getRemoteData($this->httpRequest);
+            $this->data = Helper::extractMessageData($this->httpRequest);
         }
 
         return $this->data;

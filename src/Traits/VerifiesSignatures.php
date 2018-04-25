@@ -11,7 +11,7 @@ namespace Omnipay\Datatrans\Traits;
 use Omnipay\Datatrans\Gateway;
 use Exception;
 
-trait HasSignatureVerifier
+trait VerifiesSignatures
 {
 
     /**
