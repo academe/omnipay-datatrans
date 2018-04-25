@@ -27,8 +27,6 @@ use Omnipay\Datatrans\Gateway;
 
 abstract class AbstractRedirectRequest extends AbstractRequest
 {
-    use HasGatewayParameters;
-
     /**
      * @return array
      */
