@@ -13,13 +13,13 @@ matrix:
 
 before_script:
   - composer install -n --dev --prefer-source
-  - wget -O phpunit https://phar.phpunit.de/phpunit-5.phar
-  - chmod +x phpunit
+  #- wget -O phpunit https://phar.phpunit.de/phpunit-5.phar
+  #- chmod +x phpunit
 
 script:
   - vendor/bin/phpcs --standard=PSR2 src
-  #- vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-  - phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  #- phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
