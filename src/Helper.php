@@ -8,6 +8,8 @@ namespace Omnipay\Datatrans;
 
 use Symfony\Component\HttpFoundation\Request;
 use Guzzle\Http\Message\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use SimpleXMLElement;
 
 class Helper
@@ -26,10 +28,10 @@ class Helper
      */
     public static function extractMessageData($httpMessage)
     {
-        // Guzzle 3 Response.
+        // Guzzle 3 Response or PSR-7 response.
         // The assumption for now is that it will always be XML.
 
-        if ($httpMessage instanceof Response) {
+        if ($httpMessage instanceof Response || $httpMessage instanceof ResponseInterface) {
             $xmlString = (string)$httpMessage->getBody();
 
             $xmlString = simplexml_load_string($xmlString);
@@ -37,6 +39,7 @@ class Helper
         }
 
         // Guzzle 3 ServerRequest.
+        // CHECKME: when coult this also be a ServerRequestInterface?
 
         // The results could be sent by GET or POST. It's an account
         // option, or an overriding request option.

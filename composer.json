@@ -28,14 +28,16 @@
         }
     },
     "require": {
-        "omnipay/common": "~2.5"
+        "omnipay/common": "~3.0"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
+        "omnipay/tests": "~3.0"
     },
     "extra": {
         "branch-alias": {
-          "dev-master": "2.0.x-dev"
+          "dev-3.x": "3.0.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

@@ -149,34 +149,22 @@ abstract class AbstractXmlRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        $httpRequest = $this->httpClient->createRequest(
+        $httpResponse = $this->httpClient->request(
             $this->getHttpMethod(),
             $this->getEndpoint(),
-            array(
+            [
                 'Accept' => 'application/xml',
                 'Content-type' => 'application/xml',
-            ),
+            ],
             $this->getRequestXml()->asXML()
         );
 
-        try {
-            // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6);
-            $httpResponse = $httpRequest->send();
+        // Empty response body should be parsed also as an empty array
+        //$body = $httpResponse->getBody();
 
-            // Empty response body should be parsed also as an empty array
-            $body = $httpResponse->getBody(true);
+        $data = Helper::extractMessageData($httpResponse);
 
-            $response = Helper::extractMessageData($httpResponse);
-            return $this->response = $this->createResponse($response);
-
-            //throw new InvalidResponseException('Error communicating with payment gateway');
-        } catch (\Exception $e) {
-            throw new InvalidResponseException(
-                'Error communicating with payment gateway: ' . $e->getMessage(),
-                $e->getCode()
-            );
-        }
+        return $this->response = $this->createResponse($data);
     }
 
     /**
