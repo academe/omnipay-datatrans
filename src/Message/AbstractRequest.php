@@ -63,8 +63,7 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         $data[] = $this->getCurrency();
         $data[] = $this->getTransactionId();
 
-        if (
-            (bool)$this->getPayPalOrderId()
+        if ((bool)$this->getPayPalOrderId()
             && $this->getPaymentMethod() === Gateway::PAYMENT_METHOD_PAP
         ) {
             $data[] = 'PayPalOrderId';

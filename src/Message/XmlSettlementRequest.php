@@ -66,8 +66,7 @@ class XmlSettlementRequest extends AbstractXmlRequest
         }
 
         // CHECKME: requried for REF and REC, but is it allowed for other request types?
-        if (
-            $this->getAcqAuthorizationCode()
+        if ($this->getAcqAuthorizationCode()
             && ($requestType === Gateway::REQTYPE_REF || $requestType === Gateway::REQTYPE_REC)
         ) {
             $data['acqAuthorizationCode'] = $this->getAcqAuthorizationCode();
