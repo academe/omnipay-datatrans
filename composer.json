@@ -23,10 +23,11 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Omnipay\\Datatrans\\" : "src/" }
+        "psr-4": {
+            "Omnipay\\Datatrans\\" : "src/"
+        }
     },
     "require": {
-        "php": "^5.5||^7.0",
         "omnipay/common": "~2.5"
     },
     "require-dev": {
@@ -34,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-          "dev-master": "1.0.x-dev"
+          "dev-master": "2.0.x-dev"
         }
-  }
+    }
 }
