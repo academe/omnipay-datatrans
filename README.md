@@ -8,12 +8,9 @@
 [![License](https://poser.pugx.org/academe/omnipay-datatrans/license)](https://packagist.org/packages/academe/omnipay-datatrans)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+.
+processing library for PHP 7.1+.
 
-**This is for Omnipay 2.x with a minimum PHP version of 5.6.
-Shortly, the 2.x version will be moved to a legacy branch and
-the master branch will be updated for Omnipay 3.x, which is
-currently in alpha.**
+**This is for Omnipay 3.x with a minimum PHP version of 7.1.**
 
 Table of Contents
 =================
@@ -52,7 +49,7 @@ Omnipay can be installed using [Composer](https://getcomposer.org/).
 
 Run the following command to install omnipay and the datatrans gateway:
 
-    composer require academe/omnipay-datatrans:^2.0
+    composer require academe/omnipay-datatrans:~3.0
 
 While this is in development - before it is released on [packagist](https://packagist.org/) -
 you will need this entry in your `composer.json`:
