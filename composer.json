@@ -34,11 +34,6 @@
         "omnipay/tests": "~3.0",
         "squizlabs/php_codesniffer": "^2.8.1"
     },
-    "extra": {
-        "branch-alias": {
-          "dev-3.x": "3.0.x-dev"
-        }
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
