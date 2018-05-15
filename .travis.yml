@@ -4,27 +4,18 @@ php:
   - 5.5
   - 5.6
   - 7.1
-  - 7.2
 
 matrix:
   allow_failures:
-    # Requires phpunit 5.7 (3.7 works up to PHP 7.1)
-    - php: 7.2
 
 before_script:
   - composer install -n --dev --prefer-source
-  #- wget -O phpunit https://phar.phpunit.de/phpunit-5.phar
-  #- chmod +x phpunit
 
 script:
   - vendor/bin/phpcs --standard=PSR2 src
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-  #- phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
-# TODO: For PHP7.2, get phpunit 5.7:
-# wget -O phpunit https://phar.phpunit.de/phpunit-5.phar
-# Set it for execute permission.
