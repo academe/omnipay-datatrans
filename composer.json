@@ -33,7 +33,5 @@
     "require-dev": {
         "omnipay/tests": "^3",
         "squizlabs/php_codesniffer": "^3"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
