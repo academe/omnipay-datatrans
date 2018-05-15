@@ -33,5 +33,10 @@
     "require-dev": {
         "omnipay/tests": "^3",
         "squizlabs/php_codesniffer": "^3"
+    },
+    "extra": {
+        "branch-alias": {
+          "dev-master": "3.0.x-dev"
+        }
     }
 }
