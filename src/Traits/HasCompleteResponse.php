@@ -108,6 +108,16 @@ trait HasCompleteResponse
     }
 
     /**
+     * @return bool
+     */
+    public function isCancelled()
+    {
+        $status = $this->getStatus();
+
+        return $status === Gateway::STATUS_CANCEL;
+    }
+
+    /**
      * CHECKME: is the virtualCardno the same thing, but for specific payment methods?
      *
      * @return string|null the reusable card reference if requested by setting createCard
