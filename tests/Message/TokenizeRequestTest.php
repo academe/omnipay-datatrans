@@ -5,7 +5,7 @@ namespace Omnipay\Datatrans\Message;
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\TestCase;
 
-class PurchaseRequestTest extends TestCase
+class TokenizeRequestTest extends TestCase
 {
     /**
      * @var PurchaseRequest
@@ -16,7 +16,7 @@ class PurchaseRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new TokenizeRequest($this->getHttpClient(), $this->getHttpRequest());
     }
 
     public function testGetDataWithoutCard()
@@ -25,7 +25,6 @@ class PurchaseRequestTest extends TestCase
             'merchantId' => 'asdf',
             'sign' => '123',
             'testMode' => true,
-            'amount' => '12.00',
             'currency' => 'CHF',
             'transactionId' => '123',
             'returnUrl' => 'https://www.example.com/success',
@@ -36,13 +35,13 @@ class PurchaseRequestTest extends TestCase
         $expected = array(
             'merchantId' => 'asdf',
             'refno' => '123',
-            'amount' => 1200,
+            'amount' => 0,
             'currency' => 'CHF',
             'sign' => '123',
-            'reqtype' => 'CAA',
             'successUrl' => 'https://www.example.com/success',
             'errorUrl' => 'https://www.example.com/error',
-            'cancelUrl' => 'https://www.example.com/cancel'
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'useAlias' => 'yes',
         );
 
         $this->assertEquals($expected, $this->request->getData());
@@ -54,10 +53,9 @@ class PurchaseRequestTest extends TestCase
     public function testErrorUrlDefaults()
     {
         $this->request->initialize(array(
-            'merchantId' => 'asdf',
+            'merchantId' => 'asdfxxx',
             'sign' => '123',
             'testMode' => true,
-            'amount' => '12.00',
             'currency' => 'CHF',
             'transactionId' => '123',
             'returnUrl' => 'https://www.example.com/return',
@@ -65,15 +63,15 @@ class PurchaseRequestTest extends TestCase
         ));
 
         $expected = array(
-            'merchantId' => 'asdf',
+            'merchantId' => 'asdfxxx',
             'refno' => '123',
-            'amount' => 1200,
+            'amount' => 0,
             'currency' => 'CHF',
             'sign' => '123',
-            'reqtype' => 'CAA',
             'successUrl' => 'https://www.example.com/return',
             'errorUrl' => 'https://www.example.com/return',
-            'cancelUrl' => 'https://www.example.com/cancel'
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'useAlias' => 'yes',
         );
 
         $this->assertEquals($expected, $this->request->getData());

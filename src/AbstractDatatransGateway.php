@@ -41,7 +41,7 @@ abstract class AbstractDatatransGateway extends AbstractGateway implements Const
                 self::RETURN_METHOD_POST,
                 self::RETURN_METHOD_GET,
             ],
-            'errorUrl'      => '',
+            'errorUrl'      => null,
             'language'     => [
                 null, // account default
                 'de', // German

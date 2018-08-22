@@ -218,7 +218,11 @@ abstract class AbstractRedirectRequest extends AbstractRequest
         // These URLs are optional here, if set in the account.
 
         if ($this->getReturnUrl() !== null) {
+            // Default the errorUrl to the same returnURL.
+            // It can be overridden later if required.
+
             $data['successUrl'] = $this->getReturnUrl();
+            $data['errorUrl'] = $this->getReturnUrl();
         }
 
         if ($this->getCancelUrl() !== null) {

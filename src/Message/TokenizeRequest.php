@@ -31,7 +31,7 @@ class TokenizeRequest extends AbstractRedirectRequest
      */
     public function getData()
     {
-        $this->validate('merchantId', 'transactionId', 'sign', 'returnUrl', 'errorUrl', 'cancelUrl');
+        $this->validate('merchantId', 'transactionId', 'sign', 'returnUrl', 'cancelUrl');
 
         $data = array(
             'merchantId' => $this->getMerchantId(),
@@ -44,7 +44,7 @@ class TokenizeRequest extends AbstractRedirectRequest
 
         $data['successUrl'] = $this->getReturnUrl();
         $data['cancelUrl'] = $this->getCancelUrl();
-        $data['errorUrl'] = $this->getErrorUrl();
+        $data['errorUrl'] = $this->getErrorUrl() ?: $this->getReturnUrl();
         $data['cancelUrl'] = $this->getCancelUrl();
 
         return $data;
