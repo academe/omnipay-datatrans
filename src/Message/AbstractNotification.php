@@ -16,7 +16,7 @@ use Omnipay\Datatrans\Traits\HasSignatureVerifier;
 
 use Omnipay\Common\Helper;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Guzzle\Http\ClientInterface;
+use Omnipay\Common\Http\ClientInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 abstract class AbstractNotification implements NotificationInterface
@@ -31,7 +31,7 @@ abstract class AbstractNotification implements NotificationInterface
     /**
      * The request client.
      *
-     * @var \Guzzle\Http\ClientInterface
+     * @var \Omnipay\Common\Http\ClientInterface
      */
     protected $httpClient;
 
@@ -45,7 +45,7 @@ abstract class AbstractNotification implements NotificationInterface
     /**
      * Create a new Request
      *
-     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param ClientInterface $httpClient  A client to make API calls with
      * @param HttpRequest     $httpRequest A Symfony HTTP request object
      */
     public function __construct(ClientInterface $httpClient, HttpRequest $httpRequest)

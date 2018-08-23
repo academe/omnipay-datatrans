@@ -7,7 +7,6 @@ namespace Omnipay\Datatrans;
  */
 
 use Symfony\Component\HttpFoundation\Request;
-use Guzzle\Http\Message\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use SimpleXMLElement;
@@ -20,30 +19,25 @@ class Helper
      * as XML in a header line or XML in the request body.
      * All of these methods are used in various places.
      * XML data is parsed into a flat array.
-     * Supports Guzzle sewrver request/response, but be
-     * switched to PSR-7 messages in Omnipay 3.x versions.
      *
-     * @param Request|Response|TBC $httpMessage a Guzzle HTTP server request or HTTP response, or a PSR-7 message (TODO)
+     * @param Request|ResponseInterface $httpMessage a HTTP server request or a PSR-7 message
      * @return array the data as a flat array
      */
     public static function extractMessageData($httpMessage)
     {
-        // Guzzle 3 Response or PSR-7 response.
-        // The assumption for now is that it will always be XML.
+        // The assumption for now is that a syncronous response will always be XML.
 
-        if ($httpMessage instanceof Response || $httpMessage instanceof ResponseInterface) {
+        if ($httpMessage instanceof ResponseInterface) {
             $xmlString = (string)$httpMessage->getBody();
 
             $xmlString = simplexml_load_string($xmlString);
             return static::parseXmlElement($xmlString);
         }
 
-        // Guzzle 3 ServerRequest.
-        // CHECKME: when coult this also be a ServerRequestInterface?
-
+        // Incoming server request.
         // The results could be sent by GET or POST. It's an account
         // option, or an overriding request option.
-        // Could also be XML in a header or the body.
+        // Could also be XML in a header field or the body.
 
         if ($httpMessage instanceof Request) {
             if (static::getMethod($httpMessage) === 'POST') {
@@ -70,19 +64,14 @@ class Helper
 
             // Fall back to standard GET query or POST form parameters.
 
-            return static::getFormData($httpMessage);
+            if (static::getMethod($httpMessage) === 'POST') {
+                return $httpMessage->request->all();
+            } else {
+                return $httpMessage->query->all();
+            }
         }
 
         return [];
-    }
-
-    public static function getFormData($httpMessage)
-    {
-        if (static::getMethod($httpMessage) === 'POST') {
-            return $httpMessage->request->all();
-        } else {
-            return $httpMessage->query->all();
-        }
     }
 
     public static function getMethod($httpMessage)
