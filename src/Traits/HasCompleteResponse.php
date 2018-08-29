@@ -130,7 +130,7 @@ trait HasCompleteResponse
     /**
      * Virtual card number for MFGroup Checkout
      */
-    public function getVirtualCardno2()
+    public function getVirtualCardno()
     {
         return $this->getDataItem('virtualCardno');
     }

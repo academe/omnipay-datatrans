@@ -82,6 +82,7 @@ interface Constants
 
     /**
      * @var string value to request a card alias only (uppAliasOnly data item)
+     * @deprec No longer used.
      */
     const CARD_ALIAS_ONLY = 'yes';
 

@@ -362,7 +362,7 @@ trait HasGatewayParameters
     }
 
     /**
-     * @return string used only for MFG payemnt method
+     * @return string used only for MFG payment method
      */
     public function getVirtualCardno()
     {

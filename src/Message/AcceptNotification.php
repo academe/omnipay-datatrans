@@ -13,8 +13,9 @@ use Omnipay\Datatrans\Helper;
 
 class AcceptNotification extends AbstractNotification
 {
-    use HasCompleteResponse;
-    use HasGatewayParameters;
+    use HasGatewayParameters, HasCompleteResponse {
+        HasCompleteResponse::getVirtualCardno insteadof HasGatewayParameters;
+    }
     use VerifiesSignatures;
 
     /**

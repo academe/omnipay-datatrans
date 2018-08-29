@@ -49,11 +49,10 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         // If the amount is zero, then the merchant site is seeking
         // authorisation for the card (or other payment method) only.
-        // Some docuemnts list using '1' instead of zero, but both seem
-        // to work.
+        // Set the useAlias flag to request an alias is returned.
 
         if ($this->getAmountInteger() === 0) {
-            $data['uppAliasOnly'] = Gateway::CARD_ALIAS_ONLY;
+            $data['useAlias'] = Gateway::USE_ALIAS;
         }
 
         if ($card = $this->getCard()) {
@@ -79,6 +78,7 @@ abstract class AbstractRedirectRequest extends AbstractRequest
 
         // The card reference be provided without a card object and without
         // an expiry date.
+
         if ($this->getCardReference()) {
             $data['aliasCC'] = $this->getCardReference();
         }

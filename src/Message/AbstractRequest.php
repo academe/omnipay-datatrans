@@ -56,9 +56,9 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
             $this->getMerchantId(),
         ];
 
-        // If the amount is zero, then use "ppAliasOnly" instead to show
-        // we only want the card to be authorised.
-        $data[] = $this->getAmountInteger() ?: 'uppAliasOnly';
+        // No longer replace a zero amount with "uppAliasOnly".
+
+        $data[] = $this->getAmountInteger();
 
         $data[] = $this->getCurrency();
         $data[] = $this->getTransactionId();

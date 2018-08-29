@@ -38,20 +38,20 @@ class XmlGateway extends AbstractDatatransGateway
 
     /**
      * @param array $options
-     * @return XmlPurchaseRequest
-     */
-    public function purchase(array $options = array())
-    {
-        return $this->createRequest(XmlPurchaseRequest::class, $options);
-    }
-
-    /**
-     * @param array $options
      * @return XmlAuthorizationRequest
      */
     public function authorize(array $options = array())
     {
         return $this->createRequest(XmlAuthorizationRequest::class, $options);
+    }
+
+    /**
+     * @param array $options
+     * @return XmlPurchaseRequest
+     */
+    public function purchase(array $options = array())
+    {
+        return $this->createRequest(XmlPurchaseRequest::class, $options);
     }
 
     /**

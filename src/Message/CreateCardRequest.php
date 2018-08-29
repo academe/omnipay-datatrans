@@ -4,7 +4,7 @@ namespace Omnipay\Datatrans\Message;
 
 use Omnipay\Datatrans\Gateway;
 
-class CreateCardRequest extends AuthorizeRequest // FIXME: skip the authorize
+class CreateCardRequest extends AuthorizeRequest
 {
     /**
      * @return array
