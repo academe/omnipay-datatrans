@@ -24,9 +24,16 @@ namespace Omnipay\Datatrans\Message;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\Datatrans\Traits\HasGatewayParameters;
 use Omnipay\Datatrans\Gateway;
+use Omnipay\Datatrans\Interfaces\Constants;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 abstract class AbstractRedirectRequest extends AbstractRequest
 {
+    /**
+     * @var string NOA or CAA (null to use account default)
+     */
+    protected $requestType = Constants::REQTYPE_AUTHORIZE;
+
     /**
      * @return array
      */
@@ -152,6 +159,18 @@ abstract class AbstractRedirectRequest extends AbstractRequest
             // be used repeatedly to authorise payments against.
 
             if ($this->getPaymentMethod() === Gateway::PAYMENT_METHOD_PAP) {
+                if ($this->requestType === Constants::REQTYPE_PURCHASE) {
+                    // PayPal switches to authorize only if requesting an
+                    // order ID. If we are expecting a purchase, then throw
+                    // an exception to avoid an unexpected result.
+
+                    throw new InvalidRequestException(sprintf(
+                        'Invalid: cannot use request type %s with method %s and option createCard',
+                        Constants::REQTYPE_PURCHASE,
+                        Gateway::PAYMENT_METHOD_PAP
+                    ));
+                }
+
                 $this->setPayPalOrderId(true);
             } else {
                 $data['useAlias'] = Gateway::USE_ALIAS;

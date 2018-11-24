@@ -33,8 +33,8 @@ abstract class AbstractDatatransGateway extends AbstractGateway implements Const
     public function getDefaultParameters()
     {
         return [
-            'merchantId'    => '',
-            'sign'          => '',
+            'merchantId'    => null,
+            'sign'          => null,
             'testMode'      => true,
             'returnMethod'  => [
                 null,
@@ -42,7 +42,7 @@ abstract class AbstractDatatransGateway extends AbstractGateway implements Const
                 self::RETURN_METHOD_GET,
             ],
             'errorUrl'      => null,
-            'language'     => [
+            'language'      => [
                 null, // account default
                 'de', // German
                 'en', // English
