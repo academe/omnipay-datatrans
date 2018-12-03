@@ -104,7 +104,8 @@ trait HasCompleteResponse
     {
         $status = $this->getStatus();
 
-        return $status === Gateway::STATUS_SUCCESS || $status === Gateway::STATUS_ACCEPTED;
+        return $status === Gateway::STATUS_SUCCESS
+            || $status === Gateway::STATUS_ACCEPTED;
     }
 
     /**
@@ -115,6 +116,14 @@ trait HasCompleteResponse
         $status = $this->getStatus();
 
         return $status === Gateway::STATUS_CANCEL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPending()
+    {
+        return $this->getPendingPayPal() !== null;
     }
 
     /**
@@ -204,7 +213,8 @@ trait HasCompleteResponse
 
     /**
      * Authorization response code. See docs for details.
-     * @return string '01' or '02'
+     * @return string '01' or '02' for successful transaction.
+     * Other codes for unsuccessful transactions (such as 13 for pending).
      */
     public function getResponseCode()
     {

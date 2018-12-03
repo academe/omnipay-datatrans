@@ -322,4 +322,32 @@ interface Constants
      */
     const CUSTOMER_TYPE_PERSON  = 'P';
     const CUSTOMER_TYPE_COMPANY = 'C';
+
+    /**
+     * Response codes.
+     * These are listed in some parts of the documentation as
+     * strings with leading zeros, and in other parts as integers.
+     * So there is some ambiguity about what we will receive, and
+     * whether we can guarantee it can be cast to an integer for
+     * comparison.
+     * CHECKME: what is AUTHENTIFIED?
+     */
+    const RESPONSE_CODE_INCOMPLETE = '00';
+    const RESPONSE_CODE_READY_FOR_SETTLEMENT = '01';
+    const RESPONSE_CODE_DEBIT_WAITING_SETTLEMENT = '02';
+    const RESPONSE_CODE_CREDIT_WAITING_SETTLEMENT = '03';
+    const RESPONSE_CODE_DECLINED = '04';
+    const RESPONSE_CODE_REFERRAL_STATUS = '05';
+    const RESPONSE_CODE_CANCELLED_MERCHANT_1 = '06';
+    const RESPONSE_CODE_CANCELLED_MERCHANT_2 = '07';
+    const RESPONSE_CODE_CANCELLED_MERCHANT_3 = '08';
+    const RESPONSE_CODE_CANCELLED_USER = '09';
+    const RESPONSE_CODE_AUTHENTIFIED = '11';
+    const RESPONSE_CODE_AUTHENTIFIED_AUTHORIZED = '12';
+    const RESPONSE_CODE_PENDING_TRANSACTION = '13';
+    const RESPONSE_CODE_TIMEOUT = '14';
+    const RESPONSE_CODE_CARD_CHECK_PROCESSED = '15';
+    const RESPONSE_CODE_RECORD_NOT_FOUND = '20';
+    const RESPONSE_CODE_ALREADY_SETTLED = '21';
+    const RESPONSE_CODE_MULTIPLE_ONE_TRANSACTION = '30';
 }

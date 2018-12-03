@@ -67,6 +67,61 @@ class CompleteResponseTest extends TestCase
                 "uppMsgType" => "web",
             ]
         );
+
+        $this->responsePendingPayPal = new CompleteResponse(
+            $this->getMockRequest(),
+            [
+                "uppCustomerEmail"=> "jason.datatrans@academe.co.uk",
+                "testOnly"=> "yes",
+                "amount"=> "2250",
+                "pmethod"=> "PAP",
+                "itemamt"=> "2250",
+                "uppWebResponseMethod"=> "POST",
+                "sign2"=> "d878c372972f03c8947af261ea9522e99ac5bb48c1a079cb4a84ec16a987fa4d",
+                "uppCustomerName"=> "Jason Judge",
+                "sign"=> "7b59c12fa3dd680771b2cd8cdc4eb394cf12f2f4a39a8e8d7e5dde0e295670b7",
+                "uppCustomerCountry"=> "DEU",
+                "uppCustomerCity"=> "Freiburg",
+                "taxamt1"=> "0",
+                "uppCustomerZipCode"=> "79111",
+                "taxamt0"=> "0",
+                "payPalAllowNote"=> "1",
+                "refno"=> "382583328377",
+                "uppReturnMaskedCc"=> "yes",
+                "uppCustomerDetails"=> "return",
+                "language"=> "en",
+                "uppDisplayShippingDetails"=> "yes",
+                "reqtype"=> "CAA",
+                "acqAuthorizationCode"=> "8Y894304WN001691G",
+                "uppCustomerStreet"=> "ESpachstr. 1",
+                "taxamt"=> "0",
+                "name1"=> "Item2",
+                "theme"=> "DT2015",
+                "name0"=> "Item1",
+                "number1"=> "2",
+                "number0"=> "1",
+                "pendingPayPal"=> "yes",
+                "responseMessage"=> "PayPal transaction successful/pending",
+                "uppTransactionId"=> "181203004654632546",
+                "uppForwardCustomerDetails"=> "yes",
+                "responseCode"=> "01",
+                "merchantId"=> "1100016183",
+                "redirectMethod"=> "GET",
+                "currency"=> "GBP",
+                "amt1"=> "250",
+                "amt0"=> "1000",
+                "version"=> "1.0.2",
+                "authorizationCode"=> "719912597",
+                "shippingamt"=> "0",
+                "qty1"=> "1",
+                "desc1"=> "This is Item Two",
+                "uppTermsLink"=> "https://academe.co.uk/",
+                "qty0"=> "2",
+                "desc0"=> "This is Item One",
+                "status" => "success",
+                "uppMsgType"=> "web",
+            ]
+        );
     }
 
     public function testSuccess()
@@ -88,5 +143,12 @@ class CompleteResponseTest extends TestCase
     {
         $this->assertFalse($this->responseCancel->isSuccessful());
         $this->assertTrue($this->responseCancel->isCancelled());
+    }
+
+    public function testPendingPayal()
+    {
+        $this->assertTrue($this->responsePendingPayPal->isSuccessful());
+        $this->assertFalse($this->responsePendingPayPal->isCancelled());
+        $this->assertTrue($this->responsePendingPayPal->isPending());
     }
 }
