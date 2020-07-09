@@ -58,6 +58,8 @@ abstract class AbstractXmlRequest extends AbstractRequest
 
     abstract public function getData();
 
+    abstract public function getAuthorization();
+
     /**
      * @param $requestElement
      * @return mixed
@@ -149,13 +151,19 @@ abstract class AbstractXmlRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        $headers = [
+            'Accept' => 'application/xml',
+            'Content-type' => 'application/xml',
+        ];
+
+        if ($this->getAuthorization()) {
+            $headers['Authorization'] = $this->getAuthorization();
+        }
+
         $httpResponse = $this->httpClient->request(
             $this->getHttpMethod(),
             $this->getEndpoint(),
-            [
-                'Accept' => 'application/xml',
-                'Content-type' => 'application/xml',
-            ],
+            $headers,
             $this->getRequestXml()->asXML()
         );
 
