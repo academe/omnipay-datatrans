@@ -58,8 +58,6 @@ abstract class AbstractXmlRequest extends AbstractRequest
 
     abstract public function getData();
 
-    abstract public function getAuthorization();
-
     /**
      * @param $requestElement
      * @return mixed
@@ -216,5 +214,17 @@ abstract class AbstractXmlRequest extends AbstractRequest
     public function getApiEndpoint()
     {
         return $this->apiEndpoint;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAuthorization()
+    {
+        if ($this->getPassword()) {
+            return 'Basic ' . base64_encode($this->getMerchantId() . ':' . $this->getPassword());
+        }
+
+        return null;
     }
 }

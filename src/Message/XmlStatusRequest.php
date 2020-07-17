@@ -62,16 +62,4 @@ class XmlStatusRequest extends AbstractXmlRequest
 
         return $data;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getAuthorization()
-    {
-        if ($this->getPassword()) {
-            return 'Basic ' . base64_encode($this->getMerchantId() . ':' . $this->getPassword());
-        }
-
-        return null;
-    }
 }
