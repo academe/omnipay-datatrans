@@ -149,13 +149,19 @@ abstract class AbstractXmlRequest extends AbstractRequest
      */
     public function sendData($data)
     {
+        $headers = [
+            'Accept' => 'application/xml',
+            'Content-type' => 'application/xml',
+        ];
+
+        if ($this->getAuthorization()) {
+            $headers['Authorization'] = $this->getAuthorization();
+        }
+
         $httpResponse = $this->httpClient->request(
             $this->getHttpMethod(),
             $this->getEndpoint(),
-            [
-                'Accept' => 'application/xml',
-                'Content-type' => 'application/xml',
-            ],
+            $headers,
             $this->getRequestXml()->asXML()
         );
 
@@ -208,5 +214,17 @@ abstract class AbstractXmlRequest extends AbstractRequest
     public function getApiEndpoint()
     {
         return $this->apiEndpoint;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAuthorization()
+    {
+        if ($this->getPassword()) {
+            return 'Basic ' . base64_encode($this->getMerchantId() . ':' . $this->getPassword());
+        }
+
+        return null;
     }
 }

@@ -777,4 +777,21 @@ trait HasGatewayParameters
     {
         return $this->getParameter('hmacKey2') ?: $this->getParameter('hmacKey1');
     }
+
+    /**
+     * @param string password for server-to-server services
+     * @return $this
+     */
+    public function setPassword($value)
+    {
+        return $this->setParameter('password', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->getParameter('password');
+    }
 }
